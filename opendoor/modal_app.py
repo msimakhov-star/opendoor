@@ -55,7 +55,7 @@ def _reg_links(base, pairs):
     return sorted(links, key=lambda l: (bool(NATIONAL.search(l)), not best.search(l)))[:3]
 
 
-@app.function(image=image, max_containers=2, timeout=300)
+@app.function(image=image, max_containers=2, timeout=300, scaledown_window=900)
 @modal.concurrent(max_inputs=5)
 def resolve(org: dict) -> dict:
     """Adds site and reg_url (both the practice homepage, from its nhs.uk profile). One GET, to nhs.uk only: capture finds the
