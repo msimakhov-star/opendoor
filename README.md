@@ -105,7 +105,7 @@ The `modal` path includes active protections for "NHS number" and "UK phone numb
 
 ## Run it
 
-Execute a replay without API credentials or Modal infrastructure (verified on 2026-09-19 using a new repository clone lacking environment secrets, where `tests/test_core.py` output "10 passed", and the service delivered all three stored datasets):
+Execute a replay without API credentials or Modal infrastructure (verified on 2026-09-19 using a new repository clone lacking environment secrets, where `tests/test_core.py` output "11 passed", and the service delivered all three stored datasets):
 ```
 git clone https://github.com/msimakhov-star/opendoor.git && cd opendoor
 uv run python tests/test_core.py

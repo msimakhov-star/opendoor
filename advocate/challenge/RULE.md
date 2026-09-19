@@ -85,7 +85,7 @@ STYLE: Open Door house style. You write as Open Door, a free service that reads 
 
 Result: `evidence/COMPARE_rule_on_v2.md`.
 
-Outcomes for v2 compared to rule_off (same code, sha256 `0bd552801e0557d4`): placeholders dropped from 3 to 0 (notes) and from 5 to 0 (letters) across all executions; letters used 50% fewer words, 50% fewer output tokens, reduced latency by 49%, and moved reading grade from 8.9 to 7.4; notes featured 39% fewer words, increased NHS link occurrences from 0 of 5 to 4 of 5, and concluded with the Open Door signature. Overhead introduced by this update was roughly 250 additional input tokens per prompt. Patient note reading grade remained unchanged (7.9 to 7.9).
+Outcomes for v2 compared to rule_off: see `evidence/COMPARE_rule_on_v2.md`. The public numbers for this entry are rule v3 only (see `evidence/COMPARE_rule_on_v3.md`).
 When tested on 9 actual surgeries in Newham, several flaws appeared: an amber-tier letter employed "seems to contradict" (improper when a site simply requests documentation), a note inserted [1] style citations, and interface developers spotted the ambiguous phrase "the NHS guidance on their website", which made "their" resemble the surgery.
 
 **v3.** Incorporates: "No markdown", "Always call the NHS page 'the NHS guidance on nhs.uk', never 'their website'. Call the practice by its name and its page 'the practice website'", "never add footnotes", and for amber pages "never say contradicts". The full text, byte for byte as configured in the Gateway (`RULE_v3.txt`):
