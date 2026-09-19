@@ -209,6 +209,10 @@ figcaption{font-size:14px;text-transform:uppercase;letter-spacing:.08em;color:va
 .crop{position:relative;aspect-ratio:2/1;overflow:hidden;border-radius:8px;border:2px solid var(--c,#2c3a4d);background:#fff}
 .crop img{position:absolute;left:0;top:0;width:100%;max-width:none;display:block}
 figure .pill{margin:10px 0 6px;font-size:12px;padding:3px 10px}
+/* a site pop-up covered the boxed sentence when the screenshot was taken: grey it and say so */
+figure.covered .crop img{filter:grayscale(1) opacity(.4)}
+figure.covered .crop::after{content:"Screenshot covered by a pop-up";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);padding:6px 12px;border-radius:8px;background:rgba(10,14,19,.9);color:var(--amber);font-size:14px;font-weight:800;white-space:nowrap}
+.covnote{margin:6px 0 0;font-size:14px;line-height:1.35;color:var(--amber)}
 figure blockquote.q{margin:0;font-size:18px;line-height:1.35;padding:10px 14px;border-left-width:5px;font-weight:600}
 figure blockquote.q cite{font-size:13px;margin-top:6px}
 .split.big figure blockquote.q{font-size:26px}
@@ -476,7 +480,7 @@ function apply(e) {
       setMarker(p); break;
     case "second_opinion": S.defChecked++; p.defence = e; // round 3: a second agent argues the surgery's defence before a red is shown
       if (e.agreed === false) S.defSoftened++; break; /* the downgrade itself arrives as a later classified event for the same code */
-    case "boxed": p.boxed = true; p.shot = e.shot; break;
+    case "boxed": p.boxed = true; p.shot = e.shot; if (e.box_occluded) p.covered = true; break;
     case "run_finished": finish(e); break;
   }
   logLine(e); S.dirty = true; // counters and panel are redrawn once per clock tick, not per event: 1,200 practices send about 6,000 events
@@ -785,6 +789,12 @@ function shot(src, caption, quote, tone, box) {
   };
   return f;
 }
+function covered(fig, p, r) { // results.box_occluded (set by an audit) or the boxed event says a pop-up hid the sentence
+  if (!(r.box_occluded || p.covered)) return fig;
+  fig.classList.add("covered");
+  fig.querySelector("figcaption").after(el("p", "covnote", r.box_note || "The saved screenshot has something over the boxed sentence; the quote itself was verified in the page text."));
+  return fig;
+}
 function underShot(fig, tone, label, quote, source) {
   const q = el("blockquote", "q t-" + tone, quote || "(no sentence quoted)");
   q.append(el("cite", "", source));
@@ -822,7 +832,7 @@ function renderPanel() {
   const source = "Quoted from " + (host(url) || "the practice website");
   if (asks(p)) {
     const s = el("section", "split"), cols = el("div", "cols");
-    cols.append(underShot(shot(mine, "This surgery's website", p.quote, tone, p.boxed && r.quote_box), tone, w[0], p.quote, source),
+    cols.append(underShot(covered(shot(mine, "This surgery's website", p.quote, tone, p.boxed && r.quote_box), p, r), tone, w[0], p.quote, source),
       underShot(shot(shots ? shots + "nhs.png" : null, "nhs.uk", NHS_QUOTE, "green", S.nhsBox), "green", "NHS guidance", NHS_QUOTE, "Quoted from nhs.uk"));
     const red = p.category === "demands_documents";
     s.append(el("h3", "", !red ? "This surgery's website next to nhs.uk" : /(^|\.)nhs\.uk$/.test(host(url)) ? "Two NHS websites that disagree" : "This surgery's website disagrees with nhs.uk"), cols);
@@ -849,7 +859,7 @@ function renderPanel() {
     }
     if (p.category && p.category !== "not_checked") {
       const s = el("section", "split single"), cols = el("div", "cols");
-      cols.append(shot(mine, "This surgery's website", p.quote, tone, p.boxed && r.quote_box));
+      cols.append(covered(shot(mine, "This surgery's website", p.quote, tone, p.boxed && r.quote_box), p, r));
       s.append(cols); s.onclick = () => s.classList.toggle("big");
       panel.append(s);
     }
