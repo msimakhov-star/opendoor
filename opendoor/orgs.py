@@ -70,11 +70,16 @@ def _geocode(client: httpx.Client, postcodes: list[str]) -> dict:
 NOT_GP = re.compile(r"DERMATOLOGY|GYNAECOLOGY", re.I)
 
 
+def keep(o: dict) -> bool:
+    """A GP practice in England: the nhs.uk guidance we compare against is for England, and Welsh ODS codes start with W."""
+    return not NOT_GP.search(o["name"]) and not o["code"].upper().startswith("W")
+
+
 def _prefix_orgs(client: httpx.Client, prefix: str) -> list[dict]:
     """All practices for one prefix, geocoded, cached on disk so repeat runs (and the demo) do not hit the APIs again."""
     path = CACHE / f"{prefix}.json"
     if path.exists():
-        return [o for o in json.loads(path.read_text()) if not NOT_GP.search(o["name"])]
+        return [o for o in json.loads(path.read_text()) if keep(o)]
     with ThreadPoolExecutor(4) as ex:
         raw = [o for page in ex.map(lambda q: _ord(client, q), _queries(prefix)) for o in page]
     raw = list({o["OrgId"]: o for o in raw if matches(prefix, o["PostCode"])}.values())
@@ -84,7 +89,7 @@ def _prefix_orgs(client: httpx.Client, prefix: str) -> list[dict]:
              "region": geo.get(o["PostCode"], {}).get("region")} for o in sorted(raw, key=lambda o: o["OrgId"])]
     CACHE.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(orgs, indent=1))
-    return [o for o in orgs if not NOT_GP.search(o["name"])]
+    return [o for o in orgs if keep(o)]
 
 
 PC = "https://api.postcodes.io"
@@ -145,15 +150,38 @@ def find_nearest(place: str, n: int) -> tuple[list[dict], dict]:
     return sorted(found.values(), key=lambda o: o["distance_km"])[:max(0, n)], c
 
 
-def find_practices(postcode_prefixes: list[str], limit: int, region: str | None = None) -> list[dict]:
+BOX_MARGIN = 0.15  # degrees: about 17 km north-south and 10 km east-west at London's latitude
+
+
+def outside_box(orgs: list[dict], margin: float = BOX_MARGIN) -> list[dict]:
+    """Practices whose geocode sits outside a generous box around the searched areas: the 5th to 95th percentile of all
+    their latitudes and longitudes, widened by `margin` degrees on every side. Practices without coordinates stay.
+    ponytail: percentiles of the practices themselves, so a sweep of 1 or 2 practices cannot flag anything; use outcode shapes if that matters."""
+    from statistics import quantiles
+    pts = [o for o in orgs if o.get("lat") is not None and o.get("lon") is not None]
+    if len(pts) < 3:
+        return []
+    box = {k: (lambda q: (q[0] - margin, q[-1] + margin))(quantiles([o[k] for o in pts], n=20, method="inclusive")) for k in ("lat", "lon")}
+    return [o for o in pts if not all(box[k][0] <= o[k] <= box[k][1] for k in box)]
+
+
+def find_practices(postcode_prefixes: list[str], limit: int, region: str | None = None, dropped: list | None = None) -> list[dict]:
     """Org = {code, name, postcode, lat, lon, region}. Deduped by code, at most `limit`.
-    region="London" drops practices postcodes.io places outside London (DA, EN, KT, RM, TW ... reach into the home counties)."""
+    region="London" drops practices postcodes.io places outside London (DA, EN, KT, RM, TW ... reach into the home counties).
+    Practices geocoded outside a generous box around the searched areas are dropped too, and appended to `dropped`."""
     seen: dict[str, dict] = {}
+    per: dict[str, list] = {}  # each prefix gets its own box, so a small area swept with a big one is not dropped whole
     with httpx.Client(headers=UA, timeout=30) as client:
         for p in filter(None, map(clean_prefix, postcode_prefixes)):
             for o in _prefix_orgs(client, p):
-                if region is None or o.get("region") == region:
-                    seen.setdefault(o["code"], o)
+                if (region is None or o.get("region") == region) and o["code"] not in seen:
+                    seen[o["code"]] = o
+                    per.setdefault(p, []).append(o)
+    far = [o for group in per.values() for o in outside_box(group)]
+    for o in far:
+        seen.pop(o["code"])
+    if dropped is not None:
+        dropped += far
     # Round-robin over districts, so a limit below the total spreads over the whole area instead of filling up from E1.
     by_district: dict[str, list] = {}
     for o in seen.values():
@@ -167,7 +195,9 @@ if __name__ == "__main__":
         found, c = find_nearest(single_place(sys.argv[1]), 40)
         print(c, "| outcodes:", sorted({o["postcode"].split()[0] for o in found}), "| furthest km:", found[-1]["distance_km"] if found else None)
     else:
-        found = find_practices(sys.argv[1:] or ["E13"], 5000)
+        far = []
+        found = find_practices(sys.argv[1:] or ["E13"], 5000, dropped=far)
+        print(len(far), "outside the area box:", [(o["code"], o["name"], o["postcode"]) for o in far])
     for o in found[:10]:
         print(o)
     print(len(found), "practices |", sum(1 for o in found if o["lat"] is None), "without coordinates")

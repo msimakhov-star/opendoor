@@ -1,7 +1,7 @@
 """Open Door on Modal: resolve(org), capture(target), box(target), plus warm(), recheck(practices) and the weekly() cron.
 Deploy: uv run modal deploy opendoor/modal_app.py
 Test:   uv run modal run opendoor/modal_app.py::smoke     (one practice end to end)
-        uv run modal run opendoor/modal_app.py::newham    (24 Newham practices, writes fixtures/pages/)
+        uv run modal run opendoor/modal_app.py::newham    (the 40 Newham practices in fixtures/fake, writes fixtures/pages/)
         uv run modal run opendoor/modal_app.py::boxes     (boxes quotes on fixture pages + nhs.uk, writes fixtures/boxed/)
         uv run modal run opendoor/modal_app.py::watch     (seeds the weekly re-check with the frozen Newham run and runs it once)
         uv run modal run opendoor/modal_app.py::hot --n 26  (keeps 26 capture containers up for a recording; --n 0 turns it off)
@@ -10,7 +10,7 @@ request: resolve reads only the practice's nhs.uk profile, never the practice si
 its registration link (2 loads), and stores an offline MHTML snapshot so box draws on the very same page without contacting
 the site again. box loads the live page only when capture made 1 load. recheck makes exactly 1 per practice.
 """
-import hashlib, html, json, re, time, urllib.parse, urllib.request, zlib
+import hashlib, html, json, random, re, time, urllib.parse, urllib.request, zlib
 from datetime import datetime, timezone
 from pathlib import Path
 import modal
@@ -55,19 +55,26 @@ def _reg_links(base, pairs):
     return sorted(links, key=lambda l: (bool(NATIONAL.search(l)), not best.search(l)))[:3]
 
 
-@app.function(image=image, max_containers=4, timeout=60)
-@modal.concurrent(max_inputs=25)
+@app.function(image=image, max_containers=2, timeout=300)
+@modal.concurrent(max_inputs=5)
 def resolve(org: dict) -> dict:
     """Adds site and reg_url (both the practice homepage, from its nhs.uk profile). One GET, to nhs.uk only: capture finds the
-    registration link in the browser, so the practice site gets at most 2 loads in a run."""
+    registration link in the browser, so the practice site gets at most 2 loads in a run.
+    nhs.uk answers 403 to a burst (a 1,156 practice sweep at 25 x 4 in flight got 552 of them), so at most 10 lookups run at
+    once and a 403 or 429 is retried after about 5, 10, 20 and 40 s."""
     out = {**org, "site": None, "reg_links": [], "reg_url": None, "error": None}
-    try:
-        _, p = _get("https://www.nhs.uk/services/gp-surgery/x/%s/contact-details-and-opening-times" % org["code"])
-        m = re.search(r'contact_info_panel_website_link"[^>]*href="([^"]+)"', p)
-        if m: out["site"] = out["reg_url"] = html.unescape(m.group(1))
-    except Exception as e:
-        out["error"] = f"{type(e).__name__}: {str(e)[:200]}"
-    return out
+    for wait in (5, 10, 20, 40, None):
+        try:
+            _, p = _get("https://www.nhs.uk/services/gp-surgery/x/%s/contact-details-and-opening-times" % org["code"])
+            m = re.search(r'contact_info_panel_website_link"[^>]*href="([^"]+)"', p)
+            if m: out["site"] = out["reg_url"] = html.unescape(m.group(1))
+            out["error"] = None
+            return out
+        except Exception as e:
+            out["error"] = f"{type(e).__name__}: {str(e)[:200]}"
+            if wait is None or getattr(e, "code", None) not in (403, 429):
+                return out
+            time.sleep(wait + random.random() * wait)
 
 
 def _page(p):
@@ -315,9 +322,11 @@ def smoke(code: str = "F84093", name: str = "TOLLGATE MEDICAL CENTRE"):
 
 @app.local_entrypoint()
 def newham():
-    gps = json.loads((ROOT.parent / "probe" / "targets.json").read_text())["gps"]
-    own = lambda g: g.get("url") and (host(g["url"]) == host(g["site"] or "") or NATIONAL.search(g["url"]))
-    targets = [{**g, "reg_url": g["url"]} if own(g) else {**g, "reg_url": g.get("site"), "reg_links": []} for g in gps]  # third-party hosts are never loaded
+    """The 40 Newham practices in fixtures/fake. A known registration page on the practice's own host is read directly (1 load);
+    otherwise capture starts at the homepage and follows its registration link (2 loads). Third-party hosts are never loaded."""
+    gps = json.loads((ROOT / "fixtures" / "fake" / "practices.json").read_text())["practices"]
+    targets = [{k: g[k] for k in ("code", "name", "site")} | ({"reg_url": g["reg_url"], "reg_links": [g["reg_url"]]}
+               if g["reg_links"] and host(g["reg_url"]) == host(g["site"] or "") else {"reg_url": g["site"], "reg_links": []}) for g in gps]
     t0, res = time.time(), []
     for r in capture.map(targets, order_outputs=False, return_exceptions=True):
         if not isinstance(r, dict): print("EXC", repr(r)); continue

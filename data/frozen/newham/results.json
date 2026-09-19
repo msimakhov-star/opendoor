@@ -1,6 +1,6 @@
 {
  "summary": {
-  "run_id": "20260919-150037-E138AA",
+  "run_id": "20260919-152338-E138AA",
   "postcode_prefixes": [
    "E13 8AA"
   ],
@@ -45,9 +45,14 @@
   "quotes_verified": 14,
   "quotes_boxed": 14,
   "quotes_rejected": 0,
-  "gemini_calls": 16,
-  "cache_hits": 0,
-  "wall_secs": 34.3,
+  "gemini_calls": 7,
+  "cache_hits": 9,
+  "second_opinions": {
+   "checked": 6,
+   "agreed": 6,
+   "downgraded": 0
+  },
+  "wall_secs": 39.3,
   "nhs": {
    "url": "https://www.nhs.uk/nhs-services/gps/how-to-register-with-a-gp-surgery/",
    "quote": "You do not need ID, proof of address or proof of immigration status.",
@@ -59,7 +64,7 @@
     "height": 39
    }
   },
-  "finished_at": "2026-09-19T14:01:11+00:00"
+  "finished_at": "2026-09-19T14:24:18+00:00"
  },
  "results": [
   {
@@ -85,8 +90,8 @@
    "self_contradiction": false,
    "shot": "shots/F84052.png",
    "retries": 0,
-   "secs": 13.8,
-   "checked_at": "2026-09-19T14:00:58+00:00"
+   "secs": 17.1,
+   "checked_at": "2026-09-19T14:23:58+00:00"
   },
   {
    "code": "F84681",
@@ -113,8 +118,8 @@
    "self_contradiction": false,
    "shot": "shots/F84681.png",
    "retries": 0,
-   "secs": 4.7,
-   "checked_at": "2026-09-19T14:00:49+00:00"
+   "secs": 6.4,
+   "checked_at": "2026-09-19T14:23:50+00:00"
   },
   {
    "code": "F84124",
@@ -137,12 +142,12 @@
    "documents": [],
    "doc_types": [],
    "distance_km": 0.42,
-   "reason": "The page does not mention requiring or not requiring documents such as ID or proof of address to register.",
+   "reason": "The page does not mention any document requirements for registering as a patient.",
    "self_contradiction": false,
    "shot": "shots/F84124.png",
    "retries": 0,
-   "secs": 13.4,
-   "checked_at": "2026-09-19T14:00:57+00:00"
+   "secs": 13.5,
+   "checked_at": "2026-09-19T14:24:00+00:00"
   },
   {
    "code": "F84053",
@@ -181,8 +186,8 @@
    "self_contradiction": true,
    "shot": "shots/F84053.png",
    "retries": 0,
-   "secs": 10.4,
-   "checked_at": "2026-09-19T14:00:54+00:00"
+   "secs": 12.2,
+   "checked_at": "2026-09-19T14:23:58+00:00"
   },
   {
    "code": "F84677",
@@ -207,8 +212,8 @@
    "self_contradiction": false,
    "shot": "shots/F84677.png",
    "retries": 0,
-   "secs": 4.2,
-   "checked_at": "2026-09-19T14:00:48+00:00"
+   "secs": 3.0,
+   "checked_at": "2026-09-19T14:23:47+00:00"
   },
   {
    "code": "F84642",
@@ -233,8 +238,8 @@
    "self_contradiction": false,
    "shot": "shots/F84642.png",
    "retries": 0,
-   "secs": 2.4,
-   "checked_at": "2026-09-19T14:00:51+00:00"
+   "secs": 3.2,
+   "checked_at": "2026-09-19T14:23:52+00:00"
   },
   {
    "code": "F84092",
@@ -259,8 +264,8 @@
    "self_contradiction": false,
    "shot": "shots/F84092.png",
    "retries": 0,
-   "secs": 10.2,
-   "checked_at": "2026-09-19T14:00:54+00:00"
+   "secs": 10.4,
+   "checked_at": "2026-09-19T14:23:58+00:00"
   },
   {
    "code": "F84088",
@@ -281,12 +286,12 @@
    "documents": [],
    "doc_types": [],
    "distance_km": 1.14,
-   "reason": "TimeoutError: Page.goto: Timeout 25000ms exceeded.",
+   "reason": "The practice website did not load within the page timeout.",
    "self_contradiction": false,
    "shot": null,
    "retries": 0,
-   "secs": 26.0,
-   "checked_at": "2026-09-19T14:01:10+00:00"
+   "secs": 26.1,
+   "checked_at": "2026-09-19T14:24:11+00:00"
   },
   {
    "code": "F84017",
@@ -309,12 +314,12 @@
    "documents": [],
    "doc_types": [],
    "distance_km": 1.36,
-   "reason": "The page does not mention ID or proof of address documents for new patient registration.",
+   "reason": "The page does not mention document requirements for registering as a general patient, only noting that a birth certificate is not needed to register a newborn.",
    "self_contradiction": false,
    "shot": "shots/F84017.png",
    "retries": 0,
    "secs": 14.3,
-   "checked_at": "2026-09-19T14:00:58+00:00"
+   "checked_at": "2026-09-19T14:24:00+00:00"
   },
   {
    "code": "F84111",
@@ -340,15 +345,18 @@
     "width": 542,
     "height": 37
    },
-   "documents": [],
+   "documents": [
+    "id",
+    "proof of address"
+   ],
    "doc_types": [],
    "distance_km": 1.39,
-   "reason": "The page states that patients do not have to show any ID or proof of address to register.",
+   "reason": "The practice explicitly states that you do not have to show ID or proof of address to register.",
    "self_contradiction": false,
    "shot": "shots/F84111.png",
    "retries": 0,
-   "secs": 14.7,
-   "checked_at": "2026-09-19T14:00:59+00:00"
+   "secs": 15.1,
+   "checked_at": "2026-09-19T14:23:59+00:00"
   },
   {
    "code": "F84050",
@@ -378,12 +386,12 @@
    "documents": [],
    "doc_types": [],
    "distance_km": 1.48,
-   "reason": "The practice explicitly states that new patients do not have to provide photo ID or proof of address to register.",
+   "reason": "The practice states that patients do not have to provide photo ID or proof of address to register.",
    "self_contradiction": false,
    "shot": "shots/F84050.png",
    "retries": 0,
-   "secs": 15.8,
-   "checked_at": "2026-09-19T14:01:00+00:00"
+   "secs": 12.9,
+   "checked_at": "2026-09-19T14:23:58+00:00"
   },
   {
    "code": "F84735",
@@ -418,12 +426,12 @@
     "proof_of_address"
    ],
    "distance_km": 1.48,
-   "reason": "The practice asks patients to email photo ID and proof of address if they can to speed up the process.",
+   "reason": "The practice softly asks for photo ID and proof of address if the patient can provide them to speed up registration.",
    "self_contradiction": false,
    "shot": "shots/F84735.png",
    "retries": 0,
-   "secs": 13.4,
-   "checked_at": "2026-09-19T14:00:57+00:00"
+   "secs": 17.6,
+   "checked_at": "2026-09-19T14:24:05+00:00"
   },
   {
    "code": "F84660",
@@ -453,22 +461,22 @@
    },
    "documents": [
     "proof of address",
-    "proof of id",
-    "medical card",
     "utility bill",
-    "bank statement"
+    "bank statement",
+    "proof of id",
+    "medical card"
    ],
    "doc_types": [
     "photo_id",
     "proof_of_address"
    ],
    "distance_km": 1.56,
-   "reason": "The practice states it may request proof of address and ID, but clarifies that not having these items does not prevent registration.",
+   "reason": "The surgery states it may request proof of address and ID, but clarifies that not having these items does not prevent registration.",
    "self_contradiction": false,
    "shot": "shots/F84660.png",
    "retries": 0,
-   "secs": 16.8,
-   "checked_at": "2026-09-19T14:01:01+00:00"
+   "secs": 14.5,
+   "checked_at": "2026-09-19T14:24:01+00:00"
   },
   {
    "code": "F84014",
@@ -511,12 +519,12 @@
     "proof_of_address"
    ],
    "distance_km": 1.6,
-   "reason": "The practice states that prospective patients should provide photo identification and proof of address to register.",
+   "reason": "The practice states that prospective patients should provide photo identification and proof of address, with no exceptions mentioned.",
    "self_contradiction": true,
    "shot": "shots/F84014.png",
    "retries": 0,
-   "secs": 14.9,
-   "checked_at": "2026-09-19T14:00:59+00:00"
+   "secs": 13.0,
+   "checked_at": "2026-09-19T14:24:02+00:00"
   },
   {
    "code": "F84077",
@@ -543,8 +551,8 @@
    "self_contradiction": false,
    "shot": "shots/F84077.png",
    "retries": 0,
-   "secs": 7.6,
-   "checked_at": "2026-09-19T14:00:56+00:00"
+   "secs": 7.1,
+   "checked_at": "2026-09-19T14:23:56+00:00"
   },
   {
    "code": "F84730",
@@ -569,8 +577,8 @@
    "self_contradiction": false,
    "shot": "shots/F84730.png",
    "retries": 0,
-   "secs": 6.0,
-   "checked_at": "2026-09-19T14:00:50+00:00"
+   "secs": 4.3,
+   "checked_at": "2026-09-19T14:23:49+00:00"
   },
   {
    "code": "F84047",
@@ -605,12 +613,12 @@
     "proof_of_address"
    ],
    "distance_km": 1.8,
-   "reason": "The practice asks new patients to bring proof of address and photographic ID to register, with no mention that registration is possible without them.",
+   "reason": "The practice asks new patients to bring proof of address and photographic ID to register, with no qualifying statement that documents are not required.",
    "self_contradiction": false,
    "shot": "shots/F84047.png",
    "retries": 0,
-   "secs": 6.5,
-   "checked_at": "2026-09-19T14:00:50+00:00"
+   "secs": 7.9,
+   "checked_at": "2026-09-19T14:23:56+00:00"
   },
   {
    "code": "F84010",
@@ -635,8 +643,8 @@
    "self_contradiction": false,
    "shot": "shots/F84010.png",
    "retries": 0,
-   "secs": 10.9,
-   "checked_at": "2026-09-19T14:00:55+00:00"
+   "secs": 13.2,
+   "checked_at": "2026-09-19T14:24:01+00:00"
   },
   {
    "code": "F84669",
@@ -667,12 +675,12 @@
    "documents": [],
    "doc_types": [],
    "distance_km": 1.87,
-   "reason": "The practice states that proof of address, immigration status, and ID are not needed to register.",
+   "reason": "The practice states that you do not need proof of address, immigration status, or ID to register.",
    "self_contradiction": false,
    "shot": "shots/F84669.png",
    "retries": 0,
-   "secs": 14.2,
-   "checked_at": "2026-09-19T14:00:58+00:00"
+   "secs": 15.6,
+   "checked_at": "2026-09-19T14:24:06+00:00"
   },
   {
    "code": "F84009",
@@ -697,8 +705,8 @@
    "self_contradiction": false,
    "shot": "shots/F84009.png",
    "retries": 0,
-   "secs": 6.4,
-   "checked_at": "2026-09-19T14:00:51+00:00"
+   "secs": 6.2,
+   "checked_at": "2026-09-19T14:23:55+00:00"
   },
   {
    "code": "Y03434",
@@ -719,7 +727,7 @@
    "documents": [],
    "doc_types": [],
    "distance_km": 1.89,
-   "reason": "HTTPError: HTTP Error 404: Not Found",
+   "reason": "The practice has no profile page on nhs.uk.",
    "self_contradiction": false,
    "shot": null,
    "retries": 0,
@@ -753,12 +761,12 @@
    "documents": [],
    "doc_types": [],
    "distance_km": 1.9,
-   "reason": "The practice explicitly states that you can register even if you do not have proof of ID or address, and asks for no registration documents.",
+   "reason": "The practice states that patients can still register without proof of ID or address.",
    "self_contradiction": false,
    "shot": "shots/F84006.png",
    "retries": 0,
-   "secs": 7.1,
-   "checked_at": "2026-09-19T14:00:57+00:00"
+   "secs": 6.9,
+   "checked_at": "2026-09-19T14:23:56+00:00"
   },
   {
    "code": "F84741",
@@ -786,26 +794,19 @@
     "height": 65
    },
    "documents": [
-    "proof of identity",
-    "proof of address",
-    "proof of entry",
-    "visa",
-    "home office letter",
     "id",
     "photo id"
    ],
    "doc_types": [
-    "photo_id",
-    "proof_of_address",
-    "immigration"
+    "photo_id"
    ],
    "distance_km": 1.91,
-   "reason": "The practice states that patients need to bring two forms of ID and proof of address, with no mention that registration is possible without them.",
+   "reason": "The practice requires new patients to bring two forms of ID when registering.",
    "self_contradiction": true,
    "shot": "shots/F84741.png",
    "retries": 0,
-   "secs": 11.4,
-   "checked_at": "2026-09-19T14:01:01+00:00"
+   "secs": 13.9,
+   "checked_at": "2026-09-19T14:24:01+00:00"
   },
   {
    "code": "F84670",
@@ -826,12 +827,12 @@
    "documents": [],
    "doc_types": [],
    "distance_km": 1.92,
-   "reason": "TimeoutError: Page.goto: Timeout 25000ms exceeded.",
+   "reason": "The practice website did not load within the page timeout.",
    "self_contradiction": false,
    "shot": null,
    "retries": 0,
-   "secs": 26.0,
-   "checked_at": "2026-09-19T14:01:10+00:00"
+   "secs": 26.1,
+   "checked_at": "2026-09-19T14:24:15+00:00"
   },
   {
    "code": "F84666",
@@ -867,12 +868,12 @@
     "proof_of_address"
    ],
    "distance_km": 2.02,
-   "reason": "The surgery states that new patients need to provide proof of address and photo ID to register.",
+   "reason": "The practice states that new patients need to provide proof of address and photo ID to register, with no exception stated.",
    "self_contradiction": false,
    "shot": "shots/F84666.png",
    "retries": 0,
-   "secs": 12.3,
-   "checked_at": "2026-09-19T14:01:00+00:00"
+   "secs": 8.3,
+   "checked_at": "2026-09-19T14:23:56+00:00"
   },
   {
    "code": "F84749",
@@ -897,8 +898,8 @@
    "self_contradiction": false,
    "shot": "shots/F84749.png",
    "retries": 0,
-   "secs": 2.7,
-   "checked_at": "2026-09-19T14:00:47+00:00"
+   "secs": 3.1,
+   "checked_at": "2026-09-19T14:23:53+00:00"
   },
   {
    "code": "F84097",
@@ -923,8 +924,8 @@
    "self_contradiction": false,
    "shot": "shots/F84097.png",
    "retries": 0,
-   "secs": 14.1,
-   "checked_at": "2026-09-19T14:00:58+00:00"
+   "secs": 13.1,
+   "checked_at": "2026-09-19T14:24:03+00:00"
   },
   {
    "code": "F84724",
@@ -949,8 +950,8 @@
    "self_contradiction": false,
    "shot": "shots/F84724.png",
    "retries": 0,
-   "secs": 7.5,
-   "checked_at": "2026-09-19T14:00:52+00:00"
+   "secs": 6.8,
+   "checked_at": "2026-09-19T14:23:57+00:00"
   },
   {
    "code": "F84022",
@@ -971,12 +972,12 @@
    "documents": [],
    "doc_types": [],
    "distance_km": 2.2,
-   "reason": "TimeoutError: Page.goto: Timeout 25000ms exceeded.",
+   "reason": "The practice website did not load within the page timeout.",
    "self_contradiction": false,
    "shot": null,
    "retries": 0,
    "secs": 26.1,
-   "checked_at": "2026-09-19T14:01:10+00:00"
+   "checked_at": "2026-09-19T14:24:16+00:00"
   },
   {
    "code": "F84641",
@@ -1001,8 +1002,8 @@
    "self_contradiction": false,
    "shot": "shots/F84641.png",
    "retries": 0,
-   "secs": 9.3,
-   "checked_at": "2026-09-19T14:00:53+00:00"
+   "secs": 10.8,
+   "checked_at": "2026-09-19T14:24:02+00:00"
   },
   {
    "code": "F84070",
@@ -1027,8 +1028,8 @@
    "self_contradiction": false,
    "shot": "shots/F84070.png",
    "retries": 0,
-   "secs": 10.0,
-   "checked_at": "2026-09-19T14:00:54+00:00"
+   "secs": 15.4,
+   "checked_at": "2026-09-19T14:24:08+00:00"
   },
   {
    "code": "F84074",
@@ -1053,8 +1054,8 @@
    "self_contradiction": false,
    "shot": "shots/F84074.png",
    "retries": 0,
-   "secs": 10.6,
-   "checked_at": "2026-09-19T14:00:55+00:00"
+   "secs": 10.1,
+   "checked_at": "2026-09-19T14:24:01+00:00"
   },
   {
    "code": "F84739",
@@ -1075,12 +1076,12 @@
    "documents": [],
    "doc_types": [],
    "distance_km": 2.27,
-   "reason": "TimeoutError: Page.goto: Timeout 25000ms exceeded.",
+   "reason": "The practice website did not load within the page timeout.",
    "self_contradiction": false,
    "shot": null,
    "retries": 0,
    "secs": 26.1,
-   "checked_at": "2026-09-19T14:01:10+00:00"
+   "checked_at": "2026-09-19T14:24:18+00:00"
   },
   {
    "code": "F84004",
@@ -1120,8 +1121,8 @@
    "self_contradiction": true,
    "shot": "shots/F84004.png",
    "retries": 0,
-   "secs": 21.8,
-   "checked_at": "2026-09-19T14:01:06+00:00"
+   "secs": 12.6,
+   "checked_at": "2026-09-19T14:24:05+00:00"
   },
   {
    "code": "F84086",
@@ -1146,8 +1147,8 @@
    "self_contradiction": false,
    "shot": "shots/F84086.png",
    "retries": 0,
-   "secs": 3.1,
-   "checked_at": "2026-09-19T14:00:53+00:00"
+   "secs": 3.3,
+   "checked_at": "2026-09-19T14:23:56+00:00"
   },
   {
    "code": "F84672",
@@ -1172,8 +1173,8 @@
    "self_contradiction": false,
    "shot": "shots/F84672.png",
    "retries": 0,
-   "secs": 10.3,
-   "checked_at": "2026-09-19T14:00:55+00:00"
+   "secs": 6.7,
+   "checked_at": "2026-09-19T14:24:01+00:00"
   },
   {
    "code": "Y03023",
@@ -1198,8 +1199,8 @@
    "self_contradiction": false,
    "shot": "shots/Y03023.png",
    "retries": 0,
-   "secs": 5.5,
-   "checked_at": "2026-09-19T14:00:52+00:00"
+   "secs": 8.4,
+   "checked_at": "2026-09-19T14:24:02+00:00"
   },
   {
    "code": "F84093",
@@ -1237,12 +1238,12 @@
     "proof_of_address"
    ],
    "distance_km": 2.71,
-   "reason": "The practice asks for proof of address and photo ID but clarifies that providing documentation is not a requirement for adults.",
+   "reason": "The practice asks for proof of address and photo ID, but also states that providing documentation is not a requirement for adults.",
    "self_contradiction": false,
    "shot": "shots/F84093.png",
    "retries": 0,
-   "secs": 11.0,
-   "checked_at": "2026-09-19T14:00:59+00:00"
+   "secs": 9.9,
+   "checked_at": "2026-09-19T14:24:04+00:00"
   },
   {
    "code": "F84698",
@@ -1271,12 +1272,12 @@
    "documents": [],
    "doc_types": [],
    "distance_km": 2.71,
-   "reason": "The page explicitly states that patients can still register without proof of ID or address, and asks for no documents.",
+   "reason": "The page explicitly states that people without proof of ID or address can still register.",
    "self_contradiction": false,
    "shot": "shots/F84698.png",
    "retries": 0,
-   "secs": 16.2,
-   "checked_at": "2026-09-19T14:01:00+00:00"
+   "secs": 10.9,
+   "checked_at": "2026-09-19T14:24:06+00:00"
   },
   {
    "code": "Y04273",
@@ -1301,8 +1302,8 @@
    "self_contradiction": false,
    "shot": "shots/Y04273.png",
    "retries": 0,
-   "secs": 6.0,
-   "checked_at": "2026-09-19T14:00:50+00:00"
+   "secs": 7.1,
+   "checked_at": "2026-09-19T14:24:01+00:00"
   }
  ]
 }

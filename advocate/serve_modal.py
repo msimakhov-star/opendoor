@@ -4,7 +4,7 @@ Deploy:            uv run modal deploy serve_modal.py
 Warm for the demo: ADVOCATE_MIN_CONTAINERS=1 uv run modal deploy serve_modal.py
 Inside test:       uv run modal run tests/test_endpoint_inside.py
 
-This Modal account has no payment method, so every GPU type is refused: CPU only.
+This Modal account has no payment method, so Modal would not allow any GPU type: CPU only.
 Measured numbers, the URL and the Gateway BYOK form values are in ENDPOINT.md.
 """
 import os

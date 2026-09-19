@@ -1,0 +1,315 @@
+{
+ "method": "After the sweep, AI reviewers (not people) re-read red verdicts against the saved page text in texts/<code>.txt. Reds that a reviewer doubted were read again; a red stays red only if the page makes documents a condition of registering with no way in for people without them.",
+ "changed": [
+  {
+   "code": "H84062",
+   "name": "LANGLEY MEDICAL PRACTICE",
+   "from": "demands_documents",
+   "to": "asks_softly",
+   "why": "The only document wording is \"along with the above mentioned id\" in the email route, and the page names no ID before it; the online form route asks for no document."
+  },
+  {
+   "code": "Y02946",
+   "name": "JUNCTION HEALTH CENTRE",
+   "from": "demands_documents",
+   "to": "asks_softly",
+   "why": "The page asks for \"a proof of ID and proof of address\" at the new patient health check booked after the first part of registration is processed, not as a condition of registering."
+  },
+  {
+   "code": "F82680",
+   "name": "HIGHGROVE SURGERY",
+   "from": "demands_documents",
+   "to": "asks_softly",
+   "why": "The page offers the national online form and asks for \"one of the following documents\" only \"if you attend the surgery\", and an NHS Medical Card is one of the options."
+  },
+  {
+   "code": "E87004",
+   "name": "HEALTH PARTNERS AT VIOLET MELCHETT",
+   "from": "demands_documents",
+   "to": "asks_softly",
+   "votes": [
+    "asks_softly",
+    "asks_softly",
+    "demands_documents"
+   ]
+  },
+  {
+   "code": "F85004",
+   "name": "EAGLE HOUSE SURGERY",
+   "from": "demands_documents",
+   "to": "asks_softly",
+   "votes": [
+    "asks_softly",
+    "asks_softly",
+    "asks_softly"
+   ]
+  },
+  {
+   "code": "H84010",
+   "name": "CANBURY & BERRYLANDS SURGERY",
+   "from": "demands_documents",
+   "to": "asks_softly",
+   "votes": [
+    "asks_softly",
+    "asks_softly",
+    "asks_softly"
+   ]
+  },
+  {
+   "code": "G85121",
+   "name": "PARKVIEW SURGERY",
+   "from": "demands_documents",
+   "to": "asks_softly",
+   "votes": [
+    "asks_softly",
+    "asks_softly",
+    "asks_softly"
+   ]
+  },
+  {
+   "code": "E85041",
+   "name": "HANWELL HEALTH CENTRE (NAISH)",
+   "from": "demands_documents",
+   "to": "asks_softly",
+   "votes": [
+    "asks_softly",
+    "asks_softly",
+    "asks_softly"
+   ]
+  },
+  {
+   "code": "E87038",
+   "name": "ELGIN CLINIC",
+   "from": "demands_documents",
+   "to": "asks_softly",
+   "votes": [
+    "asks_softly",
+    "asks_softly",
+    "asks_softly"
+   ]
+  },
+  {
+   "code": "F82642",
+   "name": "GABLES SURGERY",
+   "from": "demands_documents",
+   "to": "asks_softly",
+   "votes": [
+    "asks_softly",
+    "asks_softly",
+    "asks_softly"
+   ]
+  },
+  {
+   "code": "E83026",
+   "name": "SUPREME MEDICAL CENTRE",
+   "from": "demands_documents",
+   "to": "asks_softly",
+   "votes": [
+    "asks_softly",
+    "asks_softly",
+    "asks_softly"
+   ]
+  },
+  {
+   "code": "F84013",
+   "name": "STAMFORD HILL GROUP PRACTICE",
+   "from": "demands_documents",
+   "to": "asks_softly",
+   "votes": [
+    "asks_softly",
+    "asks_softly",
+    "asks_softly"
+   ]
+  },
+  {
+   "code": "G85046",
+   "name": "LEE ROAD SURGERY",
+   "from": "demands_documents",
+   "to": "asks_softly",
+   "votes": [
+    "asks_softly",
+    "asks_softly",
+    "asks_softly"
+   ]
+  },
+  {
+   "code": "G85673",
+   "name": "SPRINGFIELD MEDICAL CENTRE",
+   "from": "demands_documents",
+   "to": "asks_softly",
+   "votes": [
+    "asks_softly",
+    "asks_softly",
+    "asks_softly"
+   ]
+  },
+  {
+   "code": "G84003",
+   "name": "LINKS MEDICAL PRACTICE",
+   "from": "demands_documents",
+   "to": "asks_softly",
+   "votes": [
+    "asks_softly",
+    "asks_softly",
+    "demands_documents"
+   ]
+  },
+  {
+   "code": "H84053",
+   "name": "BERRYLANDS SURGERY",
+   "from": "demands_documents",
+   "to": "asks_softly",
+   "votes": [
+    "asks_softly",
+    "asks_softly",
+    "asks_softly"
+   ]
+  },
+  {
+   "code": "H84051",
+   "name": "ROSELAWN SURGERY",
+   "from": "demands_documents",
+   "to": "asks_softly",
+   "votes": [
+    "asks_softly",
+    "asks_softly",
+    "demands_documents"
+   ]
+  },
+  {
+   "code": "G85136",
+   "name": "WATERLOO HEALTH CENTRE",
+   "from": "demands_documents",
+   "to": "asks_softly",
+   "votes": [
+    "asks_softly",
+    "asks_softly",
+    "demands_documents"
+   ]
+  },
+  {
+   "code": "H85003",
+   "name": "QUEENSTOWN ROAD MEDICAL PRACTICE",
+   "from": "demands_documents",
+   "to": "asks_softly",
+   "votes": [
+    "asks_softly",
+    "asks_softly",
+    "demands_documents"
+   ]
+  },
+  {
+   "code": "H84625",
+   "name": "WOODLAWN MEDICAL CENTRE",
+   "from": "demands_documents",
+   "to": "asks_softly",
+   "votes": [
+    "asks_softly",
+    "asks_softly",
+    "asks_softly"
+   ]
+  },
+  {
+   "code": "Y05318",
+   "name": "DENMARK ROAD SURGERY",
+   "from": "demands_documents",
+   "to": "asks_softly",
+   "votes": [
+    "asks_softly",
+    "asks_softly",
+    "asks_softly"
+   ]
+  },
+  {
+   "code": "F86657",
+   "name": "YORK ROAD SURGERY",
+   "from": "demands_documents",
+   "to": "asks_softly",
+   "votes": [
+    "asks_softly",
+    "asks_softly",
+    "asks_softly"
+   ]
+  },
+  {
+   "code": "E83649",
+   "name": "THE HODFORD ROAD PRACTICE",
+   "from": "demands_documents",
+   "to": "asks_softly",
+   "votes": [
+    "asks_softly",
+    "asks_softly",
+    "asks_softly"
+   ]
+  },
+  {
+   "code": "E83053",
+   "name": "LANE END MEDICAL GROUP",
+   "from": "demands_documents",
+   "to": "asks_softly",
+   "votes": [
+    "asks_softly",
+    "asks_softly",
+    "asks_softly"
+   ]
+  },
+  {
+   "code": "H85653",
+   "name": "WALLINGTON FAMILY PRACTICE",
+   "from": "demands_documents",
+   "to": "asks_softly",
+   "votes": [
+    "asks_softly",
+    "asks_softly",
+    "asks_softly"
+   ]
+  },
+  {
+   "code": "E84645",
+   "name": "PARK ROYAL MEDICAL PRACTICE",
+   "from": "demands_documents",
+   "to": "asks_softly",
+   "votes": [
+    "asks_softly",
+    "asks_softly",
+    "asks_softly"
+   ]
+  },
+  {
+   "code": "H85052",
+   "name": "STREATHAM PARK SURGERY",
+   "from": "demands_documents",
+   "to": "asks_softly",
+   "votes": [
+    "asks_softly",
+    "asks_softly",
+    "asks_softly"
+   ]
+  },
+  {
+   "code": "H83043",
+   "name": "SHIRLEY MEDICAL CENTRE",
+   "from": "demands_documents",
+   "to": "asks_softly",
+   "votes": [
+    "asks_softly",
+    "asks_softly",
+    "demands_documents"
+   ]
+  }
+ ],
+ "kept": [
+  {
+   "code": "H83043",
+   "name": "SHIRLEY MEDICAL CENTRE",
+   "category": "demands_documents",
+   "why": "The page firmly asks people who register at the surgery to bring \"proof of address and ID\" and also links the national online form: a red with the self-contradiction flag, by the same rule as every other such page."
+  }
+ ],
+ "three_reader_audit": {
+  "method": "Every red verdict of the full London sweep was re-read from the saved page text by three independent AI readers (a literal reader, the surgery's defence, a patient advocate). A red stays red only if at least 2 of 3 agree the page makes documents a condition of registering with no route for people without them. AI readers, not people.",
+  "audited": 96,
+  "confirmed": 68,
+  "changed_to_amber": 28
+ }
+}

@@ -1,0 +1,34 @@
+{
+ "practices": 40,
+ "outside_area": 0,
+ "pages_read_ok": 31,
+ "not_checked": {
+  "total": 11,
+  "blocked": 4,
+  "timeout": 4,
+  "no_site": 0,
+  "no_registration_page": 2,
+  "error": 1
+ },
+ "counts": {
+  "demands_documents": 6,
+  "asks_softly": 3,
+  "says_not_needed": 5,
+  "no_mention": 15,
+  "unclear": 0,
+  "not_checked": 11
+ },
+ "self_contradictions": 4,
+ "quotes_verified": 14,
+ "quotes_rejected": 0,
+ "second_opinions": {
+  "checked": 6,
+  "agreed": 6,
+  "downgraded": 0,
+  "no_answer": 0
+ },
+ "gemini_calls": 7,
+ "cache_hits": 9,
+ "containers_peak": 34,
+ "wall_secs": 39.3
+}

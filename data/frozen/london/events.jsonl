@@ -521,7 +521,7 @@
 {"type": "captured", "t": 37.34, "code": "E85014", "status": "ok", "challenge": false, "secs": 15.4, "http_status": 200}
 {"type": "classified", "t": 37.34, "code": "E85014", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
 {"type": "captured", "t": 37.5, "code": "G85121", "status": "ok", "challenge": false, "secs": 5.9, "http_status": 200}
-{"type": "classified", "t": 37.5, "code": "G85121", "category": "demands_documents", "colour": "red", "quote": "When you visit the surgery for the first time you will need proof of address, Photo ID and the print out of the form online to confirm that the details are correct.", "retries": 0, "doc_types": ["photo_id", "proof_of_address"], "distance_km": null}
+{"type": "classified", "t": 37.5, "code": "G85121", "category": "asks_softly", "colour": "amber", "quote": "When you visit the surgery for the first time you will need proof of address, Photo ID and the print out of the form online to confirm that the details are correct.", "retries": 0, "doc_types": ["photo_id", "proof_of_address"], "distance_km": null}
 {"type": "boxed", "t": 37.57, "code": "G83021", "shot": "shots/G83021.png"}
 {"type": "boxed", "t": 37.67, "code": "F84004", "shot": "shots/F84004.png"}
 {"type": "boxed", "t": 37.7, "code": "F86020", "shot": "shots/F86020.png"}
@@ -537,7 +537,7 @@
 {"type": "captured", "t": 38.57, "code": "G85114", "status": "ok", "challenge": false, "secs": 6.9, "http_status": 200}
 {"type": "classified", "t": 38.57, "code": "G85114", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
 {"type": "captured", "t": 38.57, "code": "E87004", "status": "ok", "challenge": false, "secs": 16.8, "http_status": 200}
-{"type": "classified", "t": 38.57, "code": "E87004", "category": "demands_documents", "colour": "red", "quote": "Please provide to the surgery Proof of Address & Identification", "retries": 0, "doc_types": ["passport", "photo_id", "proof_of_address"], "distance_km": null}
+{"type": "classified", "t": 38.57, "code": "E87004", "category": "asks_softly", "colour": "amber", "quote": "Please provide to the surgery Proof of Address & Identification", "retries": 0, "doc_types": ["passport", "photo_id", "proof_of_address"], "distance_km": null}
 {"type": "captured", "t": 38.67, "code": "G83019", "status": "ok", "challenge": false, "secs": 11.0, "http_status": 200}
 {"type": "classified", "t": 38.67, "code": "G83019", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
 {"type": "captured", "t": 39.1, "code": "G85125", "status": "blocked", "challenge": true, "secs": 8.8, "http_status": 403}
@@ -648,4 +648,4 @@
 {"type": "classified", "t": 59.31, "code": "E83007", "category": "not_checked", "colour": "grey", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
 {"type": "captured", "t": 59.45, "code": "F84022", "status": "error", "challenge": false, "secs": 26.2, "http_status": null}
 {"type": "classified", "t": 59.45, "code": "F84022", "category": "not_checked", "colour": "grey", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
-{"type": "run_finished", "t": 59.46, "counts": {"demands_documents": 14, "asks_softly": 19, "says_not_needed": 24, "no_mention": 102, "unclear": 0, "not_checked": 41}, "wall_secs": 59.5, "total": 200, "quotes_rejected": 1, "gemini_calls": 10, "error": null, "containers_peak": 96}
+{"type": "run_finished", "t": 59.46, "counts": {"demands_documents": 12, "asks_softly": 21, "says_not_needed": 24, "no_mention": 102, "unclear": 0, "not_checked": 41}, "wall_secs": 59.5, "total": 200, "quotes_rejected": 1, "gemini_calls": 10, "error": null, "containers_peak": 96}

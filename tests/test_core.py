@@ -142,50 +142,138 @@ def test_letter():
     assert draft_letter({**r, "category": "says_not_needed"}) == "" and draft_letter({**r, "quote_verified": False}) == ""
 
 
+def test_outside_box_and_wales():
+    at = lambda i, lat, lon: {"code": "P%d" % i, "name": "P", "lat": lat, "lon": lon}
+    london = [at(i, 51.40 + i * 0.01, -0.30 + i * 0.02) for i in range(25)]  # 51.40..51.64, -0.30..0.18
+    chelmsford, nogeo = at(99, 51.7356, 0.4685), {"code": "N", "name": "N", "lat": None, "lon": None}
+    assert orgs.outside_box(london + [chelmsford, nogeo]) == [chelmsford] and orgs.outside_box(london) == []
+    assert orgs.outside_box([chelmsford, london[0]]) == []  # too few practices to say where the area is
+    assert not orgs.keep({"code": "W97001", "name": "A PRACTICE IN WALES"}) and orgs.keep({"code": "F84004", "name": "MARKET STREET"})
+    manchester = [at(90 + i, 53.48 + i * 0.01, -2.24) for i in range(2)]
+    fake = {"E": london + [chelmsford], "M": manchester}
+    real, orgs._prefix_orgs = orgs._prefix_orgs, lambda client, p: fake[p]
+    try:
+        far = []
+        assert len(orgs.find_practices(["E"], 100, dropped=far)) == 25 and far == [chelmsford]
+        assert len(orgs.find_practices(["E", "M"], 100)) == 27  # a small area swept with a big one keeps its own box
+    finally:
+        orgs._prefix_orgs = real
+
+
+def test_event_stats():
+    ev = [{"type": "run_started", "t": 0}, {"type": "run_started", "t": 0}, {"type": "practices_found", "count": 5, "outside_area": 1},
+          {"type": "captured", "code": "A", "status": "ok", "secs": 3.0}, {"type": "captured", "code": "B", "status": "blocked", "secs": 2.0},
+          {"type": "captured", "code": "N", "status": "ok", "secs": 0.0}, {"type": "captured", "code": "T", "status": "error", "secs": 26.0},
+          {"type": "quote_rejected", "code": "A"}, {"type": "quote_rejected", "code": "A", "cached": True},
+          {"type": "classified", "code": "A", "category": "demands_documents", "quote": "Bring ID.", "self_contradiction": True, "from_cache": True},
+          {"type": "second_opinion", "code": "A", "verdict": "asks_softly", "agreed": False, "reason": "r"},
+          {"type": "classified", "code": "A", "category": "asks_softly", "quote": "Bring ID.", "self_contradiction": False, "from_cache": True},
+          {"type": "classified", "code": "B", "category": "not_checked", "status": "blocked", "reason": "The site did not let ..."},
+          {"type": "classified", "code": "N", "category": "no_mention", "status": "ok", "reason": ""},
+          {"type": "classified", "code": "T", "category": "not_checked", "status": "error", "reason": "TimeoutError: Page.goto: Timeout 25000ms exceeded."},
+          {"type": "classified", "code": "S", "category": "not_checked", "status": "no_site", "reason": "No website listed"},
+          {"type": "run_finished", "gemini_calls": 7, "containers_peak": 3, "wall_secs": 9.5}]
+    s = pipeline.event_stats(ev)
+    assert (s["practices"], s["outside_area"], s["pages_read_ok"], s["quotes_verified"], s["quotes_rejected"], s["cache_hits"]) == (5, 1, 1, 1, 1, 1)
+    assert s["not_checked"] == {"total": 3, "blocked": 1, "timeout": 1, "no_site": 1, "no_registration_page": 0, "error": 0}
+    assert s["counts"]["asks_softly"] == 1 and s["counts"]["demands_documents"] == 0 and s["self_contradictions"] == 0  # the last classified wins
+    assert s["second_opinions"] == {"checked": 1, "agreed": 0, "downgraded": 1, "no_answer": 0}
+    assert (s["gemini_calls"], s["containers_peak"], s["wall_secs"]) == (7, 3, 9.5)
+    assert pipeline.event_stats(ev + [{"type": "run_started", "t": 0}])["practices"] == 0  # only the last run in an appended file counts
+
+
+def test_real_run_stops_without_second_opinion():
+    """No surgery may be shown red unchecked: a classify.py without second_opinion stops a real run before any page is read."""
+    from opendoor import classify as cl
+    saved = {"so": getattr(cl, "second_opinion", None), "warm": pipeline._warm, "fp": pipeline.find_practices}
+    pipeline._warm, pipeline.find_practices = (lambda: None), (lambda *a, **k: [{"code": "X1", "name": "X", "postcode": "E13 9AZ"}])
+    if saved["so"]:
+        del cl.second_opinion
+    got, run_id = [], "test-no-second"
+    try:
+        s = pipeline.run(["E13", "E6"], 5, run_id, got.append)
+        assert "second_opinion" in s["error"] and got[-1]["type"] == "run_finished" and got[-1]["error"] == s["error"]
+        assert not any(e["type"] in ("resolved", "captured") for e in got)
+    finally:
+        if saved["so"]:
+            cl.second_opinion = saved["so"]
+        pipeline._warm, pipeline.find_practices = saved["warm"], saved["fp"]
+        shutil.rmtree(pipeline.RUNS / run_id, ignore_errors=True)
+
+
 def test_fake_pipeline_event_order():
-    gps = json.loads((ROOT.parent / "probe" / "targets.json").read_text())["gps"]
-    real, pipeline.find_nearest = pipeline.find_nearest, lambda place, n: ([
-        {"code": g["code"], "name": g["name"], "postcode": "E13 9AZ", "lat": 51.5, "lon": 0.03, "distance_km": i / 10} for i, g in enumerate(gps)],
-        {"lat": 51.5, "lon": 0.03, "outcode": "E13"})
+    """Runs from fixtures/fake only: no network, nothing outside the repo."""
+    gps = json.loads((ROOT / "fixtures" / "fake" / "practices.json").read_text())["practices"]
     got, run_id = [], "test-fake-run"
     shutil.rmtree(pipeline.RUNS / run_id, ignore_errors=True)
     try:
         s = pipeline.run(["E13 9AZ"], 40, run_id, got.append, fake=True)
         d = pipeline.RUNS / run_id
         on_disk = [json.loads(l) for l in (d / "events.jsonl").read_text().splitlines()]
-        assert on_disk == got and len(got) > len(gps)
+        assert on_disk == got and len(got) > len(gps) and s["error"] is None
         types = [e["type"] for e in got]
         assert types[:2] == ["run_started", "practices_found"] and types[-1] == "run_finished" and types.count("run_finished") == 1  # fake: no warming
-        assert "lacking" not in got[0] and "lacking" not in s and got[0]["near"] == "E13 9AZ" and got[1]["outcodes"] == ["E13"]
+        assert "lacking" not in got[0] and "lacking" not in s and got[0]["near"] == "E13 9AZ"
+        assert got[1]["outcodes"] == sorted({g["postcode"].split()[0] for g in gps}) and got[1]["furthest_km"] == max(g["distance_km"] for g in gps)
         assert got[1]["count"] == len(gps) == s["total"] and got[-1]["containers_peak"] is None  # fake: no containers
-        dist = {g["code"]: i / 10 for i, g in enumerate(gps)}
+        dist = {g["code"]: g["distance_km"] for g in gps}
         for e in got:
             if e["type"] == "classified":
                 assert e["distance_km"] == dist[e["code"]] and (e["doc_types"] != []) <= (e["colour"] in ("red", "amber")), e
+                assert e["from_cache"] is False and isinstance(e["self_contradiction"], bool) and not BANNED.search(e["reason"]), e
         assert all("t" in e for e in got) and [e["t"] for e in got] == sorted(e["t"] for e in got)
-        order = {"resolved": 0, "captured": 1, "quote_rejected": 2, "classified": 3, "boxed": 4}
+        order = {"resolved": 0, "captured": 1, "quote_rejected": 2, "classified": 3, "second_opinion": 4, "boxed": 6}
+        so = [e for e in got if e["type"] == "second_opinion"]
         for g in gps:
             mine = [order[e["type"]] for e in got if e.get("code") == g["code"]]
-            assert mine == sorted(mine) and mine[0] == 0 and mine.count(3) == 1, (g["code"], mine)  # every practice: resolved first, classified exactly once
+            if 4 in mine:  # red: classified, second opinion, and a second classified only when it disagreed
+                i = mine.index(4)
+                mine[i + 1:i + 2] = [5] if mine[i + 1:i + 2] == [3] else mine[i + 1:i + 2]
+            assert mine == sorted(mine) and mine[0] == 0 and mine.count(3) == 1, (g["code"], mine)  # every practice: resolved first, classified once
+        # exactly one staged disagreement: that practice is re-classified amber with the reason, every other red stays red
+        assert [set(e) for e in so] == [{"type", "t", "code", "verdict", "agreed", "reason"}] * len(so) and len(so) >= 2
+        down = [e["code"] for e in so if not e["agreed"]]
+        assert len(down) == 1
+        last = {e["code"]: e for e in got if e["type"] == "classified"}
+        assert last[down[0]]["category"] == "asks_softly" and last[down[0]]["colour"] == "amber" and pipeline.DISAGREED in last[down[0]]["reason"]
+        assert "keyword match" not in last[down[0]]["reason"]  # the first reader's red reason never rides on an amber pin
+        assert all(last[e["code"]]["colour"] == "red" for e in so if e["agreed"])
+        want = {"checked": len(so), "agreed": len(so) - 1, "downgraded": 1}
+        assert got[-1]["second_opinions"] == s["second_opinions"] == want and got[-1]["cache_hits"] == s["cache_hits"] == 0
         out = json.loads((d / "results.json").read_text())
         assert len(out["results"]) == len(gps) and sum(out["summary"]["counts"].values()) == len(gps)
         assert out["summary"]["quotes_rejected"] == types.count("quote_rejected") == 1 and out["summary"]["gemini_calls"] == 0
         for r in out["results"]:
             PracticeResult(**r)
-            assert r["colour"] == COLOUR[r["category"]]
+            assert r["colour"] == COLOUR[r["category"]] and last[r["code"]]["category"] == r["category"]
             assert not r["shot"] or (d / r["shot"]).exists()
             assert not r["quote_box"] or r["quote_verified"]
             assert r["distance_km"] == dist[r["code"]]
             if r["colour"] in ("red", "amber"):
                 assert r["doc_types"] == doc_types([r["quote"]] + r["documents"]) != [], r
         assert s["counts"]["demands_documents"] >= 1 and s["counts"]["not_checked"] >= 1 and types.count("boxed") == s["quotes_boxed"] >= 1
+        st = json.loads((d / "stats.json").read_text())  # from events.jsonl, so it must agree with results.json
+        assert st["counts"] == s["counts"] and st["practices"] == s["total"] and st["quotes_verified"] == s["quotes_verified"]
+        assert st["self_contradictions"] == s["self_contradictions"] and st["quotes_rejected"] == 1 and st["second_opinions"] == {**want, "no_answer": 0}
+        assert st["not_checked"]["total"] == s["counts"]["not_checked"] == sum(v for k, v in st["not_checked"].items() if k != "total")
+        assert st["pages_read_ok"] == sum(e["status"] == "ok" and e["secs"] > 0 for e in got if e["type"] == "captured") and st["wall_secs"] == s["wall_secs"]
     finally:
-        pipeline.find_nearest = real
         shutil.rmtree(pipeline.RUNS / run_id, ignore_errors=True)
 
 
+def test_fake_box_and_readable_errors():
+    fx = pipeline._fakes()
+    nhs = fx["box"]({"code": "nhs", "quote": NHS_GUIDANCE_QUOTE})
+    assert nhs["_png"] and nhs["quote_box"]  # a fresh clone's --fake run still gets the nhs.uk reference shot
+    assert fx["box"]({"code": "F84741", "quote": "Any patients registering must provide proof of entry."})["_png"] is None  # PNG boxes another sentence
+    r = pipeline._readable
+    assert r("net::ERR_NAME_NOT_RESOLVED at http://x") == pipeline.UNREACHABLE and r("Plain words.") == "Plain words."
+    assert pipeline._why({"reason": r("TimeoutError: Page.goto: Timeout 25000ms exceeded.")}) == "timeout"
+    assert r("HTTPError: HTTP Error 404: Not Found") == "The practice has no profile page on nhs.uk."
+
+
 if __name__ == "__main__":
-    tests = [(k, v) for k, v in list(globals().items()) if k.startswith("test_")]
+    tests =[(k, v) for k, v in list(globals().items()) if k.startswith("test_")]
     for name, fn in tests:
         fn()
         print("ok", name)

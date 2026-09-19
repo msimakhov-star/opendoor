@@ -1,23 +1,39 @@
 """Open Door pipeline: find practices, resolve and capture on Modal, classify with Gemini, box the verified quotes.
-Writes data/runs/<run_id>/{events.jsonl, results.json, shots/<code>.png}. Reads website wording only, never front-desk behaviour.
+Writes data/runs/<run_id>/{events.jsonl, results.json, stats.json, shots/<code>.png}. Reads website wording only, never front-desk behaviour.
 
   uv run python -m opendoor.pipeline --postcode "E13 8AA" --limit 40            (one postcode or outcode: the 40 nearest practices)
-  uv run python -m opendoor.pipeline --postcode E13,E6,E7 --limit 40 --fake     (several prefixes: every practice in them. --fake: no Modal, no Gemini)
+  uv run python -m opendoor.pipeline --postcode E13,E6,E7 --limit 40            (several prefixes: every practice in them)
   uv run python -m opendoor.pipeline --london --limit 1500                      (every London postcode area)
+  uv run python -m opendoor.pipeline --fake     (no network, no Modal, no Gemini: the 40 Newham practices in fixtures/fake, whatever the postcode)
 """
 import argparse, asyncio, json, re, shutil, threading, time
 from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
 
-from opendoor.models import COLOUR, DOC_RE, NHS_GUIDANCE_QUOTE, NHS_GUIDANCE_URL, Finding, PracticeResult, doc_types, norm
+from opendoor.models import COLOUR, DOC_RE, NHS_GUIDANCE_QUOTE, NHS_GUIDANCE_URL, Finding, PracticeResult, SecondOpinion, doc_types, norm
 from opendoor.orgs import LONDON_PREFIXES, find_nearest, find_practices, single_place
 
 ROOT = Path(__file__).resolve().parent.parent
 RUNS, CACHE = ROOT / "data" / "runs", ROOT / "data" / "cache"
+FAKE = ROOT / "fixtures" / "fake"  # practices.json + shots/, built from data/frozen/newham
 VERDICTS = ROOT / "data" / "verdicts.json"  # latest real run, one object per quoted practice, for a teammate
 BOXED = ("demands_documents", "asks_softly", "says_not_needed")  # categories whose verified quote gets boxed on a screenshot
 MIN_TEXT = 200  # a page with less visible text than this was not really read, so it must not show as green
+DISAGREED = "A second reader arguing the surgery's side did not agree it is a requirement."
+NO_SECOND = "The second reader gave no answer, so this is not shown as red."
+UNREACHABLE = "The practice website could not be reached."
+
+
+def _readable(reason: str) -> str:
+    """Grey-pin reasons in plain words, not error text. The timeout wording keeps "timeout": _why() sorts on it."""
+    if "net::ERR_" in reason:
+        return UNREACHABLE
+    if reason.startswith("TimeoutError"):
+        return "The practice website did not load within the page timeout."
+    if reason.startswith(("HTTPError", "URLError")):  # resolve's one GET to the practice's nhs.uk profile
+        return "The practice has no profile page on nhs.uk." if "404" in reason else "The practice's nhs.uk profile could not be read."
+    return reason
 
 
 def parse_prefixes(s: str) -> list[str]:
@@ -42,6 +58,47 @@ def apply_finding(r: PracticeResult, f: Finding) -> None:
 def peak_overlap(spans: list[tuple[float, float]]) -> int:
     """Most (start, end) spans open at one moment. The peak always falls on some span's start."""
     return max((sum(a <= s < b for a, b in spans) for s, _ in spans), default=0)
+
+
+def _why(e: dict) -> str:
+    """Why a practice was not checked, from its last classified event. Anything else (a page with almost no text, a classifier error) is error."""
+    if e.get("status") == "blocked":
+        return "blocked"
+    if "timeout" in (e.get("reason") or "").lower():
+        return "timeout"
+    if e.get("status") == "no_site":
+        return "no_site"
+    return "no_registration_page" if (e.get("reason") or "").startswith("No registration page") else "error"
+
+
+def event_stats(events: list[dict]) -> dict:
+    """Run numbers computed from the events of one run (the last run_started onwards). The last classified event per code wins."""
+    events = events[max([i for i, e in enumerate(events) if e["type"] == "run_started"], default=0):]
+    last, cap, found, fin = {}, {}, {}, {}
+    for e in events:
+        if e["type"] == "classified":
+            last[e["code"]] = e
+        elif e["type"] == "captured":
+            cap[e["code"]] = e
+        elif e["type"] == "practices_found":
+            found = e
+        elif e["type"] == "run_finished":
+            fin = e
+    cls, so = list(last.values()), [e for e in events if e["type"] == "second_opinion"]
+    nc = [e for e in cls if e["category"] == "not_checked"]
+    return {
+        "practices": found.get("count", 0), "outside_area": found.get("outside_area", 0),
+        "pages_read_ok": sum(e["status"] == "ok" and (e.get("secs") or 0) > 0 for e in cap.values()),  # 0 s: only a national form link, never loaded
+        "not_checked": {"total": len(nc), **{k: 0 for k in ("blocked", "timeout", "no_site", "no_registration_page", "error")}, **Counter(map(_why, nc))},
+        "counts": {c: 0 for c in COLOUR} | Counter(e["category"] for e in cls),
+        "self_contradictions": sum(bool(e.get("self_contradiction")) for e in cls),
+        "quotes_verified": sum(bool(e.get("quote")) for e in cls),  # the classifier empties every quote code could not find on the page
+        "quotes_rejected": sum(e["type"] == "quote_rejected" and not e.get("cached") for e in events),
+        "second_opinions": {"checked": len(so), "agreed": sum(bool(e["agreed"]) for e in so), "downgraded": sum(not e["agreed"] for e in so),
+                            "no_answer": sum(e["verdict"] == "not_checked" for e in so)},
+        "gemini_calls": fin.get("gemini_calls"), "cache_hits": sum(bool(e.get("from_cache")) for e in cls),
+        "containers_peak": fin.get("containers_peak"), "wall_secs": fin.get("wall_secs"),
+    }
 
 
 def _warm():
@@ -76,14 +133,31 @@ async def _amap(fn, inputs):
             yield fn(x)
 
 
-async def _arun(orgs, R, emit, shots, resolve, capture, box, classify) -> int:
+async def _arun(orgs, R, emit, shots, resolve, capture, box, classify, second) -> int:
     """Returns the peak number of capture calls running at once, from each call's own runtime."""
+    hit = {}  # code -> its verdict came from an earlier run's disk cache
+
     def classified(r):
         emit("classified", code=r.code, category=r.category, colour=r.colour, quote=r.quote, retries=r.retries,
-             doc_types=r.doc_types, distance_km=r.distance_km)
+             doc_types=r.doc_types, distance_km=r.distance_km, from_cache=hit.get(r.code, False),
+             status=r.status, reason=r.reason, self_contradiction=r.self_contradiction)
+
+    async def second_look(r, f, text):
+        """Before a surgery stays red, a second reader argues the surgery's side. Anything but agreement shows it amber."""
+        try:
+            o = await second(r.code, text, f)
+        except Exception as e:
+            o = SecondOpinion(verdict="not_checked", agreed=False, reason=f"The second reader gave no answer ({type(e).__name__}).")
+        agreed = bool(o.agreed) and o.verdict == "demands_documents"
+        emit("second_opinion", code=r.code, verdict=o.verdict, agreed=agreed, reason=o.reason)
+        if not agreed:  # a NEW classified event: the UI renders the last one per code. The first reader's red reason is dropped:
+            # it would argue red on an amber pin. o.reason already passed classify._plain with the amber rule.
+            apply_finding(r, f.model_copy(update={"category": "asks_softly",
+                                                  "reason": NO_SECOND if o.verdict == "not_checked" else f"{DISAGREED} {o.reason}".strip()}))
+            classified(r)
 
     def finish(r, status, reason):  # a practice that never reaches the classifier still gets its grey pin
-        r.status, r.reason = status, reason
+        r.status, r.reason = status, _readable(reason)
         classified(r)
 
     async def box_one(job):  # box draws on capture's offline snapshot, found by final_url, so it rarely touches the site again
@@ -120,7 +194,10 @@ async def _arun(orgs, R, emit, shots, resolve, capture, box, classify) -> int:
             except Exception as e:
                 f = Finding(category="not_checked", reason=f"Classifier error: {type(e).__name__}")
         apply_finding(r, f)
+        hit[r.code] = f.from_cache
         classified(r)
+        if r.category == "demands_documents" and r.quote_verified:
+            await second_look(r, f, text)
         if r.quote_verified and r.quote and r.category in BOXED:
             await box_one({"code": r.code, "final_url": r.reg_url, "reg_url": r.reg_url, "quote": r.quote, "colour": r.colour})
 
@@ -150,7 +227,7 @@ async def _arun(orgs, R, emit, shots, resolve, capture, box, classify) -> int:
         emit("captured", code=r.code, status=r.status, challenge=bool(c.get("challenge")), secs=r.secs, http_status=c.get("http_status"))
         if r.status == "ok":
             await classify_one(r, c)
-        else:
+        else:  # finish() turns error text (net::ERR_NAME_NOT_RESOLVED, TimeoutError ...) into plain words
             finish(r, r.status, (c.get("error") or "The site did not let the automated browser read the page.").splitlines()[0])
 
     tasks = []
@@ -187,39 +264,45 @@ def run(postcode_prefixes, limit, run_id=None, on_event=None, fake=False, region
     shots = run_dir / "shots"
     shots.mkdir(parents=True, exist_ok=True)
     log = open(run_dir / "events.jsonl", "a")
-    n_rejected = 0
+    n_rejected, evs = 0, []
 
     def emit(type, **kw):
         nonlocal n_rejected
         n_rejected += type == "quote_rejected" and not kw.get("cached")  # a cache hit replays an earlier run's rejections
         ev = {"type": type, "t": round(time.time() - t0, 2), **kw}
+        evs.append(ev)
         log.write(json.dumps(ev) + "\n")
         log.flush()
         if on_event:
             on_event(ev)
 
-    R, error, stats, calls0, hits0, peak, where = {}, None, {}, 0, 0, None, {}
+    R, error, stats, calls0, peak, where, far = {}, None, {}, 0, None, {}, []
     emit("run_started", postcode_prefixes=postcode_prefixes, limit=limit, run_id=run_id, fake=fake, near=near)
     if not fake:
         emit("warming")  # a Modal browser container boots while practices are found and resolved
         threading.Thread(target=_warm, daemon=True).start()
     try:
+        fx = _fakes() if fake else None
         if near:
-            orgs, centre = find_nearest(near, limit)
+            orgs, centre = (fx["orgs"][:max(0, limit)], fx["centre"]) if fake else find_nearest(near, limit)
             where = {"centre": centre, "outcodes": sorted({o["postcode"].split()[0] for o in orgs}),
                      "furthest_km": orgs[-1]["distance_km"] if orgs else None}
         else:
-            orgs = find_practices(postcode_prefixes, limit, region=region)
+            orgs = fx["orgs"][:max(0, limit)] if fake else find_practices(postcode_prefixes, limit, region=region, dropped=far)
+            where = {"outside_area": len(far), "outside_area_codes": [o["code"] for o in far]}  # geocoded outside a box around the areas
         R = {o["code"]: PracticeResult(**{k: o.get(k) for k in ("code", "name", "postcode", "lat", "lon", "distance_km")}) for o in orgs}
         emit("practices_found", count=len(orgs), **where)
         if fake:
-            resolve, capture, box, classify = _fakes()
+            resolve, capture, box, classify, second = (fx[k] for k in ("resolve", "capture", "box", "classify", "second_opinion"))
         else:
             import modal
             from opendoor import classify as cl  # lazy: pulls in pydantic-ai and logfire
+            second = getattr(cl, "second_opinion", None)
+            if second is None:  # no surgery may be shown red without the second reader, so stop before any site is contacted
+                raise RuntimeError("opendoor.classify has no second_opinion(code, text, finding) yet: no practice page was read.")
             resolve, capture, box = (modal.Function.from_name("opendoor", n) for n in ("resolve", "capture", "box"))
-            classify, stats, calls0, hits0 = cl.classify_page, cl.STATS, cl.STATS["requests"], cl.STATS["cache_hits"]
-        peak = asyncio.run(_arun(orgs, R, emit, shots, resolve, capture, box, classify))
+            classify, stats, calls0 = cl.classify_page, cl.STATS, cl.STATS["requests"]
+        peak = asyncio.run(_arun(orgs, R, emit, shots, resolve, capture, box, classify, second))
         peak = None if fake else peak  # fake captures replay recorded timings, not containers
     except Exception as e:  # still write what we have and close the run, so the UI stops polling
         error = f"{type(e).__name__}: {str(e)[:300]}"
@@ -229,6 +312,8 @@ def run(postcode_prefixes, limit, run_id=None, on_event=None, fake=False, region
         shutil.copy(CACHE / "nhs.png", shots / "nhs.png")
     results = list(R.values())
     counts = {c: 0 for c in COLOUR} | Counter(r.category for r in results)
+    ev = event_stats(evs)
+    so = {k: ev["second_opinions"][k] for k in ("checked", "agreed", "downgraded")}
     summary = {
         "run_id": run_id, "postcode_prefixes": postcode_prefixes, "limit": limit, "fake": fake, "error": error,
         "near": near, **where, "containers_peak": peak,
@@ -239,19 +324,28 @@ def run(postcode_prefixes, limit, run_id=None, on_event=None, fake=False, region
         "quotes_boxed": sum(1 for r in results if r.quote_box),
         "quotes_rejected": n_rejected,
         "gemini_calls": stats.get("requests", 0) - calls0,
-        "cache_hits": stats.get("cache_hits", 0) - hits0,  # pages whose verdict came from an earlier run's disk cache
+        "cache_hits": ev["cache_hits"],  # pages whose verdict came from an earlier run's disk cache
+        "second_opinions": so,
         "wall_secs": round(time.time() - t0, 1),
         "nhs": {"url": NHS_GUIDANCE_URL, "quote": NHS_GUIDANCE_QUOTE, "shot": "shots/nhs.png" if nhs else None,
                 "quote_box": json.loads((CACHE / "nhs.json").read_text()) if nhs and (CACHE / "nhs.json").exists() else None},
         "finished_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
     }
     (run_dir / "results.json").write_text(json.dumps({"summary": summary, "results": [r.model_dump() for r in results]}, indent=1))
-    if results and not fake:  # fake runs use a keyword classifier, never hand those verdicts on
+    if results and not fake and not error:  # fake runs use a keyword classifier and a failed run is partial: never hand those on
         write_verdicts(results, run_dir)
     emit("run_finished", counts=counts, wall_secs=summary["wall_secs"], total=len(results), quotes_rejected=n_rejected,
-         gemini_calls=summary["gemini_calls"], cache_hits=summary["cache_hits"], error=error, containers_peak=peak)
+         gemini_calls=summary["gemini_calls"], cache_hits=summary["cache_hits"], second_opinions=so, error=error, containers_peak=peak)
     log.close()
+    write_stats(run_dir)
     return summary
+
+
+def write_stats(run_dir: Path) -> dict:
+    """data/runs/<id>/stats.json, computed from that run's events.jsonl only."""
+    s = event_stats([json.loads(l) for l in (run_dir / "events.jsonl").read_text().splitlines() if l.strip()])
+    (run_dir / "stats.json").write_text(json.dumps(s, indent=1))
+    return s
 
 
 # ---------- --fake: local stand-ins so the pipeline, the API and the UI can be exercised without Modal or Gemini ----------
@@ -260,30 +354,31 @@ _SOFT = re.compile(r"if you (?:can|have)|may (?:request|ask)|helpful|speed up|if
 _DEMAND = re.compile(r"\bmust\b|need to|required|will need|should (?:provide|bring)|please (?:provide|bring)|will be asked|produce", re.I)
 
 
-def _fakes():
-    probe = ROOT.parent / "probe"
-    sites = {g["code"]: g for g in json.loads((probe / "targets.json").read_text())["gps"]}
-    pages = {g["code"]: g for g in json.loads((probe / "results.json").read_text())["gps"]}
-    state = {"rejected": False}
+def _fakes() -> dict:
+    """Stand-ins that replay fixtures/fake/practices.json: what each Newham practice's resolve and capture returned in a real run."""
+    fx = json.loads((FAKE / "practices.json").read_text())
+    pages = {g["code"]: g for g in fx["practices"]}
+    orgs = [{k: g[k] for k in ("code", "name", "postcode", "lat", "lon", "distance_km")} for g in fx["practices"]]  # nearest first
+    state = {"rejected": False, "disagreed": False}
+    png = lambda code: (FAKE / "shots" / f"{code}.png").read_bytes() if (FAKE / "shots" / f"{code}.png").exists() else None
 
-    def resolve(org):  # the probe already found each registration link, so fake capture reads it as if followed from the homepage
-        g = sites.get(org["code"], {})
-        return {**org, "site": g.get("site"), "reg_links": g.get("reg_links") or ([g["url"]] if g.get("url") else []), "reg_url": g.get("url"), "error": None}
+    def resolve(org):
+        g = pages.get(org["code"], {})
+        return {**org, "site": g.get("site"), "reg_links": g.get("reg_links", []), "reg_url": g.get("reg_url"), "error": g.get("resolve_error")}
 
     def capture(t):
-        g, fx, png = pages.get(t["code"], {}), ROOT / "fixtures" / "texts" / f"{t['code']}.txt", probe / "shots" / f"{t['code']}.png"
-        text = norm(fx.read_text() if fx.exists() else g.get("find_text") or "")
-        st = g.get("status")
-        status = "error" if g.get("error") or st is None else "blocked" if g.get("challenge") or st >= 400 else "ok"
-        return {**t, "status": status, "http_status": st, "final_url": g.get("final_url") or t.get("reg_url"), "title": g.get("title") or "",
-                "challenge": bool(g.get("challenge")), "text": text, "links_national_form": "gp-registration.nhs.uk" in text,
-                "doc_hits": sorted({m.group(0).lower() for m in DOC_RE.finditer(text)}), "_png": png.read_bytes() if png.exists() else None,
+        g = pages.get(t["code"], {})
+        text = norm(g.get("text"))
+        return {**t, "status": g.get("status", "error"), "http_status": g.get("http_status"), "final_url": g.get("reg_url") or t.get("reg_url"),
+                "title": "", "challenge": bool(g.get("challenge")), "text": text, "links_national_form": bool(g.get("links_national_form")),
+                "national_form_only": bool(g.get("national_form_only")), "reg_links": g.get("reg_links", []),
+                "doc_hits": sorted({m.group(0).lower() for m in DOC_RE.finditer(text)}), "_png": png(t["code"]),
                 "secs": g.get("secs") or 0.0, "error": g.get("error")}
 
-    def box(t):
-        b, png = pages.get(t["code"], {}).get("find_box"), probe / "shots" / f"{t['code']}.png"
-        return {**t, "found": bool(b), "quote_box": {k: round(v) for k, v in b.items()} if b else None,
-                "_png": png.read_bytes() if b and png.exists() else None, "error": None}
+    def box(t):  # the recorded PNG already has the frozen quote boxed: hand it on only when the fake quote contains that sentence
+        g = pages.get(t["code"]) or {"quote_box": fx.get("nhs_quote_box"), "quote": NHS_GUIDANCE_QUOTE}
+        b = g.get("quote_box") if g.get("quote") and norm(g["quote"]) in norm(t.get("quote")) else None
+        return {**t, "found": bool(b), "quote_box": b, "_png": png(t["code"]) if b else None, "error": None}
 
     async def classify(code, text, on_reject=None):
         ss = [s for s in re.split(r"(?<=[.!?])\s+", norm(text)) if 20 < len(s) < 400 and DOC_RE.search(s)]
@@ -300,7 +395,13 @@ def _fakes():
         return Finding(category=cat, quote=quote, quote_verified=bool(quote), retries=retries,
                        documents=sorted({m.group(0).lower() for m in DOC_RE.finditer(quote)}), reason="FAKE RUN: keyword match, no model was called.")
 
-    return resolve, capture, box, classify
+    async def second_opinion(code, text, finding):  # the first red disagrees, every later red agrees, so the UI can show both
+        if not state["disagreed"]:
+            state["disagreed"] = True
+            return SecondOpinion(verdict="asks_softly", agreed=False, reason="FAKE RUN: staged disagreement so the interface can be tested. No model was called.")
+        return SecondOpinion(verdict="demands_documents", agreed=True, reason="FAKE RUN: staged agreement. No model was called.")
+
+    return {"orgs": orgs, "centre": fx["centre"], "resolve": resolve, "capture": capture, "box": box, "classify": classify, "second_opinion": second_opinion}
 
 
 if __name__ == "__main__":
