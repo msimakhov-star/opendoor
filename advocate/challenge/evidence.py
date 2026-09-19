@@ -44,7 +44,8 @@ def dry_reply(label: str, kind: str, v: dict) -> str:
     if label == 'rule_off':
         return (f'[DRY RUN FAKE TEXT] Following an automated assessment of the registration documentation '
                 f'requirements promulgated by {name}, it has been determined that the aforementioned practice '
-                f'unlawfully refuses prospective registrants, notwithstanding contradictory national guidance. ') * 3
+                f'imposes documentary prerequisites upon prospective registrants, notwithstanding national guidance. '
+                f'[Your Name] [Your Position] ') * 3
     ask = 'Please update the page.' if kind == 'letter' else 'You can still sign up.'
     verdict = ('This contradicts the NHS guidance on nhs.uk.' if v.get('classification') == 'demands_documents'
                else 'The NHS guidance on nhs.uk says you do not need these to register.')

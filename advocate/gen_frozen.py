@@ -21,6 +21,12 @@ LETTER_WORTHY = ('demands_documents', 'asks_softly')
 ATTEMPTS = 3
 
 
+def plain(text: str) -> str:
+    """Formatting only, never wording: drop markdown bold/headings and a bare 'Note for a patient:' title line."""
+    text = re.sub(r'^\s*#+\s*', '', text.replace('**', ''), flags=re.M)
+    return re.sub(r'^\s*note for a patient:?\s*\n+', '', text, flags=re.I).strip()
+
+
 def problems(text: str, category: str, metrics: dict) -> list[str]:
     """Code, not a model, decides whether a text may be shown. Empty list = OK."""
     found = []
@@ -28,6 +34,8 @@ def problems(text: str, category: str, metrics: dict) -> list[str]:
         found.append('banned word')
     if metrics['placeholders'] or re.search(r'\[\d+\]', text):
         found.append('placeholder or footnote')
+    if '**' in text or re.search(r'^\s*#', text, re.M):
+        found.append('markdown')  # the UI shows plain text; rule v3 already says "No markdown"
     if 'their website' in text.lower():
         found.append('"their website" is ambiguous (NHS or practice?)')
     if category == 'asks_softly' and 'contradict' in text.lower():
@@ -45,6 +53,8 @@ def main(results_path: str, run_name: str) -> None:
     done = json.loads(out.read_text()) if out.exists() else {}
     cat = {r['code']: r['category'] for r in rows}
     # re-check stored entries too, so tightening problems() regenerates only what now fails
+    for e in done.values():  # stored texts from before plain() existed
+        e['note'], e['letter'] = plain(e['note']), plain(e['letter'])
     done = {c: e for c, e in done.items()
             if not any(problems(e[k], cat.get(c, ''), e['metrics'][k]) for k in ('note', 'letter'))}
     print(f'{len(rows)} letter-worthy practices, {len(done)} already written and passing')
@@ -58,14 +68,15 @@ def main(results_path: str, run_name: str) -> None:
                 for kind in ('note', 'letter'):
                     for attempt in range(1, ATTEMPTS + 1):
                         res = advocate.run(kind, v)
-                        m = score_summary(res.output, v)
-                        bad = problems(res.output, r['category'], m)
+                        text = plain(res.output)
+                        m = score_summary(text, v)
+                        bad = problems(text, r['category'], m)
                         if not bad:
                             break
                         print(f'  {r["code"]} {kind} attempt {attempt} rejected by code: {", ".join(bad)}')
                     else:
                         raise ValueError(f'{kind} failed the code check {ATTEMPTS} times')
-                    entry[kind], entry['metrics'][kind], entry['attempts'][kind] = res.output, m, attempt
+                    entry[kind], entry['metrics'][kind], entry['attempts'][kind] = text, m, attempt
                     entry['model'] = res.response.model_name
                 entry['trace_id'] = format(span.get_span_context().trace_id, '032x')
         except Exception as e:  # keep going; a rerun fills the gap
