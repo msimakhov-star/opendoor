@@ -21,6 +21,7 @@ logfire.instrument_pydantic_ai()
 
 CACHE = ROOT / "data" / "cache"
 CACHE_V = "v4"  # part of the cache key: bump whenever the prompt, the excerpt or the post-processing changes a verdict
+SECOND_V = "s2"  # second-opinion cache only: bump when the SECOND prompt changes, so first-read caches stay warm
 QUOTED = ("demands_documents", "asks_softly", "says_not_needed")
 # Requirement words: a sentence with one of these goes to the model even when no document phrase sits near it.
 REQ_RE = re.compile(r"requir|\bneed|\bmust\b|do not have to|don.t have to|not necessary|without|\bdocument", re.I)
@@ -66,7 +67,7 @@ SECOND = """You represent the UK GP surgery that published the web page below. A
 verdict:
 - demands_documents: the page makes documents a CONDITION of registering as a new patient, and nothing on the page gives people without them a way in: no "you can still register", no offer of help, no other route.
 - asks_softly: the page only asks for documents, or also says they are not needed, or offers help or another way to register to people who cannot provide them, or asks for them for another reason: only to register a child (a birth certificate, the Red Book, proof of ID and address for the child) or only for online access to records, the NHS App or online services.
-Firm wording about registering (must, need to, are required to, should, will be asked to, please bring) counts as a condition. Only asking means soft wording such as "if you can", "if you have it", "we may ask", "it helps".
+A condition means the page says a person cannot register, or will not be registered, without the documents: wording such as "must", "required", "you will need", "in order to register", "only if you can provide", "you will not be registered until". A request is not a condition: "please bring", "please provide", "we will ask", "you will be asked", "should", "requested", "if you can", "if you have it", "we may ask", "it helps" are asks_softly unless the page also says registration depends on them. NHS England guidance lets a surgery ask for ID; what it does not allow is turning people away for not having it.
 Use only what the page says. Do not invent a route that is not on the page: if the page is firm and gives no route, demands_documents is the fair answer.
 agreed: true only when verdict is demands_documents.
 reason: one short plain English sentence that quotes the deciding words from the page, character for character, inside double quotes. Describe the wording only. Make no legal judgement."""
@@ -256,7 +257,7 @@ async def classify_page(code: str, text: str, on_reject=None) -> Finding:
 async def second_opinion(code: str, text: str, finding: Finding) -> SecondOpinion:
     """Before a surgery is shown red, a separate reader argues the surgery's side on the same passages.
     agreed is set by code (verdict == demands_documents). An API error gives verdict not_checked, agreed False, not cached."""
-    path = CACHE / ("second_%s_%s.json" % (CACHE_V, hashlib.sha256(text.encode()).hexdigest()))
+    path = CACHE / ("second_%s%s_%s.json" % (CACHE_V, SECOND_V, hashlib.sha256(text.encode()).hexdigest()))
     STATS["second_opinions"] += 1
     if path.exists():
         STATS["second_cache_hits"] += 1

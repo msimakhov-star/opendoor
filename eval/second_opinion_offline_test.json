@@ -1,0 +1,683 @@
+{
+ "pages": 96,
+ "audit_moved_to_amber": 28,
+ "second_v2_also_downgrades_of_those": 26,
+ "audit_confirmed_red": 68,
+ "second_v2_agrees_red_of_those": 56,
+ "no_answer": 0,
+ "rows": [
+  {
+   "code": "F84004",
+   "audit": "CONFIRMED",
+   "second_v2": "demands_documents",
+   "agreed": true,
+   "reason": "The page states that \"You will need to produce proof of address and identification\" with no exceptions or alternatives provided."
+  },
+  {
+   "code": "E87002",
+   "audit": "CONFIRMED",
+   "second_v2": "demands_documents",
+   "agreed": true,
+   "reason": "The page states that \"Proof of address and photographic ID is required.\" and proceeds only \"Once we have seen your completed documents with the your correct proof of ID\"."
+  },
+  {
+   "code": "E87004",
+   "audit": "DISPUTED",
+   "second_v2": "asks_softly",
+   "agreed": false,
+   "reason": "The page only says \"Please provide to the surgery Proof of Address & Identification\", which is a request rather than a mandatory condition of registration."
+  },
+  {
+   "code": "E87005",
+   "audit": "CONFIRMED",
+   "second_v2": "demands_documents",
+   "agreed": true,
+   "reason": "The surgery states that \"Until we have seen your identification you will not be registered at the practice.\""
+  },
+  {
+   "code": "E87739",
+   "audit": "CONFIRMED",
+   "second_v2": "demands_documents",
+   "agreed": true,
+   "reason": "The page states \"You need a proof of address\" and adds \"It must be dated within the last 3 months to register as a patient\" with no alternative route provided."
+  },
+  {
+   "code": "H85002",
+   "audit": "CONFIRMED",
+   "second_v2": "asks_softly",
+   "agreed": false,
+   "reason": "The surgery only asks patients to \"please hand in the form to reception together with the following information\" and offers assistance if they \"need help to do so\"."
+  },
+  {
+   "code": "E87066",
+   "audit": "CONFIRMED",
+   "second_v2": "demands_documents",
+   "agreed": true,
+   "reason": "The website states under New Patient Registration that patients are \"required to fill out the two separate registration forms and provide a recent proof of address\" without offering any alternative or exception."
+  },
+  {
+   "code": "E87648",
+   "audit": "CONFIRMED",
+   "second_v2": "asks_softly",
+   "agreed": false,
+   "reason": "Patients have another route via \"Option-1: Online\" using the national \"Register with a GP surgery\" service, whereas documents are only specified under \"Option-2: Post or email registration*\"."
+  },
+  {
+   "code": "G84023",
+   "audit": "CONFIRMED",
+   "second_v2": "demands_documents",
+   "agreed": true,
+   "reason": "The page explicitly states that \"Until we have seen your identification you will not be registered at the practice.\""
+  },
+  {
+   "code": "F85004",
+   "audit": "DISPUTED",
+   "second_v2": "asks_softly",
+   "agreed": false,
+   "reason": "The page uses polite and advisory wording by stating \"Please check that you are within our catchment area and complete both forms below, together with photo ID and proof of address\" and \"These should be submitted in person\", rather than making them a mandatory condition of registration."
+  },
+  {
+   "code": "H84010",
+   "audit": "DISPUTED",
+   "second_v2": "asks_softly",
+   "agreed": false,
+   "reason": "The practice states \"we will email you requesting proof of ID in the form of a passport or driving licence, proof of address\", which is a request rather than a stated condition of registration."
+  },
+  {
+   "code": "H84635",
+   "audit": "CONFIRMED",
+   "second_v2": "demands_documents",
+   "agreed": true,
+   "reason": "Under the instructions to register, the page states that \"After completing the form patients will then need to come in to the practice bringing photo id and a utility bill.\" with no exceptions or alternative routes provided."
+  },
+  {
+   "code": "F82009",
+   "audit": "CONFIRMED",
+   "second_v2": "asks_softly",
+   "agreed": false,
+   "reason": "The practice uses polite request wording rather than making documents mandatory, stating \"To register please provide the practice with the following\"."
+  },
+  {
+   "code": "F82038",
+   "audit": "CONFIRMED",
+   "second_v2": "demands_documents",
+   "agreed": true,
+   "reason": "The page states \"If you wish to register you will need the following ORIGINALS documents\" and warns that \"Registration would remain pending after completion of the form online until documents have been provided.\""
+  },
+  {
+   "code": "H84031",
+   "audit": "CONFIRMED",
+   "second_v2": "demands_documents",
+   "agreed": true,
+   "reason": "The page states that \"All patients are required to provide photographic proof of identity\" and Non-EU patients \"must present their passport with a valid visa\", offering no alternative or exception."
+  },
+  {
+   "code": "F84014",
+   "audit": "CONFIRMED",
+   "second_v2": "asks_softly",
+   "agreed": false,
+   "reason": "The practice only uses the advisory word \"should\" by stating \"Prospective patients should provide photo identification and proof of address\", without making documents a mandatory condition of registration."
+  },
+  {
+   "code": "F84047",
+   "audit": "CONFIRMED",
+   "second_v2": "asks_softly",
+   "agreed": false,
+   "reason": "The surgery uses the request \"To register, please bring with you your proof of address, photographic ID, details of your previous GP and your NHS number if you have this\", without stating that registration depends on having these documents."
+  },
+  {
+   "code": "F84053",
+   "audit": "CONFIRMED",
+   "second_v2": "demands_documents",
+   "agreed": true,
+   "reason": "The page states that \"Patients wishing to register with the practice must produce Proof of address Photo ID NHS Number\" without offering any exceptions."
+  },
+  {
+   "code": "F83678",
+   "audit": "CONFIRMED",
+   "second_v2": "demands_documents",
+   "agreed": true,
+   "reason": "The practice explicitly makes documents a condition of registration, stating that \"we are unable to progress with your registration until we have seen your identity documents.\""
+  },
+  {
+   "code": "G83031",
+   "audit": "CONFIRMED",
+   "second_v2": "demands_documents",
+   "agreed": true,
+   "reason": "The website states \"We require 2 proofs of address\" and \"Proof of identity is also required\" without offering an alternative route or support for applicants who do not have these documents."
+  },
+  {
+   "code": "G85121",
+   "audit": "DISPUTED",
+   "second_v2": "demands_documents",
+   "agreed": true,
+   "reason": "The page states that \"When you visit the surgery for the first time you will need proof of address, Photo ID and the print out of the form online to confirm that the details are correct.\" with no alternative route or exception offered for those without ID."
+  },
+  {
+   "code": "E87665",
+   "audit": "CONFIRMED",
+   "second_v2": "demands_documents",
+   "agreed": true,
+   "reason": "The page explicitly states that \"Until you have submitted both forms and had your ID checked you will not be registered at the practice.\""
+  },
+  {
+   "code": "E85041",
+   "audit": "DISPUTED",
+   "second_v2": "asks_softly",
+   "agreed": false,
+   "reason": "The page politely requests identification by stating \"please bring your ID with you\" without making it a mandatory condition of registration."
+  },
+  {
+   "code": "E85091",
+   "audit": "CONFIRMED",
+   "second_v2": "demands_documents",
+   "agreed": true,
+   "reason": "The practice explicitly states that \"Until you have submitted your ID you will not be registered at the practice.\""
+  },
+  {
+   "code": "E87038",
+   "audit": "DISPUTED",
+   "second_v2": "asks_softly",
+   "agreed": false,
+   "reason": "For online registration, photo ID is only specified because \"To register for online services we do require a copy of your photo identification\", and the offline instruction to \"Return your completed registration forms to reception along with your photo id\" is a request without conditional wording."
+  },
+  {
+   "code": "G84017",
+   "audit": "CONFIRMED",
+   "second_v2": "demands_documents",
+   "agreed": true,
+   "reason": "The page states that \"you must attend the surgery within 7 days with one form of identification and proof of address\" and explicitly warns that \"Until we have seen your identification you will not be registered at the practice.\""
+  },
+  {
+   "code": "E84007",
+   "audit": "CONFIRMED",
+   "second_v2": "demands_documents",
+   "agreed": true,
+   "reason": "The surgery states that \"Until we have seen your identification you will not be registered at the practice.\""
+  },
+  {
+   "code": "E84017",
+   "audit": "CONFIRMED",
+   "second_v2": "demands_documents",
+   "agreed": true,
+   "reason": "The page explicitly states that \"Until we have seen your identification you will not be registered at the practice.\""
+  },
+  {
+   "code": "E84057",
+   "audit": "CONFIRMED",
+   "second_v2": "demands_documents",
+   "agreed": true,
+   "reason": "The page explicitly states that \"Until we have seen your identification you will not be registered at the practice.\""
+  },
+  {
+   "code": "F86034",
+   "audit": "CONFIRMED",
+   "second_v2": "asks_softly",
+   "agreed": false,
+   "reason": "The model's wording was replaced; see the quote."
+  },
+  {
+   "code": "F82005",
+   "audit": "CONFIRMED",
+   "second_v2": "demands_documents",
+   "agreed": true,
+   "reason": "The practice explicitly states that \"We also require one form of photographic ID such as a passport to validate your name and date of birth\" without offering an alternative route."
+  },
+  {
+   "code": "F82011",
+   "audit": "CONFIRMED",
+   "second_v2": "asks_softly",
+   "agreed": false,
+   "reason": "The page only states that patients \"are requested to complete a registration form, questionnaire and supply relevant identification before being fully accepted\", using request wording rather than a mandatory condition."
+  },
+  {
+   "code": "F82642",
+   "audit": "DISPUTED",
+   "second_v2": "asks_softly",
+   "agreed": false,
+   "reason": "The practice uses polite request wording, stating \"When you come to register, please bring with you two forms of identification\", without making registration conditional on them."
+  },
+  {
+   "code": "E85053",
+   "audit": "CONFIRMED",
+   "second_v2": "demands_documents",
+   "agreed": true,
+   "reason": "The page explicitly conditions registration on providing documents, stating \"Until you have submitted your ID you will not be registered at the practice.\""
+  },
+  {
+   "code": "F84666",
+   "audit": "CONFIRMED",
+   "second_v2": "demands_documents",
+   "agreed": true,
+   "reason": "The page states under registration that \"You need to provide us with a copy of proof of address and a photo ID.\" without offering any exceptions or alternative routes."
+  },
+  {
+   "code": "F84088",
+   "audit": "CONFIRMED",
+   "second_v2": "demands_documents",
+   "agreed": true,
+   "reason": "The practice states that \"You are eligible to register with the practice if you live within our catchment area and can provide a valid proof of address and ID.\" with no alternative route offered."
+  },
+  {
+   "code": "F86018",
+   "audit": "CONFIRMED",
+   "second_v2": "demands_documents",
+   "agreed": true,
+   "reason": "The practice states that \"Once all your documentation has been seen and you have completed your health check, you will then be fully registered with the practice\", offering no alternative route for those without documents."
+  },
+  {
+   "code": "E83026",
+   "audit": "DISPUTED",
+   "second_v2": "asks_softly",
+   "agreed": false,
+   "reason": "The practice only states that \"It is Practice policy to ask your photo identification and proof of your address\", which is a request rather than a condition of registration."
+  },
+  {
+   "code": "F84013",
+   "audit": "DISPUTED",
+   "second_v2": "asks_softly",
+   "agreed": false,
+   "reason": "The practice only states \"We will ask you for proof of identity\", which is a request rather than a mandatory condition for registration."
+  },
+  {
+   "code": "F83006",
+   "audit": "CONFIRMED",
+   "second_v2": "asks_softly",
+   "agreed": false,
+   "reason": "The page tells patients to \"Ready two documents A photo ID and proof of address\" for online registration, but it does not state they are required or that registration depends on them, emphasizing instead that \"Wherever you\u2019re coming from, there\u2019s a way to register with us.\""
+  },
+  {
+   "code": "G85046",
+   "audit": "DISPUTED",
+   "second_v2": "asks_softly",
+   "agreed": false,
+   "reason": "The surgery only states that \"we will request proof of ID as well as address\", which is a request rather than a mandatory requirement for registration."
+  },
+  {
+   "code": "G85673",
+   "audit": "DISPUTED",
+   "second_v2": "asks_softly",
+   "agreed": false,
+   "reason": "The surgery only states \"We will ask you for\" and invites patients to get in touch if they \"have any questions regarding supporting documents\", without stating that registration is conditional on providing them."
+  },
+  {
+   "code": "G84003",
+   "audit": "DISPUTED",
+   "second_v2": "asks_softly",
+   "agreed": false,
+   "reason": "The page softly requests documents with \"Please bring two forms of identification and proof of address not older than three months\", rather than stating they are mandatory to register."
+  },
+  {
+   "code": "E83044",
+   "audit": "CONFIRMED",
+   "second_v2": "demands_documents",
+   "agreed": true,
+   "reason": "The page states for paper registration that \"To complete your registration we require the following:\" including \"Proof of Address (dated within the last 3 months)\" and \"Proof of Identity\", with no exception or alternative offered."
+  },
+  {
+   "code": "F86082",
+   "audit": "CONFIRMED",
+   "second_v2": "demands_documents",
+   "agreed": true,
+   "reason": "The page states that \"In order to complete your registration you will need to provide the surgery with your proof of address and identification.\" with no alternative route offered."
+  },
+  {
+   "code": "H84053",
+   "audit": "DISPUTED",
+   "second_v2": "asks_softly",
+   "agreed": false,
+   "reason": "The practice states that \"once we have received your registration we will email you requesting proof of ID\", which is a request rather than a mandatory condition for registration."
+  },
+  {
+   "code": "H84051",
+   "audit": "DISPUTED",
+   "second_v2": "asks_softly",
+   "agreed": false,
+   "reason": "The page says patients "
+  },
+  {
+   "code": "F82610",
+   "audit": "CONFIRMED",
+   "second_v2": "demands_documents",
+   "agreed": true,
+   "reason": "The page lists ID, proof of address, and visas under the heading \"Documents Required for Registration with Mawney Road Surgery\" without offering any alternative or exception for patients who lack them."
+  },
+  {
+   "code": "E85061",
+   "audit": "CONFIRMED",
+   "second_v2": "demands_documents",
+   "agreed": true,
+   "reason": "The page states \"You must attend the surgery within 7 days with 1 forms of identification (ID) .\" without offering an alternative."
+  },
+  {
+   "code": "F83666",
+   "audit": "CONFIRMED",
+   "second_v2": "demands_documents",
+   "agreed": true,
+   "reason": "The page states \"In order to get registered with our practice you will need to:\" followed by \"Provide proof of ID and Address\"."
+  },
+  {
+   "code": "E84036",
+   "audit": "CONFIRMED",
+   "second_v2": "demands_documents",
+   "agreed": true,
+   "reason": "The page explicitly states that \"Until we have seen your identification you will not be registered at the practice.\""
+  },
+  {
+   "code": "F83011",
+   "audit": "CONFIRMED",
+   "second_v2": "demands_documents",
+   "agreed": true,
+   "reason": "The website explicitly states that \"The following ID must be supplied before registration can be accepted: One proof of residency within the practice area\" and \"Photo identity.\""
+  },
+  {
+   "code": "G85722",
+   "audit": "CONFIRMED",
+   "second_v2": "demands_documents",
+   "agreed": true,
+   "reason": "The website states under How to register that new patients must attend with documents \"which you are required to provide\" without offering an alternative route."
+  },
+  {
+   "code": "G85136",
+   "audit": "DISPUTED",
+   "second_v2": "demands_documents",
+   "agreed": true,
+   "reason": "The page states that \"you will need to upload proof of ID and proof of address at the end of the form\" with no exceptions or alternatives for those without them."
+  },
+  {
+   "code": "H85003",
+   "audit": "DISPUTED",
+   "second_v2": "asks_softly",
+   "agreed": false,
+   "reason": "The page states that patients \"will be asked to produce proof of address and if possible a medical card\", which is a request rather than an absolute requirement."
+  },
+  {
+   "code": "E87065",
+   "audit": "CONFIRMED",
+   "second_v2": "demands_documents",
+   "agreed": true,
+   "reason": "The page states that \"Until you have submitted your ID you will not be registered at the practice.\""
+  },
+  {
+   "code": "E84033",
+   "audit": "CONFIRMED",
+   "second_v2": "demands_documents",
+   "agreed": true,
+   "reason": "The page states \"you must attend the surgery within 7 days with two forms of identification\" and confirms \"Until we have seen your identification you will not be registered at the practice.\""
+  },
+  {
+   "code": "E84063",
+   "audit": "CONFIRMED",
+   "second_v2": "demands_documents",
+   "agreed": true,
+   "reason": "The page states that \"After you have completed the form you must attend the surgery within 7 days with two forms of identification\" without offering an alternative if documents cannot be provided."
+  },
+  {
+   "code": "F82663",
+   "audit": "CONFIRMED",
+   "second_v2": "asks_softly",
+   "agreed": false,
+   "reason": "The page states that \"You will be asked to attend the surgery in person and provide photographic ID\" without making registration explicitly conditional on having those documents."
+  },
+  {
+   "code": "F82661",
+   "audit": "CONFIRMED",
+   "second_v2": "demands_documents",
+   "agreed": true,
+   "reason": "The page states that to register \"you will need to visit the surgery to complete a registration form and also show us one of the following\", including forms of identification or a passport."
+  },
+  {
+   "code": "H84625",
+   "audit": "DISPUTED",
+   "second_v2": "asks_softly",
+   "agreed": false,
+   "reason": "The page only states that patients \"are requested provide proof of identity, i.e. a passport and a utility bill with your address\", using request rather than mandatory language and without conditioning registration on them."
+  },
+  {
+   "code": "E85098",
+   "audit": "CONFIRMED",
+   "second_v2": "demands_documents",
+   "agreed": true,
+   "reason": "The page states that \"Until you have submitted your ID you will not be registered at the practice.\""
+  },
+  {
+   "code": "F85623",
+   "audit": "CONFIRMED",
+   "second_v2": "demands_documents",
+   "agreed": true,
+   "reason": "The page states that \"Whichever method you choose to register, to complete your registration we need to see: One proof of identification\" and \"One recent proof of residency /address.\" without offering an exception or alternative for patients lacking these documents."
+  },
+  {
+   "code": "Y05318",
+   "audit": "DISPUTED",
+   "second_v2": "asks_softly",
+   "agreed": false,
+   "reason": "The page says patients \"will be asked to show some form of identification such as a utility bill, or proof of residency in the UK\", which is a request rather than a condition."
+  },
+  {
+   "code": "E87702",
+   "audit": "CONFIRMED",
+   "second_v2": "demands_documents",
+   "agreed": true,
+   "reason": "The page makes identification an explicit condition of registration, stating \"Until we have seen your identification you will not be registered at the practice.\""
+  },
+  {
+   "code": "H85065",
+   "audit": "CONFIRMED",
+   "second_v2": "asks_softly",
+   "agreed": false,
+   "reason": "The practice uses polite request wording, stating \"please email to swlccg.altonpractice@nhs.net along with a proof of address and ID\", rather than making them a mandatory condition of registration."
+  },
+  {
+   "code": "E85694",
+   "audit": "CONFIRMED",
+   "second_v2": "demands_documents",
+   "agreed": true,
+   "reason": "The practice states, \"Please make sure that you provide us with your photo ID and proof of address within 2 weeks in order to complete the registration with our practice\" and will only register patients \"once we receive your photo ID and proof of address.\""
+  },
+  {
+   "code": "G84040",
+   "audit": "CONFIRMED",
+   "second_v2": "demands_documents",
+   "agreed": true,
+   "reason": "The page explicitly states that \"Until we have seen your identification you will not be registered at the practice.\""
+  },
+  {
+   "code": "F86657",
+   "audit": "DISPUTED",
+   "second_v2": "asks_softly",
+   "agreed": false,
+   "reason": "The practice only uses request wording, stating \"Please bring photo ID and proof of address for registration with the practice\", and also offers online registration with no document requirement stated."
+  },
+  {
+   "code": "H84062",
+   "audit": "DISPUTED",
+   "second_v2": "asks_softly",
+   "agreed": false,
+   "reason": "The practice offers an online registration form without requesting documents, is part of the Safe Surgeries Network, and only suggests emailing a paper form \"along with the above mentioned id\" without making it a mandatory condition of registration."
+  },
+  {
+   "code": "E83649",
+   "audit": "DISPUTED",
+   "second_v2": "asks_softly",
+   "agreed": false,
+   "reason": "The surgery only states that \"We shall also ask for some form of identity and proof of address\", which is a request rather than a mandatory condition of registration."
+  },
+  {
+   "code": "E84049",
+   "audit": "CONFIRMED",
+   "second_v2": "demands_documents",
+   "agreed": true,
+   "reason": "The page states that \"Until we have seen your identification you will not be registered at the practice.\""
+  },
+  {
+   "code": "E85077",
+   "audit": "CONFIRMED",
+   "second_v2": "demands_documents",
+   "agreed": true,
+   "reason": "The page states that \"Until we have seen your identification you will not be registered at the practice.\""
+  },
+  {
+   "code": "E83053",
+   "audit": "DISPUTED",
+   "second_v2": "asks_softly",
+   "agreed": false,
+   "reason": "The surgery only asks politely with \"please return to the practice with ID and proof of address\" for paper forms and offers an online registration link without mentioning documents."
+  },
+  {
+   "code": "E84620",
+   "audit": "CONFIRMED",
+   "second_v2": "demands_documents",
+   "agreed": true,
+   "reason": "The page explicitly states that \"Until we have seen your identification you will not be registered at the practice.\""
+  },
+  {
+   "code": "H85653",
+   "audit": "DISPUTED",
+   "second_v2": "asks_softly",
+   "agreed": false,
+   "reason": "The surgery only states that new patients \"will be asked to provide proof of address\" and \"Please deliver to the practice copies of two forms of your identity\", noting later that they \"may require proof of your ID and address to provide certain services\" without conditioning registration on them."
+  },
+  {
+   "code": "F84719",
+   "audit": "CONFIRMED",
+   "second_v2": "demands_documents",
+   "agreed": true,
+   "reason": "The page states that patients are \"still required to contact surgery to finish your registration\" and instructs them to \"contact the practice during our opening hours with 1 proof of ID and 1 proof address and we will complete the registration process for you\"."
+  },
+  {
+   "code": "F86700",
+   "audit": "CONFIRMED",
+   "second_v2": "demands_documents",
+   "agreed": true,
+   "reason": "The page states that \"you are NOT REGISTERED with the Practice until you have brought in your PROOF OF ADDRESS to show you reside in our catchment area\" and adds that without it within 4 weeks \"your application will be void.\""
+  },
+  {
+   "code": "G85708",
+   "audit": "CONFIRMED",
+   "second_v2": "asks_softly",
+   "agreed": false,
+   "reason": "The page only says \"you can visit the surgery with the following information\" and does not make ID or proof of address a mandatory condition of registration."
+  },
+  {
+   "code": "E85726",
+   "audit": "CONFIRMED",
+   "second_v2": "demands_documents",
+   "agreed": true,
+   "reason": "The surgery states that \"Until you have submitted your ID and new patient questionnaire you will not be registered at the practice yet.\""
+  },
+  {
+   "code": "E84693",
+   "audit": "CONFIRMED",
+   "second_v2": "demands_documents",
+   "agreed": true,
+   "reason": "The page states that \"before we can register you to the surgery you must provide us with a valid item of photo identification and some separate proof of address\"."
+  },
+  {
+   "code": "F86698",
+   "audit": "CONFIRMED",
+   "second_v2": "demands_documents",
+   "agreed": true,
+   "reason": "The page states that \"All new patients will also need to provide one proof of ID (passport/ photo driving license) and one proof of address\" without offering any alternative or exception."
+  },
+  {
+   "code": "F86702",
+   "audit": "CONFIRMED",
+   "second_v2": "asks_softly",
+   "agreed": false,
+   "reason": "The page only states that patients eligible to register \"should bring with them\" documents, which is a request rather than a mandatory condition for registration."
+  },
+  {
+   "code": "E87755",
+   "audit": "CONFIRMED",
+   "second_v2": "demands_documents",
+   "agreed": true,
+   "reason": "The page explicitly states as warning advice that \"Until you have submitted your ID you will not be registered at the practice and cannot be seen for any treatment.\""
+  },
+  {
+   "code": "E84699",
+   "audit": "CONFIRMED",
+   "second_v2": "demands_documents",
+   "agreed": true,
+   "reason": "The page explicitly states that \"Until we have seen your identification you will not be registered at the practice.\""
+  },
+  {
+   "code": "E84645",
+   "audit": "DISPUTED",
+   "second_v2": "asks_softly",
+   "agreed": false,
+   "reason": "The practice only states that \"we will ask you for proof of identity\", which is a request rather than a mandatory condition of registration."
+  },
+  {
+   "code": "G83635",
+   "audit": "CONFIRMED",
+   "second_v2": "demands_documents",
+   "agreed": true,
+   "reason": "The page states that to register using the online form, \"You will also need to attach one form of photo ID as part of this submission.\""
+  },
+  {
+   "code": "G85716",
+   "audit": "CONFIRMED",
+   "second_v2": "demands_documents",
+   "agreed": true,
+   "reason": "The page states that \"You will then just need to bring your photo identification and proof of address to reception to complete your application to register\" with no alternative route offered."
+  },
+  {
+   "code": "E84684",
+   "audit": "CONFIRMED",
+   "second_v2": "demands_documents",
+   "agreed": true,
+   "reason": "The page explicitly makes ID a condition of registration by stating, \"Until we have seen your identification you will not be registered at the practice.\""
+  },
+  {
+   "code": "F84741",
+   "audit": "CONFIRMED",
+   "second_v2": "demands_documents",
+   "agreed": true,
+   "reason": "The page states that patients from outside the UK \"must provide proof of entry, proof of a visa or home office letter\" and \"You will also need to bring in two forms of ID\" without offering any alternative."
+  },
+  {
+   "code": "F82680",
+   "audit": "DISPUTED",
+   "second_v2": "asks_softly",
+   "agreed": false,
+   "reason": "The surgery uses the polite request \"please bring one of the following documents if you attend the surgery\" and does not state that registration depends on having them."
+  },
+  {
+   "code": "H85052",
+   "audit": "DISPUTED",
+   "second_v2": "asks_softly",
+   "agreed": false,
+   "reason": "The surgery states that \"Adults are requested to submit two forms of identification\", which makes it a request rather than a mandatory condition of registration."
+  },
+  {
+   "code": "Y02946",
+   "audit": "DISPUTED",
+   "second_v2": "asks_softly",
+   "agreed": false,
+   "reason": "The surgery uses polite request wording by stating \"Please bring a proof of ID and proof of address to this appointment\" without making registration conditional on them."
+  },
+  {
+   "code": "Y02986",
+   "audit": "CONFIRMED",
+   "second_v2": "demands_documents",
+   "agreed": true,
+   "reason": "The practice states that \"We accept these forms via email but only if proof of identification is also attached\" and in person only \"with proof of identification\", offering no alternative route for those without ID."
+  },
+  {
+   "code": "E85743",
+   "audit": "CONFIRMED",
+   "second_v2": "demands_documents",
+   "agreed": true,
+   "reason": "The page states \"you must attend the surgery within 7 days with 2 forms of identification (ID)\" and explicitly adds \"Until you have submitted your ID you will not be registered at the practice.\""
+  },
+  {
+   "code": "H83043",
+   "audit": "DISPUTED",
+   "second_v2": "asks_softly",
+   "agreed": false,
+   "reason": "The page only makes a request by stating \"Please visit the surgery with proof of address and ID at the following times:\" without making them a condition of registration."
+  }
+ ],
+ "what": "The second-opinion prompt (opendoor/classify.py, SECOND, cache tag s2) was re-run on the saved page text of the 96 london1200 red pages, with no page loads. 'audit' is the verdict of the independent three-reader audit (28 moved to amber, 68 confirmed). AI readers, not people."
+}

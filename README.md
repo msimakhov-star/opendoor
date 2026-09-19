@@ -58,6 +58,15 @@ In the audit of the London sample (`data/frozen/london/audit.json`), 33 red and 
 
 Regarding agreement with the reference set (`eval/EVAL_frozen_newham_1505.md`), 20 Newham sites were scored blindly by three automated models with final classifications decided by code majority, without human input. Tested through [eval/run_eval.py](eval/run_eval.py), 19 of the 20 target pages featured in the collection (omitting F84717). Agreement reached 14/19 = 74%, achieving 100% precision and 100% recall for red cases across 3 true red instances, while verbatim extracted text matched source content in 8/8 = 100% of checks. All 5 variations involved inaccessible pages marked as `not_checked` rather than incorrect colour labels. Executing the evaluation script again against `data/frozen/newham` on 2026-09-19 outputs this identical analysis, noting that these figures reflect this particular small group of pages within one London borough.
 
+## The defence check, before and after
+
+The first second-opinion prompt agreed with 96 of 97 red pages of `london1200`; the three-reader audit then moved 28 of the 96 reds to amber. A stricter prompt was written (a condition means the page says a person cannot register without the documents; "please bring", "we will ask", "should" and "requested" count as asks) and re-run on the saved page text of the same 96 red pages. The result is in `eval/second_opinion_offline_test.json`. No pages were loaded and no frozen run was changed.
+
+* It downgrades 26 of the 28 that the audit moved to amber.
+* The two audit-moved pages it still keeps red are G85121 and G85136.
+* It also downgrades 12 of the 68 that the audit confirmed as red, so it is stricter than the audit.
+* The frozen runs and the interface still show the earlier second-opinion result. The stricter prompt applies to new live runs.
+
 ## How it works
 
 ![The output validator rejecting a quote during the London replay](docs/img/hero-validator.png)
