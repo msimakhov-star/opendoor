@@ -141,10 +141,7 @@ uv run modal deploy opendoor/modal_app.py
 uv run python -m opendoor.pipeline --postcode "E13 8AA" --limit 40
 uv run modal run opendoor/modal_app.py::watch
 ```
-
 The final command initialises the scheduled weekly process with the Newham dataset and triggers an initial pass.
-
-In a live run, the search box also accepts a town, a place name or a street address, which is sent to OpenStreetMap Nominatim and postcodes.io to find the nearest postcode and kept by Open Door only in a local cache file on the machine running the app, not in the repository. Places outside England are refused because the NHS guidance Open Door checks is for England, and replays stay postcode based.
 
 ## What it does not do
 

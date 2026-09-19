@@ -10,7 +10,6 @@ from pydantic import BaseModel
 
 from opendoor import pipeline
 from opendoor.letter import draft_letter
-from opendoor.locate import LocateError, locate
 
 ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "data"
@@ -40,13 +39,9 @@ def index():
 
 @app.post("/api/run")
 def start_run(req: RunRequest):
-    prefixes, searched = pipeline.parse_prefixes(req.postcode), None
-    if not prefixes:  # not a postcode, a district or an area: try it as a place name or a street address
-        try:
-            searched = locate(req.postcode)
-        except LocateError as e:
-            raise HTTPException(400, str(e))
-        prefixes = pipeline.parse_prefixes(searched["postcode"])
+    prefixes = pipeline.parse_prefixes(req.postcode)
+    if not prefixes:
+        raise HTTPException(400, "Give a postcode such as E13 8AA, a district such as E13, or an area such as SE.")
     limit = max(1, min(req.limit, 1500))
     run_id = pipeline.new_run_id(prefixes)
     state = LIVE[run_id] = {"events": [], "done": False}
@@ -58,7 +53,7 @@ def start_run(req: RunRequest):
             state["done"] = True
 
     threading.Thread(target=work, daemon=True).start()
-    return {"run_id": run_id, "searched": searched}  # searched: {place, matched, postcode, ...} when a place name was typed, else null
+    return {"run_id": run_id}
 
 
 @app.get("/api/run/{run_id}")
@@ -100,15 +95,6 @@ def audit(run_id: str):
     if not f.exists():
         raise HTTPException(404, "no audit for this run")
     return json.loads(f.read_text())
-
-
-@app.get("/api/locate")
-def locate_place(q: str):
-    """Where would a search for this text look? {place, matched, postcode, lat, lon, country}, or a 400 with a plain message."""
-    try:
-        return locate(q)
-    except LocateError as e:
-        raise HTTPException(400, str(e))
 
 
 @app.get("/api/runs")
