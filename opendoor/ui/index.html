@@ -1016,6 +1016,7 @@ document.addEventListener("keydown", ev => { if (ev.key === "Escape") { const bi
   reset("ready", null);
   const q = new URLSearchParams(location.search); // ?clean for a clean frame, ?replay=<run id> to start a replay on load
   if (q.has("clean")) document.body.classList.add("clean");
+  document.querySelector('[data-speed="' + q.get("speed") + '"]')?.click(); // ?speed=1, 4 or 16: clean mode hides the speed buttons
   try { await listRuns(); api = true; if (q.get("replay")) startReplay(q.get("replay")); }
   catch { // opened as a file or served without the API: show the built in sample so the design can be reviewed offline
     api = false; $("replay").add(new Option("Built in sample run", "__sample")); startSample();
