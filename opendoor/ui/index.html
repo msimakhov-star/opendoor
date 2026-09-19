@@ -137,6 +137,22 @@ main{display:grid;grid-template-columns:minmax(0,1fr) minmax(520px,47vw);min-hei
 #area .note{margin:0;font-size:13px;line-height:1.35}
 @keyframes rise{from{transform:translateY(20px);opacity:0}}
 
+/* opening frame: the question, before any run (the first seconds of the video) */
+#intro{position:absolute;inset:0;z-index:950;display:grid;align-content:center;padding:40px 7%;
+  background:linear-gradient(180deg,rgba(10,14,19,.72),rgba(10,14,19,.9))}
+#intro[hidden]{display:none}
+#intro h1{margin:0 0 22px;font-size:clamp(34px,3.3vw,60px);line-height:1.08;letter-spacing:-.025em;font-weight:800;max-width:19ch}
+#intro h1 em{font-style:normal;color:var(--green)}
+#intro .how{margin:0;font-size:clamp(18px,1.3vw,23px);color:#c4cedb;max-width:46ch}
+body.clean #intro .keys{display:none}
+#intro .keys{margin:14px 0 0;font-size:14px;color:var(--mute)}
+#intro kbd,.keys kbd{font:700 13px ui-monospace,Menlo,monospace;padding:2px 7px;border:1px solid #3a4a60;border-bottom-width:2px;border-radius:5px;color:var(--text)}
+/* recording mode: C hides the event log and the run controls a viewer does not need; the REPLAY badge always stays */
+body.clean #log,body.clean #limit,body.clean label[for=limit],body.clean #replay,body.clean .seg{display:none}
+/* persona moment: dots that ask for something the person ticked flash once */
+.pin.flash::before{animation:flash .9s ease-out}
+@keyframes flash{0%{transform:scale(2.4);box-shadow:0 0 30px 10px var(--c)}}
+
 /* the code check catching the model: shown over the map for a few seconds, the hero moment of a run */
 #toast{position:absolute;top:14px;left:50%;transform:translateX(-50%);z-index:950;width:min(720px,calc(100% - 120px));cursor:pointer;
   background:rgba(28,15,4,.97);border:2px solid var(--orange);border-radius:12px;padding:12px 18px 13px;box-shadow:0 0 44px -6px var(--orange);animation:drop .35s ease-out}
@@ -172,8 +188,9 @@ blockquote cite{display:block;font-size:15px;font-weight:400;font-style:normal;c
 /* patient answer: the default right panel */
 .answer .big{font-size:29px;line-height:1.22;font-weight:700;margin:0 0 8px;letter-spacing:-.01em}
 .answer .n{font-size:46px;line-height:1;font-weight:800;color:var(--green);font-variant-numeric:tabular-nums;margin-right:6px;vertical-align:-3px}
-.answer .n.r{color:var(--red)}
-.answer .n.a{color:var(--amber);font-size:inherit;vertical-align:0}
+.answer .n{display:inline-block;--sc:var(--green)} /* inline-block so the count can pop when a persona box is ticked */
+.answer .n.r{color:var(--red);--sc:var(--red)}
+.answer .n.a{color:var(--amber);--sc:var(--amber);font-size:inherit;vertical-align:0}
 .answer .big.m{font-size:24px;margin-top:22px}
 .answer .big.m .n{font-size:38px}
 .answer .sub{margin-bottom:12px}
@@ -181,6 +198,8 @@ blockquote cite{display:block;font-size:15px;font-weight:400;font-style:normal;c
 .answer + .eyebrow{margin-top:30px}
 
 .split{margin-top:16px;cursor:zoom-in}
+.split .hint{margin-left:12px;font-size:14px;font-weight:600;letter-spacing:.02em;color:var(--mute);white-space:nowrap}
+.split.big .hint{display:none}
 .split h3{margin:0 0 12px;font-size:28px}
 .split .cols{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
 .split.single .cols{grid-template-columns:1fr}
@@ -192,8 +211,6 @@ figcaption{font-size:14px;text-transform:uppercase;letter-spacing:.08em;color:va
 figure .pill{margin:10px 0 6px;font-size:12px;padding:3px 10px}
 figure blockquote.q{margin:0;font-size:18px;line-height:1.35;padding:10px 14px;border-left-width:5px;font-weight:600}
 figure blockquote.q cite{font-size:13px;margin-top:6px}
-.split.big .crop{aspect-ratio:auto!important}
-.split.big .crop img{position:static!important;width:100%!important}
 .split.big figure blockquote.q{font-size:26px}
 .mock{aspect-ratio:2/1;overflow:hidden;border-radius:8px;border:2px solid #2c3a4d;background:#f4f6f8;color:#1b2430;padding:14px;font-size:14px}
 .mock .bar{height:10px;border-radius:5px;background:#d5dbe3;margin:0 0 10px;width:70%}
@@ -308,6 +325,11 @@ dialog textarea{width:100%;height:46vh;background:#0a0f16;border:1px solid #2c3a
 <main>
   <div id="mapwrap">
     <div id="map"><div id="nomap">Map library did not load (no network). The run still works: see the panel and the event log.</div></div>
+    <section id="intro" aria-labelledby="intro-h" hidden>
+      <h1 id="intro-h">Do GP websites near you ask for documents <em>the NHS says you do not need?</em></h1>
+      <p class="how">Open Door reads the registration page of every GP surgery near a postcode, quotes what each one says, and puts it on the map.</p>
+      <p class="keys">Type a postcode and press Run, or replay a saved run. Keys: <kbd>N</kbd> Newham, <kbd>L</kbd> London, <kbd>1</kbd> to <kbd>9</kbd> demo runs, <kbd>C</kbd> clean frame, <kbd>Esc</kbd> back.</p>
+    </section>
     <section id="toast" role="status" hidden></section>
     <section id="area" aria-live="polite" hidden></section>
   </div>
@@ -427,7 +449,7 @@ function reset(mode, runId) {
   gen++;
   if (S) for (const p of S.P.values()) if (p.marker) p.marker.remove();
   S = fresh(); S.mode = mode; S.runId = runId; S.start = performance.now(); $("run").disabled = false;
-  $("log").replaceChildren(); $("area").hidden = true; hideToast();
+  $("log").replaceChildren(); $("area").hidden = true; hideToast(); $("intro").hidden = mode !== "ready";
   setMode(); counters(); renderPanel();
 }
 const P = code => { if (!S.P.has(code)) S.P.set(code, {code, name: code, rejections: 0}); return S.P.get(code); };
@@ -756,7 +778,7 @@ function shot(src, caption, quote, tone, box) {
   img.onerror = () => wrap.replaceWith(mock(quote, tone, "Screenshot not available. Showing the quoted sentence."));
   img.onload = () => { // quote_box is in pixels of the PNG: show a 2:1 window around it, never upscaled past the PNG
     if (!box || !(box.width > 0)) return;
-    const W = img.naturalWidth, H = img.naturalHeight, pad = 36;
+    const W = img.naturalWidth, H = img.naturalHeight, pad = 20; // tight crop: the boxed sentence is as large as the column allows
     let w = Math.min(W, 2 * H, Math.max(box.width + 2 * pad, 2 * (box.height + 2 * pad))), h = w / 2;
     const x = Math.max(0, Math.min(W - w, box.x + box.width / 2 - w / 2)), y = Math.max(0, Math.min(H - h, box.y - Math.min(0.3 * h, (h - box.height) / 2)));
     Object.assign(img.style, {width: W / w * 100 + "%", left: -x / w * 100 + "%", top: -y / h * 100 + "%"});
@@ -804,6 +826,7 @@ function renderPanel() {
       underShot(shot(shots ? shots + "nhs.png" : null, "nhs.uk", NHS_QUOTE, "green", S.nhsBox), "green", "NHS guidance", NHS_QUOTE, "Quoted from nhs.uk"));
     const red = p.category === "demands_documents";
     s.append(el("h3", "", !red ? "This surgery's website next to nhs.uk" : /(^|\.)nhs\.uk$/.test(host(url)) ? "Two NHS websites that disagree" : "This surgery's website disagrees with nhs.uk"), cols);
+    s.querySelector("h3").append(el("span", "hint", "Click to enlarge"));
     s.onclick = ev => { if (!ev.target.closest("a")) s.classList.toggle("big"); };
     const adv = S.adv && S.adv[p.code];
     if (red && !(adv && adv.letter)) { // letters are for red only: nhs.uk allows asking for documents for other reasons, so amber does not contradict it
@@ -867,6 +890,12 @@ function advocate(p, a) { // every string here came from the model or the metric
   }
   return s;
 }
+function pop(key, b) { // a number that changed since the last render pops, so ticking a persona box reads on camera
+  const was = (S.ans ||= {})[key];
+  if (was != null && was !== b.textContent) b.classList.add("tick");
+  S.ans[key] = b.textContent;
+  return b;
+}
 function renderAnswer(panel, all) {
   const box = el("section", "answer"), ticked = lacking.size > 0;
   const says = all.filter(p => p.category === "says_not_needed"), none = all.filter(p => p.category === "no_mention");
@@ -875,16 +904,16 @@ function renderAnswer(panel, all) {
   const where = S.near ? " near you" : " in this area";
   box.append(el("p", "eyebrow", ticked ? "Your answer, without " + [...lacking].map(k => DOC_NAME[k]).join(", ") : "Your answer"));
   const big = el("p", "big");
-  big.append(el("b", "n", String(says.length)), (says.length === 1 ? " surgery" + where + " says on its website" : " surgeries" + where + " say on their website") +
+  big.append(pop("says", el("b", "n", String(says.length))), (says.length === 1 ? " surgery" + where + " says on its website" : " surgeries" + where + " say on their website") +
     " you can register without documents.");
   box.append(big);
   if (none.length) box.append(el("p", "sub", plural(none.length, "more has", "more have") + " no document wording on the registration page."));
   const list = nearList([...says, ...none], null, p => p.category === "no_mention" ? "no document wording" : "");
   if (list) box.append(list);
   const m = el("p", "big m");
-  m.append(el("b", "n r", String(reds.length)), (reds.length === 1 ? " says on its website" : " say on their website") + " you must bring " + (ticked ? "something you ticked." : "documents."));
+  m.append(pop("reds", el("b", "n r", String(reds.length))), (reds.length === 1 ? " says on its website" : " say on their website") + " you must bring " + (ticked ? "something you ticked." : "documents."));
   box.append(m);
-  if (ambers.length) { const a = el("p", "sub"); a.append(el("b", "n a", String(ambers.length)), (ambers.length === 1 ? " more asks" : " more ask") + " for " + (ticked ? "something you ticked" : "documents") + ", softly or inconsistently."); box.append(a); }
+  if (ambers.length) { const a = el("p", "sub"); a.append(pop("ambers", el("b", "n a", String(ambers.length))), (ambers.length === 1 ? " more asks" : " more ask") + " for " + (ticked ? "something you ticked" : "documents") + ", softly or inconsistently."); box.append(a); }
   if (!ticked) box.append(el("p", "note", "Tick what you don't have at the top. The answer updates straight away, no new run."));
   const hl = nearList(hits, null, p => wanted(p).join(", "), "asks", 4);
   if (hl) box.append(hl);
@@ -956,14 +985,27 @@ for (const b of document.querySelectorAll("[data-doc]")) b.onclick = () => { // 
   b.setAttribute("aria-pressed", String(lacking.has(k)));
   for (const p of S.P.values()) setMarker(p);
   renderPanel();
+  if (lacking.has(k)) for (const p of S.P.values()) { // the dots this box affects flash once
+    const n = p.marker && blocks(p) && docTypes(p).includes(k) && p.marker.getElement();
+    if (n) { n.classList.remove("flash"); void n.offsetWidth; n.classList.add("flash"); setTimeout(() => n.classList.remove("flash"), 1000); }
+  }
 };
+document.addEventListener("keydown", ev => { // recording keys; never while typing or with a modifier
+  if (ev.ctrlKey || ev.metaKey || ev.altKey || $("dlg").open || ev.target.closest("input, select, textarea")) return;
+  const k = ev.key.toLowerCase(), demo = [...document.querySelectorAll('#replay optgroup[label="Demo runs"] option')].map(o => o.value);
+  const id = k === "n" ? "newham" : k === "l" ? "london" : /^[1-9]$/.test(k) ? demo[+k - 1] : null;
+  if (id && [...$("replay").options].some(o => o.value === id)) { ev.preventDefault(); startReplay(id); }
+  else if (k === "c") document.body.classList.toggle("clean");
+});
 document.addEventListener("keydown", ev => { if (ev.key === "Escape") { const big = document.querySelector(".split.big"); if (big) big.classList.remove("big"); else if (S.sel && !$("dlg").open) select(null); } });
 
 (async function init() {
   sample = JSON.parse($("sample").textContent);
   initMap();
   reset("ready", null);
-  try { await listRuns(); api = true; }
+  const q = new URLSearchParams(location.search); // ?clean for a clean frame, ?replay=<run id> to start a replay on load
+  if (q.has("clean")) document.body.classList.add("clean");
+  try { await listRuns(); api = true; if (q.get("replay")) startReplay(q.get("replay")); }
   catch { // opened as a file or served without the API: show the built in sample so the design can be reviewed offline
     api = false; $("replay").add(new Option("Built in sample run", "__sample")); startSample();
   }
