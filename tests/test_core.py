@@ -111,14 +111,14 @@ def test_api():
     try:
         c = TestClient(api.app)
         r = c.post("/api/run", json={"postcode": "e13 8aa", "limit": 5, "lacking": ["passport"]})  # an old client's extra field is ignored
-        assert r.status_code == 200 and set(r.json()) == {"run_id"}, r.text
+        assert r.status_code == 200 and set(r.json()) == {"run_id", "searched"}, r.text
         for _ in range(50):
             if calls:
                 break
             __import__("time").sleep(0.02)
         (args, kw), = calls
         assert args[:2] == (["E13 8AA"], 5) and "lacking" not in kw
-        assert c.post("/api/run", json={"postcode": "London"}).status_code == 400
+        assert c.post("/api/run", json={"postcode": "??"}).status_code == 400  # too short to search as a place; "London" is now a valid place search
         for bad in (".", "..", ".hidden"):  # a run id must not start with a dot (URLs normalise "/./", so call run_dir itself)
             try:
                 api.run_dir(bad); raise AssertionError(bad)
@@ -270,6 +270,33 @@ def test_fake_box_and_readable_errors():
     assert r("net::ERR_NAME_NOT_RESOLVED at http://x") == pipeline.UNREACHABLE and r("Plain words.") == "Plain words."
     assert pipeline._why({"reason": r("TimeoutError: Page.goto: Timeout 25000ms exceeded.")}) == "timeout"
     assert r("HTTPError: HTTP Error 404: Not Found") == "The practice has no profile page on nhs.uk."
+
+
+def test_place_search_uses_no_network_here():
+    """A stubbed transport stands in for Nominatim and postcodes.io: a place becomes a postcode, Scotland and gibberish are refused."""
+    import httpx, tempfile
+    from opendoor import locate as L
+    def handler(req):
+        if "nominatim" in req.url.host:
+            q = req.url.params["q"].lower()
+            return httpx.Response(200, json=[{"lat": "51.54", "lon": "-0.0035", "display_name": "Stratford, Newham, London"}] if "stratford" in q
+                                  else [{"lat": "55.95", "lon": "-3.19", "display_name": "Edinburgh"}] if "edinburgh" in q else [])
+        lat = float(req.url.params["lat"])
+        return httpx.Response(200, json={"result": [{"postcode": "E15 1AZ" if lat < 52 else "EH1 1YZ", "country": "England" if lat < 52 else "Scotland"}]})
+    L.CACHE = Path(tempfile.mkdtemp()); L._last[0] = 0.0
+    c = httpx.Client(transport=httpx.MockTransport(handler))
+    orig, L._polite_get = L._polite_get, lambda client, url, params: client.get(url, params=params)
+    try:
+        got = L.locate("Stratford, London", c)
+        assert got["postcode"] == "E15 1AZ" and got["place"] == "Stratford, London" and got["country"] == "England"
+        for bad, word in (("Edinburgh", "Scotland"), ("zzzz nowhere", "Could not find"), ("ab", "Type a postcode")):
+            try:
+                L.locate(bad, c); assert False, bad
+            except L.LocateError as e:
+                assert word in str(e)
+    finally:
+        L._polite_get = orig
+    assert pipeline.parse_prefixes("Stratford, London") == [] and pipeline.parse_prefixes("E13 8AA") == ["E13 8AA"]  # only non-postcodes reach the place search
 
 
 if __name__ == "__main__":
