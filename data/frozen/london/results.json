@@ -20,9 +20,9 @@
    "demands_documents": 14,
    "asks_softly": 19,
    "says_not_needed": 24,
-   "no_mention": 103,
+   "no_mention": 102,
    "unclear": 0,
-   "not_checked": 40
+   "not_checked": 41
   },
   "statuses": {
    "ok": 161,
@@ -2165,7 +2165,9 @@
    "shot": "shots/E87002.png",
    "retries": 0,
    "secs": 5.5,
-   "checked_at": "2026-09-19T13:27:30+00:00"
+   "checked_at": "2026-09-19T13:27:30+00:00",
+   "box_occluded": true,
+   "box_note": "The saved screenshot has a closure notice over the boxed sentence; the quote itself was verified in the page text."
   },
   {
    "code": "E87004",
@@ -2884,15 +2886,15 @@
    "status": "ok",
    "links_national_form": false,
    "doc_hits": [],
-   "category": "no_mention",
-   "colour": "green-outline",
+   "category": "not_checked",
+   "colour": "grey",
    "quote": "",
    "quote_verified": false,
    "quote_box": null,
    "documents": [],
    "doc_types": [],
    "distance_km": null,
-   "reason": "No document wording on the page.",
+   "reason": "The website listed for this practice on nhs.uk showed a directory page, not a surgery website, so it was not checked.",
    "self_contradiction": false,
    "shot": "shots/E85005.png",
    "retries": 0,
@@ -3254,7 +3256,9 @@
    "shot": "shots/E87066.png",
    "retries": 0,
    "secs": 2.1,
-   "checked_at": "2026-09-19T13:27:28+00:00"
+   "checked_at": "2026-09-19T13:27:28+00:00",
+   "box_occluded": true,
+   "box_note": "The saved screenshot has a survey pop-up over the boxed sentence; the quote itself was verified in the page text."
   },
   {
    "code": "E87069",
@@ -3324,7 +3328,9 @@
    "shot": "shots/E87070.png",
    "retries": 0,
    "secs": 3.7,
-   "checked_at": "2026-09-19T13:27:33+00:00"
+   "checked_at": "2026-09-19T13:27:33+00:00",
+   "box_occluded": true,
+   "box_note": "The saved screenshot has a survey pop-up over the boxed sentence; the quote itself was verified in the page text."
   },
   {
    "code": "E87648",
@@ -3368,7 +3374,9 @@
    "shot": "shots/E87648.png",
    "retries": 0,
    "secs": 8.3,
-   "checked_at": "2026-09-19T13:27:35+00:00"
+   "checked_at": "2026-09-19T13:27:35+00:00",
+   "box_occluded": true,
+   "box_note": "The saved screenshot has a survey pop-up and a cookie banner over the boxed sentence; the quote itself was verified in the page text."
   },
   {
    "code": "E83006",

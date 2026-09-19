@@ -302,7 +302,7 @@
 {"type": "captured", "t": 28.12, "code": "F84003", "status": "ok", "challenge": false, "secs": 6.1, "http_status": 200}
 {"type": "classified", "t": 28.12, "code": "F84003", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
 {"type": "captured", "t": 28.25, "code": "E85005", "status": "ok", "challenge": false, "secs": 6.3, "http_status": 200}
-{"type": "classified", "t": 28.25, "code": "E85005", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "classified", "t": 28.25, "code": "E85005", "category": "not_checked", "colour": "grey", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
 {"type": "captured", "t": 28.39, "code": "F84047", "status": "ok", "challenge": false, "secs": 4.4, "http_status": 200}
 {"type": "classified", "t": 28.39, "code": "F84047", "category": "demands_documents", "colour": "red", "quote": "To register, please bring with you your proof of address, photographic ID, details of your previous GP and your NHS number if you have this.", "retries": 0, "doc_types": ["photo_id", "proof_of_address"], "distance_km": null}
 {"type": "captured", "t": 28.39, "code": "F86006", "status": "ok", "challenge": false, "secs": 6.2, "http_status": 200}
@@ -318,7 +318,7 @@
 {"type": "captured", "t": 28.74, "code": "G85032", "status": "blocked", "challenge": true, "secs": 7.0, "http_status": 403}
 {"type": "classified", "t": 28.74, "code": "G85032", "category": "not_checked", "colour": "grey", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
 {"type": "boxed", "t": 28.8, "code": "E87739", "shot": "shots/E87739.png"}
-{"type": "boxed", "t": 28.82, "code": "E87066", "shot": "shots/E87066.png"}
+{"type": "boxed", "t": 28.82, "code": "E87066", "shot": "shots/E87066.png", "box_occluded": true}
 {"type": "boxed", "t": 28.9, "code": "F84012", "shot": "shots/F84012.png"}
 {"type": "boxed", "t": 28.9, "code": "H85002", "shot": "shots/H85002.png"}
 {"type": "captured", "t": 29.43, "code": "F85650", "status": "ok", "challenge": false, "secs": 7.4, "http_status": 200}
@@ -399,7 +399,7 @@
 {"type": "captured", "t": 32.42, "code": "E87753", "status": "ok", "challenge": false, "secs": 2.6, "http_status": 200}
 {"type": "classified", "t": 32.42, "code": "E87753", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
 {"type": "quote_rejected", "t": 32.45, "code": "G83031", "attempt": 1, "reason": "The quote names no document (ID, proof of address, passport ...). Quote the sentence that names the document, or change category."}
-{"type": "boxed", "t": 32.48, "code": "E87002", "shot": "shots/E87002.png"}
+{"type": "boxed", "t": 32.48, "code": "E87002", "shot": "shots/E87002.png", "box_occluded": true}
 {"type": "captured", "t": 32.73, "code": "F85666", "status": "ok", "challenge": false, "secs": 3.1, "http_status": 200}
 {"type": "classified", "t": 32.73, "code": "F85666", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
 {"type": "captured", "t": 32.83, "code": "E87013", "status": "ok", "challenge": false, "secs": 11.1, "http_status": 200}
@@ -583,8 +583,8 @@
 {"type": "captured", "t": 41.63, "code": "E85008", "status": "ok", "challenge": false, "secs": 19.8, "http_status": 200}
 {"type": "captured", "t": 41.8, "code": "F84036", "status": "ok", "challenge": false, "secs": 9.8, "http_status": 200}
 {"type": "classified", "t": 41.8, "code": "F84036", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
-{"type": "boxed", "t": 41.9, "code": "E87648", "shot": "shots/E87648.png"}
-{"type": "boxed", "t": 41.9, "code": "E87070", "shot": "shots/E87070.png"}
+{"type": "boxed", "t": 41.9, "code": "E87648", "shot": "shots/E87648.png", "box_occluded": true}
+{"type": "boxed", "t": 41.9, "code": "E87070", "shot": "shots/E87070.png", "box_occluded": true}
 {"type": "captured", "t": 41.95, "code": "E83013", "status": "ok", "challenge": false, "secs": 15.2, "http_status": 200}
 {"type": "classified", "t": 41.95, "code": "E83013", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
 {"type": "captured", "t": 42.11, "code": "H84055", "status": "ok", "challenge": false, "secs": 10.3, "http_status": 200}
@@ -648,4 +648,4 @@
 {"type": "classified", "t": 59.31, "code": "E83007", "category": "not_checked", "colour": "grey", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
 {"type": "captured", "t": 59.45, "code": "F84022", "status": "error", "challenge": false, "secs": 26.2, "http_status": null}
 {"type": "classified", "t": 59.45, "code": "F84022", "category": "not_checked", "colour": "grey", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
-{"type": "run_finished", "t": 59.46, "counts": {"demands_documents": 14, "asks_softly": 19, "says_not_needed": 24, "no_mention": 103, "unclear": 0, "not_checked": 40}, "wall_secs": 59.5, "total": 200, "quotes_rejected": 1, "gemini_calls": 10, "error": null, "containers_peak": 96}
+{"type": "run_finished", "t": 59.46, "counts": {"demands_documents": 14, "asks_softly": 19, "says_not_needed": 24, "no_mention": 102, "unclear": 0, "not_checked": 41}, "wall_secs": 59.5, "total": 200, "quotes_rejected": 1, "gemini_calls": 10, "error": null, "containers_peak": 96}
