@@ -1,0 +1,10 @@
+.env
+.venv/
+__pycache__/
+.logfire/
+data/runs/
+data/cache/
+*.pyc
+.DS_Store
+CONTRACT.md
+docs/
