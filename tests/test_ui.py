@@ -59,6 +59,13 @@ def main():
     js_types = json.loads(re.search(r"const DOC_TYPES = (\{.*?\});", html).group(1))
     assert js_types == {k: rx.pattern for k, rx in DOC_TYPES.items()}, "DOC_TYPES in index.html differs from opendoor/models.py"
     assert "lacking" not in html.split('fetch("/api/run", ')[1][:200], "what the person does not have must not be sent to the server"
+    # My card: the person's details stay in the browser. No network call inside the card code, and every localStorage use is guarded.
+    card = html.split("/* ---------- my card:", 1)[1].split("/* ---------- end my card ----------", 1)[0].split("\n", 1)[1]  # without the header comment
+    for banned in ("fetch(", "XMLHttpRequest", "sendBeacon", "WebSocket", "innerHTML", "insertAdjacentHTML", "EventSource"):
+        assert banned not in card, f"my card code must not use {banned}"
+    for m in re.finditer("localStorage", card):
+        assert "try {" in card[max(0, m.start() - 90):m.start()], "localStorage in the card must sit inside try { }"
+    assert 'type="file"' not in html, "no file upload: my card is browser only"
     print(f"ok: {len(fix['events'])} events, {len(results)} results, embedded copy matches, wording rules hold")
 
 

@@ -24,9 +24,10 @@ header{display:flex;flex-wrap:wrap;align-items:center;gap:10px 20px;padding:10px
 .controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .controls label,.persona>span{font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--mute);font-weight:700;white-space:nowrap}
 input,select{background:#0a0f16;border:1px solid #2c3a4d;border-radius:8px;padding:8px 12px;height:42px}
-#postcode{width:160px;text-overflow:ellipsis;font-size:21px;font-weight:700;text-transform:uppercase}
+#postcode{width:140px;text-overflow:ellipsis;font-size:21px;font-weight:700;text-transform:uppercase}
 #limit{width:72px;padding-left:6px;padding-right:6px} /* 4 digits fit */
-#replay{max-width:160px}
+#replay{max-width:100px}
+#mycard-open{padding:0 12px}
 .vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap} /* read by screen readers, not shown */
 .btn{background:#1a2432;border:1px solid #2c3a4d;border-radius:8px;padding:0 18px;height:42px;cursor:pointer;font-weight:600;text-decoration:none;color:var(--text);display:inline-flex;align-items:center}
 .btn:hover{background:#223044}
@@ -36,7 +37,7 @@ input,select{background:#0a0f16;border:1px solid #2c3a4d;border-radius:8px;paddi
 .seg{display:inline-flex;border:1px solid #2c3a4d;border-radius:8px;overflow:hidden}
 .seg button{background:none;border:0;height:40px;padding:0 12px;cursor:pointer;color:var(--mute);font-weight:700}
 .seg button[aria-pressed=true]{background:#2c3a4d;color:var(--text)}
-#mode{font-size:13px;font-weight:800;letter-spacing:.1em;padding:5px 10px;border-radius:6px;border:1px solid #2c3a4d;color:var(--mute);white-space:nowrap}
+#mode{font-size:12px;font-weight:800;letter-spacing:.06em;padding:5px 8px;border-radius:6px;border:1px solid #2c3a4d;color:var(--mute);white-space:nowrap}
 #mode.live{color:#fff;background:var(--red);border-color:var(--red)}
 #mode.replay,#mode.sample{color:#1a1200;background:var(--amber);border-color:var(--amber)}
 #mode.done{color:#04130b;background:var(--green);border-color:var(--green)}
@@ -265,6 +266,29 @@ footer{padding:9px 22px;background:var(--bar);border-top:1px solid var(--line);f
 dialog{background:var(--panel);color:var(--text);border:1px solid #2c3a4d;border-radius:14px;padding:26px 28px;width:min(820px,92vw)}
 dialog::backdrop{background:rgba(4,6,9,.8)}
 dialog h2{font-size:28px}
+/* My registration card: browser only, nothing is sent anywhere */
+#mycard{width:min(760px,94vw)}
+.mc-tabs{display:flex;gap:8px;margin:0 0 14px}
+.mc-tabs button{height:40px;padding:0 16px;border-radius:8px;border:1px solid #2c3a4d;background:#0a0f16;color:#c4cedb;cursor:pointer;font-weight:700}
+.mc-tabs button[aria-selected=true]{background:#2c3a4d;color:var(--text);border-color:var(--green)}
+.mc-form{display:grid;grid-template-columns:1fr 1fr;gap:10px 16px}
+.mc-form label,.mc-h{display:grid;gap:4px;font-size:14px;font-weight:700;color:var(--mute);text-transform:uppercase;letter-spacing:.06em}
+.mc-form input:not([type=checkbox]){text-transform:none;letter-spacing:0;font-size:18px;font-weight:500;color:var(--text)}
+label.mc-tick{display:flex;align-items:center;gap:10px;font-size:18px;font-weight:500;text-transform:none;letter-spacing:0;color:var(--text)}
+.mc-tick input{width:20px;height:20px;flex:none;accent-color:var(--green)}
+.mc-docs{display:grid;grid-template-columns:1fr 1fr;gap:8px 16px;margin-bottom:8px}
+.mc-h{margin:16px 0 8px}
+.mc-card{background:#fff;color:#111;border-radius:12px;padding:26px 30px;font-size:22px;line-height:1.4}
+.mc-card h3{margin:0 0 14px;font-size:32px;line-height:1.15;color:#111}
+.mc-card q{display:block;margin:0 0 4px;padding:10px 14px;border-left:6px solid #0a7d3c;background:#eaf6ef;font-weight:700;quotes:none}
+.mc-card .src{margin:0 0 16px;font-size:16px;color:#444}
+.mc-card dl{margin:0 0 14px;display:grid;grid-template-columns:max-content 1fr;gap:4px 14px}
+.mc-card dt{font-weight:700;color:#444}.mc-card dd{margin:0}
+.mc-card p{margin:0 0 12px}
+.mc-card .foot{margin:16px 0 0;padding-top:10px;border-top:1px solid #ccc;font-size:15px;color:#555}
+@media print{body.printing>*:not(#mycard){display:none!important}body.printing #mycard{position:static;border:0;background:#fff;padding:0;width:auto;max-width:none}
+  body.printing #mycard>*:not(#mc-p2),body.printing #mc-p2 .actions{display:none!important}body.printing #mc-p2{display:block!important}
+  body.printing .mc-card{border-radius:0;padding:0;font-size:20pt}body.printing{overflow:visible;display:block;background:#fff}}
 dialog textarea{width:100%;height:46vh;background:#0a0f16;border:1px solid #2c3a4d;border-radius:8px;padding:14px;font-size:17px;line-height:1.5;resize:vertical}
 .never{font-size:20px;font-weight:800;color:var(--amber);margin:4px 0 14px}
 
@@ -299,6 +323,7 @@ dialog textarea{width:100%;height:46vh;background:#0a0f16;border:1px solid #2c3a
       <button type="button" data-speed="1" aria-pressed="false">x1</button><button type="button" data-speed="4" aria-pressed="true">x4</button><button type="button" data-speed="16" aria-pressed="false">x16</button>
     </span>
     <span id="mode">READY</span>
+    <button type="button" class="btn" id="mycard-open" title="Your details stay in this browser">My card</button>
   </form>
   <div class="persona" role="group" aria-labelledby="persona-l">
     <span id="persona-l">I don't have:</span>
@@ -361,6 +386,38 @@ dialog textarea{width:100%;height:46vh;background:#0a0f16;border:1px solid #2c3a
     <a class="btn go" id="dlg-mail" href="mailto:">Approve and open in my email</a>
     <button class="btn" id="dlg-close" type="button">Close</button>
   </div>
+</dialog>
+
+<dialog id="mycard" aria-labelledby="mc-title">
+  <h2 id="mc-title">My registration card</h2>
+  <div class="mc-tabs" role="tablist">
+    <button type="button" role="tab" id="mc-t1" aria-selected="true" aria-controls="mc-p1">My details</button>
+    <button type="button" role="tab" id="mc-t2" aria-selected="false" aria-controls="mc-p2">Show at reception</button>
+  </div>
+  <section id="mc-p1" role="tabpanel" aria-labelledby="mc-t1">
+    <p class="note">All optional. Saved only in this browser. Nothing is sent to Open Door. Clear it any time.</p>
+    <div class="mc-form">
+      <label>Full name<input id="mc-name" autocomplete="off"></label>
+      <label>Date of birth<input id="mc-dob" type="date"></label>
+      <label>Address<input id="mc-addr" autocomplete="off"></label>
+      <label class="mc-tick"><input id="mc-nfa" type="checkbox"> I have no fixed address</label>
+      <label>Previous GP surgery<input id="mc-prev" autocomplete="off"></label>
+      <label>NHS number<input id="mc-nhs" inputmode="numeric" autocomplete="off"></label>
+    </div>
+    <p class="mc-h">Documents I can show</p>
+    <div class="mc-docs">
+      <label class="mc-tick"><input type="checkbox" data-mcdoc="passport"> Passport</label>
+      <label class="mc-tick"><input type="checkbox" data-mcdoc="photo_id"> Photo ID</label>
+      <label class="mc-tick"><input type="checkbox" data-mcdoc="proof_of_address"> Proof of address</label>
+      <label class="mc-tick"><input type="checkbox" data-mcdoc="immigration"> Immigration papers</label>
+    </div>
+    <p class="note">Ticking a document here also updates the "I don't have" boxes at the top.</p>
+    <div class="actions"><button type="button" class="btn" id="mc-clear">Clear my data</button><button type="button" class="btn go" id="mc-show">Show at reception</button></div>
+  </section>
+  <section id="mc-p2" role="tabpanel" aria-labelledby="mc-t2" hidden>
+    <article id="mc-card" class="mc-card" aria-label="Registration card"></article>
+    <div class="actions"><button type="button" class="btn go" id="mc-print">Print</button><button type="button" class="btn" id="mc-back">Back to my details</button><button type="button" class="btn" id="mc-close">Close</button></div>
+  </section>
 </dialog>
 
 <script id="sample" type="application/json">{"note":"Sample data for UI testing. Every surgery, quote and number here is invented. Shapes follow CONTRACT.md and opendoor/models.py.","run_id":"sample-e13","events":[{"type":"run_started","t":0.0,"postcode_prefixes":["E13"],"limit":40},{"type":"practices_found","t":1.4,"count":8},{"type":"resolved","t":6.0,"code":"S00001","name":"Harbour Lane Sample Surgery","lat":51.5312,"lon":0.0205,"reg_url":"https://harbour-lane-sample-surgery.example/new-patients"},{"type":"resolved","t":6.5,"code":"S00002","name":"Greenway Sample Medical Centre","lat":51.5248,"lon":0.0331,"reg_url":"https://greenway-sample-medical-centre.example/new-patients"},{"type":"resolved","t":6.9,"code":"S00003","name":"Station Road Sample Practice","lat":51.5289,"lon":0.0402,"reg_url":"https://station-road-sample-practice.example/new-patients"},{"type":"resolved","t":7.3,"code":"S00004","name":"Canal Side Sample Surgery","lat":51.5221,"lon":0.0188,"reg_url":"https://canal-side-sample-surgery.example/new-patients"},{"type":"resolved","t":7.8,"code":"S00005","name":"Orchard Sample Health Centre","lat":51.5345,"lon":0.0312,"reg_url":"https://orchard-sample-health-centre.example/new-patients"},{"type":"resolved","t":8.2,"code":"S00006","name":"Millfield Sample Practice","lat":51.5266,"lon":0.0124,"reg_url":"https://millfield-sample-practice.example/new-patients"},{"type":"resolved","t":8.7,"code":"S00007","name":"Parkview Sample Surgery","lat":51.5198,"lon":0.029,"reg_url":"https://parkview-sample-surgery.example/new-patients"},{"type":"resolved","t":9.2,"code":"S00008","name":"Riverside Sample Medical Practice","lat":51.533,"lon":0.0451,"reg_url":"https://riverside-sample-medical-practice.example/new-patients"},{"type":"captured","t":10.2,"code":"S00001","status":200,"challenge":false,"secs":4.2},{"type":"captured","t":11.4,"code":"S00002","status":200,"challenge":false,"secs":4.9},{"type":"captured","t":12.5,"code":"S00003","status":200,"challenge":false,"secs":5.6},{"type":"quote_rejected","t":13.3,"code":"S00001","attempt":1,"reason":"quote not found on the page: the model wrote 'You must bring a photo ID and proof of address' and the page has no such sentence"},{"type":"captured","t":13.6,"code":"S00004","status":200,"challenge":false,"secs":6.3},{"type":"classified","t":14.5,"code":"S00002","category":"demands_documents","colour":"red","quote":"All new patients are required to provide a passport and a recent utility bill.","retries":0},{"type":"captured","t":14.8,"code":"S00005","status":200,"challenge":false,"secs":7.0},{"type":"quote_rejected","t":15.6,"code":"S00003","attempt":1,"reason":"quote not found on the page: the model joined two separate sentences into one"},{"type":"classified","t":15.9,"code":"S00001","category":"demands_documents","colour":"red","quote":"You must bring photo ID and proof of address dated within the last three months to register.","retries":1},{"type":"captured","t":15.9,"code":"S00006","status":200,"challenge":false,"secs":7.7},{"type":"classified","t":16.1,"code":"S00006","category":"no_mention","colour":"green-outline","quote":"","retries":0},{"type":"classified","t":16.8,"code":"S00004","category":"says_not_needed","colour":"green","quote":"You do not need proof of address, immigration status, ID or an NHS number to register with us.","retries":0},{"type":"captured","t":17.1,"code":"S00007","status":200,"challenge":false,"secs":8.4},{"type":"classified","t":17.9,"code":"S00005","category":"says_not_needed","colour":"green","quote":"We will never ask for proof of identity or address when you register.","retries":0},{"type":"classified","t":18.2,"code":"S00003","category":"asks_softly","colour":"amber","quote":"Please bring proof of address if you have it, but we will still register you without it.","retries":1},{"type":"captured","t":18.2,"code":"S00008","status":403,"challenge":true,"secs":9.1},{"type":"classified","t":18.4,"code":"S00008","category":"not_checked","colour":"grey","quote":"","retries":0},{"type":"boxed","t":19.8,"code":"S00002","shot":"shots/S00002.png"},{"type":"classified","t":20.2,"code":"S00007","category":"unclear","colour":"grey","quote":"","retries":0},{"type":"boxed","t":21.2,"code":"S00001","shot":"shots/S00001.png"},{"type":"boxed","t":22.1,"code":"S00004","shot":"shots/S00004.png"},{"type":"boxed","t":23.2,"code":"S00005","shot":"shots/S00005.png"},{"type":"boxed","t":23.5,"code":"S00003","shot":"shots/S00003.png"},{"type":"run_finished","t":24.1,"counts":{"demands_documents":2,"asks_softly":1,"says_not_needed":2,"no_mention":1,"unclear":1,"not_checked":1},"wall_secs":24.1,"containers_peak":8}],"results":[{"code":"S00001","name":"Harbour Lane Sample Surgery","postcode":"E13 0ZZ","lat":51.5312,"lon":0.0205,"site":"https://harbour-lane-sample-surgery.example/","reg_url":"https://harbour-lane-sample-surgery.example/new-patients","status":"ok","links_national_form":false,"doc_hits":["photo ID","proof of address"],"category":"demands_documents","colour":"red","quote":"You must bring photo ID and proof of address dated within the last three months to register.","quote_verified":true,"quote_box":{"x":212,"y":388,"width":640,"height":52},"documents":["photo ID","proof of address"],"reason":"The page says new patients must bring photo ID and proof of address.","self_contradiction":false,"shot":"shots/S00001.png","retries":1,"secs":4.2,"checked_at":"2026-09-19T13:30:00Z"},{"code":"S00002","name":"Greenway Sample Medical Centre","postcode":"E13 0ZZ","lat":51.5248,"lon":0.0331,"site":"https://greenway-sample-medical-centre.example/","reg_url":"https://greenway-sample-medical-centre.example/new-patients","status":"ok","links_national_form":true,"doc_hits":["passport","utility bill"],"category":"demands_documents","colour":"red","quote":"All new patients are required to provide a passport and a recent utility bill.","quote_verified":true,"quote_box":{"x":212,"y":388,"width":640,"height":52},"documents":["passport","utility bill"],"reason":"The page says a passport and a utility bill are required.","self_contradiction":true,"shot":"shots/S00002.png","retries":0,"secs":4.9,"checked_at":"2026-09-19T13:30:00Z"},{"code":"S00003","name":"Station Road Sample Practice","postcode":"E13 0ZZ","lat":51.5289,"lon":0.0402,"site":"https://station-road-sample-practice.example/","reg_url":"https://station-road-sample-practice.example/new-patients","status":"ok","links_national_form":false,"doc_hits":["proof of address"],"category":"asks_softly","colour":"amber","quote":"Please bring proof of address if you have it, but we will still register you without it.","quote_verified":true,"quote_box":{"x":212,"y":388,"width":640,"height":52},"documents":["proof of address"],"reason":"The page asks for proof of address but says registration is still possible without it.","self_contradiction":false,"shot":"shots/S00003.png","retries":1,"secs":5.6,"checked_at":"2026-09-19T13:30:00Z"},{"code":"S00004","name":"Canal Side Sample Surgery","postcode":"E13 0ZZ","lat":51.5221,"lon":0.0188,"site":"https://canal-side-sample-surgery.example/","reg_url":"https://canal-side-sample-surgery.example/new-patients","status":"ok","links_national_form":true,"doc_hits":[],"category":"says_not_needed","colour":"green","quote":"You do not need proof of address, immigration status, ID or an NHS number to register with us.","quote_verified":true,"quote_box":{"x":212,"y":388,"width":640,"height":52},"documents":[],"reason":"The page says documents are not needed.","self_contradiction":false,"shot":"shots/S00004.png","retries":0,"secs":6.3,"checked_at":"2026-09-19T13:30:00Z"},{"code":"S00005","name":"Orchard Sample Health Centre","postcode":"E13 0ZZ","lat":51.5345,"lon":0.0312,"site":"https://orchard-sample-health-centre.example/","reg_url":"https://orchard-sample-health-centre.example/new-patients","status":"ok","links_national_form":false,"doc_hits":[],"category":"says_not_needed","colour":"green","quote":"We will never ask for proof of identity or address when you register.","quote_verified":true,"quote_box":{"x":212,"y":388,"width":640,"height":52},"documents":[],"reason":"The page says it never asks for proof of identity or address.","self_contradiction":false,"shot":"shots/S00005.png","retries":0,"secs":7.0,"checked_at":"2026-09-19T13:30:00Z"},{"code":"S00006","name":"Millfield Sample Practice","postcode":"E13 0ZZ","lat":51.5266,"lon":0.0124,"site":"https://millfield-sample-practice.example/","reg_url":"https://millfield-sample-practice.example/new-patients","status":"ok","links_national_form":true,"doc_hits":[],"category":"no_mention","colour":"green-outline","quote":"","quote_verified":false,"quote_box":null,"documents":[],"reason":"No document wording on the registration page, so the model was not called.","self_contradiction":false,"shot":"shots/S00006.png","retries":0,"secs":7.7,"checked_at":"2026-09-19T13:30:00Z"},{"code":"S00007","name":"Parkview Sample Surgery","postcode":"E13 0ZZ","lat":51.5198,"lon":0.029,"site":"https://parkview-sample-surgery.example/","reg_url":"https://parkview-sample-surgery.example/new-patients","status":"ok","links_national_form":false,"doc_hits":["ID"],"category":"unclear","colour":"grey","quote":"","quote_verified":false,"quote_box":null,"documents":["ID"],"reason":"The page mentions ID only in a section about collecting prescriptions.","self_contradiction":false,"shot":"shots/S00007.png","retries":0,"secs":8.4,"checked_at":"2026-09-19T13:30:00Z"},{"code":"S00008","name":"Riverside Sample Medical Practice","postcode":"E13 0ZZ","lat":51.533,"lon":0.0451,"site":"https://riverside-sample-medical-practice.example/","reg_url":"https://riverside-sample-medical-practice.example/new-patients","status":"blocked","links_national_form":false,"doc_hits":[],"category":"not_checked","colour":"grey","quote":"","quote_verified":false,"quote_box":null,"documents":[],"reason":"The site showed a bot challenge, so the page was not read.","self_contradiction":false,"shot":null,"retries":0,"secs":9.1,"checked_at":"2026-09-19T13:30:00Z"}],"letter_sample":"Dear Practice Manager,\n\nI am writing about the new patient registration page on the {name} website. It currently says:\n\n\"{quote}\"\n\nThe NHS guidance on nhs.uk says: \"You do not need ID, proof of address or proof of immigration status.\"\nhttps://www.nhs.uk/nhs-services/gps/how-to-register-with-a-gp-surgery/\n\nThe wording on your website contradicts the NHS guidance on nhs.uk, and it may put off people who do not have these documents. Could you update the page so that it matches the guidance?\n\nI have only read the website. I am not commenting on how your reception team registers patients in person.\n\nThank you for your time.\n\nKind regards,\n[Your name]\n\n(Sample letter for offline review. In the live app the letter is drafted by the server.)"}</script>
@@ -471,7 +528,7 @@ function apply(e) {
   switch (e.type) {
     case "run_started": S.fake = !!e.fake; S.prefixes = e.postcode_prefixes || []; S.near = e.near || null; setMode();
       if (S.mode === "replay") { // the box shows what is being replayed (CSS field-sizing crashed headless Chrome here, so size it by hand)
-        const pc = $("postcode"); pc.value = S.near || S.prefixes.join(" "); pc.style.width = ""; pc.style.width = Math.min(190, Math.max(160, pc.scrollWidth + 2)) + "px"; if (e.limit) $("limit").value = e.limit;
+        const pc = $("postcode"); pc.value = S.near || S.prefixes.join(" "); pc.style.width = ""; pc.style.width = Math.min(160, Math.max(140, pc.scrollWidth + 2)) + "px"; if (e.limit) $("limit").value = e.limit;
       } break;
     case "practices_found": S.found = e.count || 0; break;
     case "resolved": S.mid = null; Object.assign(p, {name: nice(e.name) || p.name, lat: e.lat, lon: e.lon, reg_url: e.reg_url});
@@ -1025,13 +1082,79 @@ for (const b of document.querySelectorAll("[data-doc]")) b.onclick = () => { // 
   }
 };
 document.addEventListener("keydown", ev => { // recording keys; never while typing or with a modifier
-  if (ev.ctrlKey || ev.metaKey || ev.altKey || $("dlg").open || ev.target.closest("input, select, textarea")) return;
+  if (ev.ctrlKey || ev.metaKey || ev.altKey || $("dlg").open || $("mycard").open || ev.target.closest("input, select, textarea")) return;
   const k = ev.key.toLowerCase(), demo = [...document.querySelectorAll('#replay optgroup[label="Demo runs"] option')].map(o => o.value);
   const id = k === "n" ? "newham" : k === "l" ? "london" : /^[1-9]$/.test(k) ? demo[+k - 1] : null;
   if (id && [...$("replay").options].some(o => o.value === id)) { ev.preventDefault(); startReplay(id); }
   else if (k === "c") document.body.classList.toggle("clean");
 });
-document.addEventListener("keydown", ev => { if (ev.key === "Escape") { const big = document.querySelector(".split.big"); if (big) big.classList.remove("big"); else if (S.sel && !$("dlg").open) select(null); } });
+document.addEventListener("keydown", ev => { if (ev.key === "Escape") { const big = document.querySelector(".split.big"); if (big) big.classList.remove("big"); else if (S.sel && !$("dlg").open && !$("mycard").open) select(null); } });
+
+/* ---------- my card: browser only. Saved in localStorage on this device, never sent anywhere ---------- */
+const MC_KEY = "opendoor.mycard.v1", MC_DOCS = ["passport", "photo_id", "proof_of_address", "immigration"];
+let mc = {name: "", dob: "", addr: "", nfa: false, prev: "", nhs: "", docs: null}; // docs: null until the person ticks something
+function mcLoad() {
+  try { const j = JSON.parse(localStorage.getItem(MC_KEY) || "null"); if (j && typeof j === "object") mc = {...mc, ...j}; } catch {}
+}
+function mcSave() {
+  try { localStorage.setItem(MC_KEY, JSON.stringify(mc)); } catch {}
+}
+function mcClear() {
+  try { localStorage.removeItem(MC_KEY); } catch {}
+  mc = {name: "", dob: "", addr: "", nfa: false, prev: "", nhs: "", docs: null};
+  mcFill(); mcCard();
+}
+function mcFill() { // form from state
+  $("mc-name").value = mc.name; $("mc-dob").value = mc.dob; $("mc-addr").value = mc.addr; $("mc-nfa").checked = !!mc.nfa;
+  $("mc-addr").disabled = !!mc.nfa; $("mc-prev").value = mc.prev; $("mc-nhs").value = mc.nhs;
+  for (const c of document.querySelectorAll("[data-mcdoc]")) c.checked = !!(mc.docs && mc.docs.includes(c.dataset.mcdoc));
+}
+function mcRead() { // state from form
+  mc.name = $("mc-name").value.trim(); mc.dob = $("mc-dob").value; mc.addr = $("mc-addr").value.trim(); mc.nfa = $("mc-nfa").checked;
+  mc.prev = $("mc-prev").value.trim(); mc.nhs = $("mc-nhs").value.trim();
+}
+function mcSyncChips() { // one source of truth: what the person can show decides what they do not have
+  if (!mc.docs) return;
+  lacking.clear(); for (const k of MC_DOCS) if (!mc.docs.includes(k)) lacking.add(k);
+  for (const b of document.querySelectorAll("[data-doc]")) b.setAttribute("aria-pressed", String(lacking.has(b.dataset.doc)));
+  if (S) { for (const p of S.P.values()) setMarker(p); renderPanel(); }
+}
+function mcCard() { // the large, light card to show on a phone or print; textContent only
+  const c = $("mc-card"), row = (k, v) => { const f = document.createDocumentFragment(); f.append(el("dt", "", k), el("dd", "", v)); return f; };
+  c.replaceChildren(el("h3", "", "I would like to register as a patient."));
+  const q = el("q", "", "“" + NHS_QUOTE + "”"); c.append(q, el("p", "src", "nhs.uk"));
+  const dl = el("dl"), n = dl.childElementCount;
+  if (mc.name) dl.append(row("Name", mc.name));
+  if (mc.dob) dl.append(row("Date of birth", mc.dob));
+  if (mc.nfa) dl.append(row("Address", "I have no fixed address")); else if (mc.addr) dl.append(row("Address", mc.addr));
+  if (mc.nhs) dl.append(row("NHS number", mc.nhs));
+  if (dl.childElementCount > n) c.append(el("h3", "", "My details"), dl);
+  const can = (mc.docs || []).map(k => DOC_NAME[k]);
+  c.append(el("p", "", can.length ? "Documents I can show: " + can.join(", ") + "." : "I do not have these documents. The NHS guidance above says I can still register."));
+  if (mc.prev) c.append(el("p", "", "My health record: please request it from " + mc.prev + ". NHS GP2GP sends it when I am registered."));
+  c.append(el("p", "foot", "Made with Open Door. This card is kept on my device."));
+}
+function mcTab(n) {
+  $("mc-t1").setAttribute("aria-selected", String(n === 1)); $("mc-t2").setAttribute("aria-selected", String(n === 2));
+  $("mc-p1").hidden = n !== 1; $("mc-p2").hidden = n !== 2;
+  if (n === 2) mcCard();
+}
+function mcOpen() { mcFill(); mcTab(1); $("mycard").showModal(); }
+function mcPrint() {
+  mcCard(); document.body.classList.add("printing");
+  const done = () => { document.body.classList.remove("printing"); removeEventListener("afterprint", done); };
+  addEventListener("afterprint", done); window.print();
+}
+$("mycard-open").onclick = mcOpen;
+$("mc-t1").onclick = () => mcTab(1); $("mc-t2").onclick = () => mcTab(2); $("mc-show").onclick = () => mcTab(2); $("mc-back").onclick = () => mcTab(1);
+$("mc-close").onclick = () => $("mycard").close(); $("mc-print").onclick = mcPrint;
+$("mc-clear").onclick = () => { if (mc.docs) { lacking.clear(); for (const b of document.querySelectorAll("[data-doc]")) b.setAttribute("aria-pressed", "false"); if (S) { for (const p of S.P.values()) setMarker(p); renderPanel(); } } mcClear(); };
+for (const id of ["mc-name", "mc-dob", "mc-addr", "mc-prev", "mc-nhs", "mc-nfa"]) $(id).addEventListener("input", () => { mcRead(); $("mc-addr").disabled = mc.nfa; mcSave(); });
+for (const c of document.querySelectorAll("[data-mcdoc]")) c.addEventListener("change", () => {
+  mc.docs = [...document.querySelectorAll("[data-mcdoc]")].filter(x => x.checked).map(x => x.dataset.mcdoc); mcSave(); mcSyncChips();
+});
+mcLoad(); if (mc.docs) mcSyncChips();
+/* ---------- end my card ---------- */
 
 (async function init() {
   sample = JSON.parse($("sample").textContent);
