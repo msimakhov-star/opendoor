@@ -82,6 +82,24 @@ def results(run_id: str):
     return _results(run_id)
 
 
+@app.get("/api/runs/{run_id}/advocate")
+def advocate(run_id: str):
+    """Patient notes and letters written by the open model (session 1's advocate). The UI hides the panel on 404."""
+    f = run_dir(run_id) / "advocate.json"
+    if not f.exists():
+        raise HTTPException(404, "no advocate output for this run")
+    return json.loads(f.read_text())
+
+
+@app.get("/api/runs/{run_id}/audit")
+def audit(run_id: str):
+    """Independent re-reading of red and amber verdicts, when a run has one."""
+    f = run_dir(run_id) / "audit.json"
+    if not f.exists():
+        raise HTTPException(404, "no audit for this run")
+    return json.loads(f.read_text())
+
+
 @app.get("/api/runs")
 def runs():
     out = []

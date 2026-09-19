@@ -1,0 +1,382 @@
+{
+ "method": "Each red or amber verdict was re-read from the saved page text by three independent AI readers with different instructions (literal reader; the surgery's defence; a patient advocate). A verdict stands if at least 2 of 3 agree. These are AI readers, not human reviewers.",
+ "audited": 33,
+ "confirmed": 32,
+ "changed": [
+  {
+   "code": "E83016",
+   "from": "demands_documents",
+   "to": "asks_softly",
+   "votes": [
+    "asks_softly",
+    "asks_softly",
+    "demands_documents"
+   ]
+  }
+ ],
+ "rows": [
+  {
+   "code": "F84004",
+   "name": "MARKET STREET HEALTH GROUP",
+   "classifier": "demands_documents",
+   "votes": [
+    "demands_documents",
+    "demands_documents",
+    "demands_documents"
+   ],
+   "status": "CONFIRMED"
+  },
+  {
+   "code": "F84012",
+   "name": "ALBION HEALTH CENTRE",
+   "classifier": "asks_softly",
+   "votes": [
+    "asks_softly",
+    "asks_softly",
+    "asks_softly"
+   ],
+   "status": "CONFIRMED"
+  },
+  {
+   "code": "F84016",
+   "name": "THE MISSION PRACTICE",
+   "classifier": "asks_softly",
+   "votes": [
+    "asks_softly",
+    "asks_softly",
+    "asks_softly"
+   ],
+   "status": "CONFIRMED"
+  },
+  {
+   "code": "F84021",
+   "name": "LONDON FIELDS MEDICAL CENTRE",
+   "classifier": "asks_softly",
+   "votes": [
+    "asks_softly",
+    "asks_softly",
+    "asks_softly"
+   ],
+   "status": "CONFIRMED"
+  },
+  {
+   "code": "F84030",
+   "name": "RUSTON STREET CLINIC",
+   "classifier": "asks_softly",
+   "votes": [
+    "asks_softly",
+    "asks_softly",
+    "asks_softly"
+   ],
+   "status": "CONFIRMED"
+  },
+  {
+   "code": "F86020",
+   "name": "GLEBELANDS PRACTICE",
+   "classifier": "asks_softly",
+   "votes": [
+    "asks_softly",
+    "demands_documents",
+    "asks_softly"
+   ],
+   "status": "CONFIRMED"
+  },
+  {
+   "code": "F83002",
+   "name": "RIVER PLACE HEALTH CENTRE",
+   "classifier": "asks_softly",
+   "votes": [
+    "asks_softly",
+    "asks_softly",
+    "asks_softly"
+   ],
+   "status": "CONFIRMED"
+  },
+  {
+   "code": "F83053",
+   "name": "MILDMAY MEDICAL PRACTICE",
+   "classifier": "asks_softly",
+   "votes": [
+    "asks_softly",
+    "asks_softly",
+    "asks_softly"
+   ],
+   "status": "CONFIRMED"
+  },
+  {
+   "code": "G85006",
+   "name": "THE ACORN & GAUMONT HOUSE SURGERY",
+   "classifier": "asks_softly",
+   "votes": [
+    "asks_softly",
+    "asks_softly",
+    "asks_softly"
+   ],
+   "status": "CONFIRMED"
+  },
+  {
+   "code": "E87002",
+   "name": "VICTORIA MEDICAL CENTRE",
+   "classifier": "demands_documents",
+   "votes": [
+    "demands_documents",
+    "demands_documents",
+    "demands_documents"
+   ],
+   "status": "CONFIRMED"
+  },
+  {
+   "code": "E87004",
+   "name": "HEALTH PARTNERS AT VIOLET MELCHETT",
+   "classifier": "demands_documents",
+   "votes": [
+    "demands_documents",
+    "demands_documents",
+    "demands_documents"
+   ],
+   "status": "CONFIRMED"
+  },
+  {
+   "code": "E87005",
+   "name": "BELGRAVIA SURGERY",
+   "classifier": "demands_documents",
+   "votes": [
+    "demands_documents",
+    "demands_documents",
+    "demands_documents"
+   ],
+   "status": "CONFIRMED"
+  },
+  {
+   "code": "E87739",
+   "name": "MILLBANK MEDICAL CENTRE",
+   "classifier": "demands_documents",
+   "votes": [
+    "demands_documents",
+    "demands_documents",
+    "demands_documents"
+   ],
+   "status": "CONFIRMED"
+  },
+  {
+   "code": "H85002",
+   "name": "FALCON ROAD MEDICAL CENTRE",
+   "classifier": "demands_documents",
+   "votes": [
+    "demands_documents",
+    "demands_documents",
+    "demands_documents"
+   ],
+   "status": "CONFIRMED"
+  },
+  {
+   "code": "E85003",
+   "name": "NORTH END MEDICAL CENTRE",
+   "classifier": "asks_softly",
+   "votes": [
+    "asks_softly",
+    "asks_softly",
+    "asks_softly"
+   ],
+   "status": "CONFIRMED"
+  },
+  {
+   "code": "E85016",
+   "name": "RICHFORD GATE MEDICAL CENTRE",
+   "classifier": "asks_softly",
+   "votes": [
+    "asks_softly",
+    "asks_softly",
+    "asks_softly"
+   ],
+   "status": "CONFIRMED"
+  },
+  {
+   "code": "E87016",
+   "name": "HOLLAND PARK SURGERY",
+   "classifier": "asks_softly",
+   "votes": [
+    "asks_softly",
+    "asks_softly",
+    "asks_softly"
+   ],
+   "status": "CONFIRMED"
+  },
+  {
+   "code": "E87066",
+   "name": "FITZROVIA MEDICAL CENTRE",
+   "classifier": "demands_documents",
+   "votes": [
+    "demands_documents",
+    "demands_documents",
+    "demands_documents"
+   ],
+   "status": "CONFIRMED"
+  },
+  {
+   "code": "E87070",
+   "name": "CRAWFORD STREET SURGERY",
+   "classifier": "asks_softly",
+   "votes": [
+    "asks_softly",
+    "asks_softly",
+    "asks_softly"
+   ],
+   "status": "CONFIRMED"
+  },
+  {
+   "code": "E87648",
+   "name": "MAYFAIR MEDICAL CENTRE",
+   "classifier": "demands_documents",
+   "votes": [
+    "demands_documents",
+    "demands_documents",
+    "demands_documents"
+   ],
+   "status": "CONFIRMED"
+  },
+  {
+   "code": "E83016",
+   "name": "MILLWAY MEDICAL PRACTICE",
+   "classifier": "demands_documents",
+   "votes": [
+    "asks_softly",
+    "asks_softly",
+    "demands_documents"
+   ],
+   "status": "DISPUTED"
+  },
+  {
+   "code": "F84014",
+   "name": "UPTON LANE MEDICAL CENTRE",
+   "classifier": "demands_documents",
+   "votes": [
+    "demands_documents",
+    "demands_documents",
+    "demands_documents"
+   ],
+   "status": "CONFIRMED"
+  },
+  {
+   "code": "F84051",
+   "name": "STROUTS PLACE MEDICAL CENTRE",
+   "classifier": "asks_softly",
+   "votes": [
+    "asks_softly",
+    "asks_softly",
+    "asks_softly"
+   ],
+   "status": "CONFIRMED"
+  },
+  {
+   "code": "F84047",
+   "name": "CUSTOM HOUSE SURGERY",
+   "classifier": "demands_documents",
+   "votes": [
+    "demands_documents",
+    "demands_documents",
+    "demands_documents"
+   ],
+   "status": "CONFIRMED"
+  },
+  {
+   "code": "F84053",
+   "name": "GREENGATE MEDICAL CENTRE",
+   "classifier": "demands_documents",
+   "votes": [
+    "demands_documents",
+    "demands_documents",
+    "demands_documents"
+   ],
+   "status": "CONFIRMED"
+  },
+  {
+   "code": "F83660",
+   "name": "HIGHBURY GRANGE MEDICAL PRACTICE",
+   "classifier": "asks_softly",
+   "votes": [
+    "asks_softly",
+    "asks_softly",
+    "asks_softly"
+   ],
+   "status": "CONFIRMED"
+  },
+  {
+   "code": "F85031",
+   "name": "WESTBURY MEDICAL CENTRE",
+   "classifier": "asks_softly",
+   "votes": [
+    "says_not_needed",
+    "asks_softly",
+    "asks_softly"
+   ],
+   "status": "CONFIRMED"
+  },
+  {
+   "code": "F85033",
+   "name": "WINCHMORE HILL PRACTICE",
+   "classifier": "asks_softly",
+   "votes": [
+    "asks_softly",
+    "asks_softly",
+    "asks_softly"
+   ],
+   "status": "CONFIRMED"
+  },
+  {
+   "code": "G83031",
+   "name": "ABBEY WOOD SURGERY",
+   "classifier": "demands_documents",
+   "votes": [
+    "demands_documents",
+    "demands_documents",
+    "demands_documents"
+   ],
+   "status": "CONFIRMED"
+  },
+  {
+   "code": "G85038",
+   "name": "THE LEWISHAM CARE PARTNERSHIP",
+   "classifier": "asks_softly",
+   "votes": [
+    "asks_softly",
+    "asks_softly",
+    "asks_softly"
+   ],
+   "status": "CONFIRMED"
+  },
+  {
+   "code": "G85121",
+   "name": "PARKVIEW SURGERY",
+   "classifier": "demands_documents",
+   "votes": [
+    "demands_documents",
+    "demands_documents",
+    "demands_documents"
+   ],
+   "status": "CONFIRMED"
+  },
+  {
+   "code": "E87665",
+   "name": "THE CHELSEA PRACTICE",
+   "classifier": "demands_documents",
+   "votes": [
+    "demands_documents",
+    "demands_documents",
+    "demands_documents"
+   ],
+   "status": "CONFIRMED"
+  },
+  {
+   "code": "G85130",
+   "name": "MAWBEY GROUP PRACTICE",
+   "classifier": "asks_softly",
+   "votes": [
+    "asks_softly",
+    "asks_softly",
+    "asks_softly"
+   ],
+   "status": "CONFIRMED"
+  }
+ ]
+}

@@ -395,7 +395,7 @@
 {"type": "captured", "t": 32.17, "code": "E85013", "status": "ok", "challenge": false, "secs": 10.1, "http_status": 200}
 {"type": "classified", "t": 32.17, "code": "E85013", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
 {"type": "captured", "t": 32.26, "code": "E83016", "status": "ok", "challenge": false, "secs": 10.2, "http_status": 200}
-{"type": "classified", "t": 32.26, "code": "E83016", "category": "demands_documents", "colour": "red", "quote": "Acceptance on to the list is as at the discretion of the Doctor and we will ask you for proof of identity.", "retries": 0, "doc_types": ["photo_id", "proof_of_address", "immigration"], "distance_km": null}
+{"type": "classified", "t": 32.26, "code": "E83016", "category": "asks_softly", "colour": "amber", "quote": "Acceptance on to the list is as at the discretion of the Doctor and we will ask you for proof of identity.", "retries": 0, "doc_types": ["photo_id", "proof_of_address", "immigration"], "distance_km": null}
 {"type": "captured", "t": 32.42, "code": "E87753", "status": "ok", "challenge": false, "secs": 2.6, "http_status": 200}
 {"type": "classified", "t": 32.42, "code": "E87753", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
 {"type": "quote_rejected", "t": 32.45, "code": "G83031", "attempt": 1, "reason": "The quote names no document (ID, proof of address, passport ...). Quote the sentence that names the document, or change category."}
@@ -648,4 +648,4 @@
 {"type": "classified", "t": 59.31, "code": "E83007", "category": "not_checked", "colour": "grey", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
 {"type": "captured", "t": 59.45, "code": "F84022", "status": "error", "challenge": false, "secs": 26.2, "http_status": null}
 {"type": "classified", "t": 59.45, "code": "F84022", "category": "not_checked", "colour": "grey", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
-{"type": "run_finished", "t": 59.46, "counts": {"demands_documents": 15, "asks_softly": 18, "says_not_needed": 24, "no_mention": 103, "unclear": 0, "not_checked": 40}, "wall_secs": 59.5, "total": 200, "quotes_rejected": 1, "gemini_calls": 10, "error": null, "containers_peak": 96}
+{"type": "run_finished", "t": 59.46, "counts": {"no_mention": 103, "demands_documents": 14, "says_not_needed": 24, "asks_softly": 19, "not_checked": 40, "unclear": 0}, "wall_secs": 59.5, "total": 200, "quotes_rejected": 1, "gemini_calls": 10, "error": null, "containers_peak": 96}

@@ -26,7 +26,8 @@ header{display:flex;flex-wrap:wrap;align-items:center;gap:10px 20px;padding:10px
 input,select{background:#0a0f16;border:1px solid #2c3a4d;border-radius:8px;padding:8px 12px;height:42px}
 #postcode{width:160px;font-size:21px;font-weight:700;text-transform:uppercase}
 #limit{width:72px}
-#replay{max-width:220px}
+#replay{max-width:180px}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap} /* read by screen readers, not shown */
 .btn{background:#1a2432;border:1px solid #2c3a4d;border-radius:8px;padding:0 18px;height:42px;cursor:pointer;font-weight:600;text-decoration:none;color:var(--text);display:inline-flex;align-items:center}
 .btn:hover{background:#223044}
 .btn.go{background:var(--green);border-color:var(--green);color:#04130b;font-size:20px;font-weight:800;padding:0 24px}
@@ -67,7 +68,8 @@ input,select{background:#0a0f16;border:1px solid #2c3a4d;border-radius:8px;paddi
 .arr.flow{animation:flow .5s linear infinite}
 @keyframes flow{to{background-position:8px 0}}
 .tick{animation:tick .6s ease-out}
-@keyframes tick{0%{transform:scale(1.4);text-shadow:0 0 18px var(--sc,#fff)}100%{transform:none}}
+.step .row>b{transform-origin:right center}
+@keyframes tick{0%{transform:scale(1.25);text-shadow:0 0 18px var(--sc,#fff)}100%{transform:none}}
 .step.rej{animation:rej 1.2s ease-out}
 @keyframes rej{0%{border-color:var(--orange);box-shadow:0 0 34px 2px var(--orange)}100%{}}
 .tally{display:flex;gap:14px}
@@ -86,7 +88,6 @@ main{display:grid;grid-template-columns:minmax(0,1fr) minmax(520px,47vw);min-hei
 #map{position:absolute;inset:0;background:var(--bg)}
 #nomap{display:none;place-items:center;color:var(--mute);padding:40px;text-align:center;height:100%}
 .leaflet-container{background:#15191f;font:inherit}
-.leaflet-tile{width:256.5px!important;height:256.5px!important} /* hides hairline seams between tiles at fractional zoom */
 .leaflet-tile-pane{filter:invert(1) hue-rotate(180deg) brightness(.82) contrast(.95) saturate(.3)}
 .leaflet-control-attribution{background:rgba(10,14,19,.75)!important;color:var(--mute)!important;font-size:11px}
 .leaflet-control-attribution a{color:var(--mute)!important}
@@ -130,6 +131,16 @@ main{display:grid;grid-template-columns:minmax(0,1fr) minmax(520px,47vw);min-hei
 .contra b{color:var(--red);font-size:22px}
 #area .note{margin:0;font-size:13px;line-height:1.35}
 @keyframes rise{from{transform:translateY(20px);opacity:0}}
+
+/* the code check catching the model: shown over the map for a few seconds, the hero moment of a run */
+#toast{position:absolute;top:14px;left:50%;transform:translateX(-50%);z-index:950;width:min(720px,calc(100% - 120px));cursor:pointer;
+  background:rgba(28,15,4,.97);border:2px solid var(--orange);border-radius:12px;padding:12px 18px 13px;box-shadow:0 0 44px -6px var(--orange);animation:drop .35s ease-out}
+#toast[hidden]{display:none}
+#toast .h{margin:0;color:var(--orange);font-size:14px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+#toast .who{margin:2px 0 4px;font-size:22px;font-weight:700;line-height:1.25}
+#toast .why{margin:0;font-size:16px;line-height:1.35;color:#eadccb}
+#toast .then{margin:8px 0 0;font-size:16px;font-weight:700;color:var(--green)}
+@keyframes drop{from{transform:translate(-50%,-16px);opacity:0}}
 @keyframes grow{from{transform:scaleX(0)}}
 
 #panel{overflow-y:auto;background:var(--panel);border-left:1px solid var(--line);padding:22px 30px 40px}
@@ -187,6 +198,16 @@ figure blockquote.q cite{font-size:13px;margin-top:6px}
 .split.big h3{font-size:44px;text-align:center;margin-bottom:20px}
 .split.big .mock{font-size:22px;padding:28px;aspect-ratio:auto;min-height:300px}
 
+/* advocate: an open-weight model writes a note for the patient and a letter to the practice, a human approves */
+.adv{margin-top:26px;padding:18px 20px 20px;border:1px solid rgba(177,140,255,.5);border-radius:12px;background:rgba(177,140,255,.06)}
+.adv h3{margin:0 0 10px;font-size:24px}
+.adv h4{margin:18px 0 6px}
+.badges{display:flex;flex-wrap:wrap;gap:8px}
+.badge{font-size:14px;font-weight:700;padding:4px 10px;border-radius:8px;border:1px solid var(--violet);color:var(--violet)}
+.badge.warn{border-color:var(--amber);color:var(--amber)}
+.adv .txt{margin:0;white-space:pre-wrap;font-size:17px;line-height:1.45;background:#0b1119;border:1px solid var(--line);border-radius:8px;padding:12px 14px;max-height:260px;overflow-y:auto}
+.adv .actions{margin-top:14px}
+
 .greens{list-style:none;padding:0;margin:0}
 .greens button{width:100%;display:flex;align-items:center;gap:12px;text-align:left;background:#0b1119;border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin-bottom:7px;cursor:pointer;font-size:19px}
 .greens button:hover{border-color:var(--green)}
@@ -200,7 +221,7 @@ figure blockquote.q cite{font-size:13px;margin-top:6px}
 .actions{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:18px}
 .note{color:var(--mute);font-size:16px}
 
-#log{height:92px;overflow-y:auto;padding:8px 22px;background:#07090d;border-top:1px solid var(--line);color:#b8c3d0;
+#log{height:calc(3 * 1.5em + 16px);overflow-y:auto;padding:0 22px 8px;border-top:8px solid #07090d;box-shadow:0 -1px 0 var(--line);background:#07090d;color:#b8c3d0;
   font:15px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
 .ln{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .ln .t{display:inline-block;width:70px;color:var(--mute)}
@@ -217,26 +238,26 @@ dialog textarea{width:100%;height:46vh;background:#0a0f16;border:1px solid #2c3a
 
 /* laptop screens: keep the split screen above the fold */
 @media (max-height:960px){h2{font-size:28px}h3{font-size:20px}blockquote{font-size:22px;padding:12px 18px}.split h3{font-size:24px}
-  #log{height:66px}#panel{padding-top:16px}header{padding:7px 22px}.brand{font-size:26px}#chain{padding:6px 22px}
+  #log{height:calc(2 * 1.5em + 16px)}#panel{padding-top:16px}header{padding:7px 22px}.brand{font-size:26px}#chain{padding:6px 22px}
   .step .row>b,.clock b{font-size:26px}.tally b{font-size:24px}.answer .big{font-size:25px}.answer .n{font-size:40px}
   .answer .big.m{font-size:21px;margin-top:16px}.answer .big.m .n{font-size:32px}.greens button{padding:8px 12px;font-size:17px}
   figure blockquote.q{font-size:16px}blockquote.nhs{font-size:24px}footer{padding:7px 22px;font-size:15px}}
 @media (max-width:1500px){.step{padding:5px 9px 6px}.step .u{font-size:12px}.tally{gap:9px}.arr{flex-basis:16px}.clock{min-width:80px;padding-left:10px}}
 @media (max-width:900px){body{overflow:auto;display:block}main{grid-template-columns:1fr}#mapwrap{height:50vh}#area{position:static;grid-template-columns:1fr}#panel{border-left:0}
   .persona{margin-left:0}#chain{flex-wrap:wrap;gap:6px}.arr{display:none}.step{flex-basis:30%}}
-@media (prefers-reduced-motion:reduce){.pin::before,.pin::after,.tick,.step.rej,.arr.flow,#area,.sbar{animation:none!important}}
+@media (prefers-reduced-motion:reduce){.pin::before,.pin::after,.tick,.step.rej,.arr.flow,#area,#toast,.sbar{animation:none!important}}
 </style>
 </head>
 <body>
 <header>
   <div class="brand"><span class="door" aria-hidden="true"></span>Open Door</div>
   <form class="controls" id="runform">
-    <label for="postcode">Postcode</label>
+    <label for="postcode" class="vh">Postcode</label>
     <input id="postcode" value="E13 8AA" maxlength="40" autocomplete="off" spellcheck="false" aria-label="Postcode or postcode district">
     <label for="limit">Max</label>
     <input id="limit" type="number" min="1" max="1500" value="40" aria-label="Maximum number of practices">
     <button class="btn go" id="run" type="submit">Run</button>
-    <select id="replay" aria-label="Replay a saved run"><option value="">Replay a saved run</option></select>
+    <select id="replay" aria-label="Replay a saved run"><option value="">Saved runs</option></select>
     <span class="seg" role="group" aria-label="Replay speed">
       <button type="button" data-speed="1" aria-pressed="false">x1</button><button type="button" data-speed="4" aria-pressed="true">x4</button>
     </span>
@@ -275,6 +296,7 @@ dialog textarea{width:100%;height:46vh;background:#0a0f16;border:1px solid #2c3a
 <main>
   <div id="mapwrap">
     <div id="map"><div id="nomap">Map library did not load (no network). The run still works: see the panel and the event log.</div></div>
+    <section id="toast" role="status" hidden></section>
     <section id="area" aria-live="polite" hidden></section>
   </div>
   <aside id="panel" aria-live="polite"></aside>
@@ -392,7 +414,7 @@ function reset(mode, runId) {
   gen++;
   if (S) for (const p of S.P.values()) if (p.marker) p.marker.remove();
   S = fresh(); S.mode = mode; S.runId = runId; S.start = performance.now();
-  $("log").replaceChildren(); $("area").hidden = true;
+  $("log").replaceChildren(); $("area").hidden = true; hideToast();
   setMode(); counters(); renderPanel();
 }
 const P = code => { if (!S.P.has(code)) S.P.set(code, {code, name: code, rejections: 0}); return S.P.get(code); };
@@ -401,14 +423,18 @@ function apply(e) {
   const p = e.code ? P(e.code) : null;
   if (p && typeof e.distance_km === "number") p.distance_km = e.distance_km;
   switch (e.type) {
-    case "run_started": S.fake = !!e.fake; S.prefixes = e.postcode_prefixes || []; S.near = e.near || null; setMode(); break;
+    case "run_started": S.fake = !!e.fake; S.prefixes = e.postcode_prefixes || []; S.near = e.near || null; setMode();
+      if (S.mode === "replay") { // the box shows what is being replayed (CSS field-sizing crashed headless Chrome here, so size it by hand)
+        const pc = $("postcode"); pc.value = S.near || S.prefixes.join(" "); pc.style.width = ""; pc.style.width = Math.min(250, Math.max(160, pc.scrollWidth + 2)) + "px";
+      } break;
     case "practices_found": S.found = e.count || 0; break;
     case "resolved": Object.assign(p, {name: nice(e.name) || p.name, lat: e.lat, lon: e.lon, reg_url: e.reg_url}); setMarker(p); break;
     case "captured": if (e.status === "ok" || e.status < 400) S.pages++; /* the built in sample uses HTTP codes */ S.finished.add(e.code); Object.assign(p, {status: e.status, challenge: e.challenge, secs: e.secs});
       if (typeof e.t === "number" && typeof e.secs === "number") S.spans.push([e.t - e.secs, e.t]); break;
     case "quote_rejected": S.rejected++; p.rejections++;
-      $("st-code").classList.remove("rej"); void $("st-code").offsetWidth; $("st-code").classList.add("rej"); break;
+      $("st-code").classList.remove("rej"); void $("st-code").offsetWidth; $("st-code").classList.add("rej"); toast(p, e); break;
     case "classified": S.finished.add(e.code);
+      if (S.toast === e.code && WORDS[e.category]) $("toast").append(el("p", "then", "Answered again: " + WORDS[e.category][0].toLowerCase() + (e.quote ? ', quote "' + e.quote + '"' : "")));
       Object.assign(p, {category: e.category, colour: e.colour, quote: e.quote || "", retries: e.retries || 0});
       if (Array.isArray(e.doc_types)) p.doc_types = e.doc_types;
       setMarker(p); break;
@@ -494,6 +520,16 @@ function logLine(e) {
   log.scrollTop = log.scrollHeight;
 }
 const note = msg => logLine({type: "note", msg});
+let toastTimer;
+function toast(p, e) { // wall-clock seconds, not replay seconds, so it reads the same at x1 and x4
+  const t = $("toast");
+  t.replaceChildren(el("p", "h", "Code check rejected the model's answer"), el("p", "who", p.name), el("p", "why", e.reason || "The quote was not found word for word on the page."),
+    el("p", "why", "Sent back to Gemini to answer again (attempt " + ((e.attempt || 1) + 1) + ")."));
+  t.onclick = () => select(p.code);
+  t.hidden = false; S.toast = p.code;
+  clearTimeout(toastTimer); toastTimer = setTimeout(hideToast, 8000);
+}
+function hideToast() { clearTimeout(toastTimer); $("toast").hidden = true; if (S) S.toast = null; }
 
 /* ---------- clock: drains the queue so dots land one by one, and drives replays ---------- */
 let last = performance.now();
@@ -525,6 +561,16 @@ async function loadResults(runId, g) {
     for (const p of S.P.values()) setMarker(p);
     renderArea(); renderPanel(); if (S.done) fit();
   } catch (err) { note("results not available: " + err.message); }
+  loadAdvocate(runId, g);
+}
+async function loadAdvocate(runId, g) { // optional: a run without advocate output simply has no advocate panel
+  try {
+    const r = await fetch("/api/runs/" + encodeURIComponent(runId) + "/advocate");
+    if (!r.ok) return;
+    const j = await r.json();
+    if (g !== gen || !j || typeof j !== "object") return;
+    S.adv = j; renderPanel();
+  } catch {}
 }
 async function startLive(postcode, limit) {
   reset("live", null);
@@ -570,7 +616,7 @@ async function listRuns() {
   const r = await fetch("/api/runs");
   if (!r.ok) throw new Error("HTTP " + r.status);
   const sel = $("replay"), runs = asList(await r.json());
-  sel.replaceChildren(new Option("Replay a saved run", ""));
+  sel.replaceChildren(new Option("Saved runs", ""));
   for (const x of runs) {
     const id = typeof x === "string" ? x : x && (x.run_id || x.id);
     if (!id) continue;
@@ -704,9 +750,13 @@ function renderPanel() {
     s.onclick = ev => { if (!ev.target.closest("a")) s.classList.toggle("big"); };
     panel.append(s, ...explain);
     if (chips.children.length) panel.append(chips);
-    const act = el("div", "actions"), b = el("button", "btn go", "Draft letter"); b.type = "button"; b.onclick = () => openLetter(p);
-    act.append(b, el("span", "note", "Nothing is sent automatically. You approve it and send it yourself."));
-    panel.append(act);
+    const adv = S.adv && S.adv[p.code];
+    if (adv && (adv.note || adv.letter)) panel.append(advocate(p, adv));
+    else {
+      const act = el("div", "actions"), b = el("button", "btn go", "Draft letter"); b.type = "button"; b.onclick = () => openLetter(p);
+      act.append(b, el("span", "note", "Nothing is sent automatically. You approve it and send it yourself."));
+      panel.append(act);
+    }
   } else {
     panel.append(...explain);
     if (p.quote) {
@@ -730,6 +780,29 @@ function renderPanel() {
   if (near) panel.append(near);
   const g = el("p", "note", "The NHS guidance applies to every GP surgery in England. "), a = el("a", "", "Read it on nhs.uk");
   a.href = NHS_URL; a.target = "_blank"; a.rel = "noopener noreferrer"; g.append(a); panel.append(g);
+}
+function advocate(p, a) { // every string here came from the model or the metrics file: textContent only
+  const s = el("section", "adv"), badges = el("div", "badges");
+  s.append(el("p", "eyebrow", "Advocate"), el("h3", "", "Written for this person, from this sentence"));
+  if (a.model) badges.append(el("span", "badge", "Open-weight model: " + a.model));
+  if (a.rule) badges.append(el("span", "badge", "Gateway rule: " + a.rule));
+  badges.append(el("span", "badge warn", "Human approves, nothing is sent"));
+  s.append(badges);
+  const m = a.metrics || {};
+  for (const [k, title] of [["note", "Note for the patient"], ["letter", "Letter to the practice"]]) {
+    if (!a[k]) continue;
+    const x = m[k] || {}, facts = [typeof x.flesch_kincaid_grade === "number" ? "reading grade " + x.flesch_kincaid_grade : "",
+      typeof x.banned_total === "number" ? plural(x.banned_total, "banned word", "banned words") : ""].filter(Boolean).join(", ");
+    s.append(el("h4", "", title + (facts ? " (" + facts + ")" : "")), el("p", "txt", a[k]));
+  }
+  if (a.letter) {
+    const act = el("div", "actions"), b = el("button", "btn go", "Review and approve the letter"); b.type = "button";
+    b.onclick = () => openLetter(p, a.letter);
+    act.append(b);
+    if (a.trace_id) act.append(el("span", "note", "Logfire trace " + a.trace_id.slice(0, 12)));
+    s.append(act);
+  }
+  return s;
 }
 function renderAnswer(panel, all) {
   const box = el("section", "answer"), ticked = lacking.size > 0;
@@ -771,7 +844,7 @@ function renderOverview(panel) {
 }
 
 /* ---------- letter: a human approves, nothing is sent from here ---------- */
-async function openLetter(p) {
+async function openLetter(p, preset) {
   const dlg = $("dlg"), ta = $("dlg-text");
   $("dlg-title").textContent = "Draft letter to " + p.name;
   ta.value = "Drafting...";
@@ -779,7 +852,8 @@ async function openLetter(p) {
   dlg.showModal();
   try {
     let text;
-    if (S.mode === "sample") text = sample.letter_sample.replace("{name}", p.name).replace("{quote}", p.quote);
+    if (preset) text = preset;
+    else if (S.mode === "sample") text = sample.letter_sample.replace("{name}", p.name).replace("{quote}", p.quote);
     else {
       const r = await fetch("/api/letter/" + encodeURIComponent(S.runId) + "/" + encodeURIComponent(p.code));
       text = await r.text();

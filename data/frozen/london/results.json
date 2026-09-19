@@ -17,12 +17,12 @@
   "containers_peak": 96,
   "total": 200,
   "counts": {
-   "demands_documents": 15,
-   "asks_softly": 18,
-   "says_not_needed": 24,
    "no_mention": 103,
-   "unclear": 0,
-   "not_checked": 40
+   "demands_documents": 14,
+   "says_not_needed": 24,
+   "asks_softly": 19,
+   "not_checked": 40,
+   "unclear": 0
   },
   "statuses": {
    "ok": 161,
@@ -30,7 +30,7 @@
    "blocked": 22,
    "error": 10
   },
-  "self_contradictions": 12,
+  "self_contradictions": 11,
   "quotes_verified": 57,
   "quotes_boxed": 57,
   "quotes_rejected": 1,
@@ -3465,8 +3465,8 @@
     "proof of id",
     "visa"
    ],
-   "category": "demands_documents",
-   "colour": "red",
+   "category": "asks_softly",
+   "colour": "amber",
    "quote": "Acceptance on to the list is as at the discretion of the Doctor and we will ask you for proof of identity.",
    "quote_verified": true,
    "quote_box": {
@@ -3487,8 +3487,8 @@
     "immigration"
    ],
    "distance_km": null,
-   "reason": "The practice states that it will ask new patients for proof of identity.",
-   "self_contradiction": true,
+   "reason": "The practice states that it will ask new patients for proof of identity. Downgraded from red to amber after an independent three-reader audit: 2 of 3 readers found the page offers help to people who cannot provide documents.",
+   "self_contradiction": false,
    "shot": "shots/E83016.png",
    "retries": 0,
    "secs": 10.2,
