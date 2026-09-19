@@ -841,6 +841,8 @@ function renderPanel() {
   const g = el("p", "note", "nhs.uk says: \"Everyone in England can register with a GP surgery or change their GP surgery for free.\" "), a = el("a", "", "Read it on nhs.uk");
   a.href = NHS_URL; a.target = "_blank"; a.rel = "noopener noreferrer"; g.append(a); panel.append(g);
 }
+// model output is plain text on screen: drop markdown bold and a first line that only repeats the panel's own heading
+const plain = t => String(t || "").replace(/^\s*\**\s*(?:note|letter) (?:for|to) (?:a|the) (?:patient|practice)\s*:?\s*\**\s*\n+/i, "").replace(/\*\*(.+?)\*\*/g, "$1").replace(/\*\*/g, "");
 function advocate(p, a) { // every string here came from the model or the metrics file: textContent only
   const s = el("section", "adv"), badges = el("div", "badges");
   s.append(el("p", "eyebrow", "Advocate"), el("h3", "", "Written for this person, from this sentence"));
@@ -854,11 +856,11 @@ function advocate(p, a) { // every string here came from the model or the metric
     const x = m[k] || {}, facts = [typeof x.flesch_kincaid_grade === "number" ? "reading grade " + x.flesch_kincaid_grade : "",
       typeof x.banned_total === "number" ? plural(x.banned_total, "banned word", "banned words") : "",
       a.attempts && typeof a.attempts[k] === "number" ? "checked by code" + (a.attempts[k] > 1 ? ", " + a.attempts[k] + " tries" : "") : ""].filter(Boolean).join(", ");
-    s.append(el("h4", "", title + (facts ? " (" + facts + ")" : "")), el("p", "txt", a[k]));
+    s.append(el("h4", "", title + (facts ? " (" + facts + ")" : "")), el("p", "txt", plain(a[k])));
   }
   if (a.letter) {
     const act = el("div", "actions"), b = el("button", "btn go", "Review and approve the letter"); b.type = "button";
-    b.onclick = () => openLetter(p, a.letter);
+    b.onclick = () => openLetter(p, plain(a.letter));
     act.append(b);
     if (a.trace_id) act.append(el("span", "note", "Logfire trace " + a.trace_id.slice(0, 12)));
     s.append(act);
