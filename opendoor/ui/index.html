@@ -307,6 +307,109 @@ dialog textarea{width:100%;height:46vh;background:#0a0f16;border:1px solid #2c3a
 @media (max-width:900px){body{overflow:auto;display:block}main{grid-template-columns:1fr}#mapwrap{height:50vh}#area{position:static;grid-template-columns:1fr}#panel{border-left:0}
   .persona{margin-left:0}#chain{flex-wrap:wrap;gap:6px}.arr{display:none}.step{flex-basis:30%}}
 @media (prefers-reduced-motion:reduce){.pin::before,.pin::after,.tick,.step.rej,.arr.flow,#area,#toast,.sbar{animation:none!important}}
+
+/* ---- design pass: calmer, editorial. CSS only; no markup or script changes. ----
+   One accent (green) plus the three traffic-light colours, which carry meaning. No glows, no gradients,
+   hairline borders, sentence-case labels, numbers that sit still. */
+:root{--bg:#0e1116;--bar:#0e1116;--panel:#12161c;--line:#232a33;--text:#e9ecef;--mute:#8d96a3;
+  --red:#e5534b;--amber:#d9a441;--green:#3fb37f;--grey:#69727f;--orange:#d98a3d;--blue:#7aa7d9;--violet:#9aa4b2;--teal:#9aa4b2}
+body{font-family:"Inter","Helvetica Neue",Helvetica,Arial,system-ui,sans-serif;font-feature-settings:"tnum" 1,"ss01" 1}
+a{text-underline-offset:3px}
+
+/* header: a wordmark, not a logo with a halo */
+.brand{font-size:24px;font-weight:650;letter-spacing:-.01em}
+.door{box-shadow:none;border-width:2px;border-color:var(--text);transform:none;width:16px;height:24px;border-radius:2px}
+.door::after{background:var(--text)}
+.controls label,.persona>span{text-transform:none;letter-spacing:0;font-size:15px;font-weight:500}
+input,select{background:transparent;border-color:var(--line);border-radius:6px}
+#postcode{font-size:19px;font-weight:600}
+.btn{background:transparent;border-color:var(--line);border-radius:6px;font-weight:550}
+.btn:hover{background:#1a2028}
+.btn.go{background:var(--text);border-color:var(--text);color:#0e1116;font-size:17px;font-weight:650;padding:0 20px}
+.btn.go:hover{filter:none;background:#fff}
+#mode{border-radius:4px;letter-spacing:.04em;font-weight:650}
+#mode.replay,#mode.sample{background:transparent;color:var(--amber);border-color:var(--amber)}
+#mode.done{background:transparent;color:var(--green);border-color:var(--green)}
+.persona button{border-radius:6px;background:transparent;border-color:var(--line);font-size:15px;font-weight:500;color:var(--text)}
+.persona button::before{border-radius:3px;border-width:1.5px;border-color:#5b6572}
+.persona button[aria-pressed=true]{background:rgba(217,164,65,.10);border-color:var(--amber)}
+.persona button[aria-pressed=true]::before{box-shadow:none}
+
+/* the pipeline strip: a row of plain figures divided by hairlines, not seven glowing cards */
+#chain{background:var(--bar);padding-top:10px;padding-bottom:10px}
+.step,.step.on{border:0;border-left:1px solid var(--line);border-radius:0;background:transparent;box-shadow:none;padding:2px 14px}
+.step:first-child{border-left:0;padding-left:0}
+.step{opacity:.35}.step.on{opacity:1}
+.step .nm{color:var(--mute);text-transform:none;letter-spacing:0;font-size:13px;font-weight:500}
+.step.on .nm{color:var(--mute)}
+.step .row>b,.clock b{font-weight:600;letter-spacing:-.01em}
+.step .u{color:var(--mute)}
+.arr,.arr.on{background:none;flex-basis:8px;margin:0}.arr::after{display:none}.arr.flow{animation:none}
+@keyframes tick{0%{opacity:.55}100%{opacity:1}}
+@keyframes rej{0%{background:rgba(217,138,61,.16)}100%{background:transparent}}
+.tally small,.clock span{text-transform:none;letter-spacing:0;font-size:12px}
+.tally b{font-weight:600}
+
+/* map: flat dots, thin rings; selection is a ring, not a pulse */
+.pin::before{box-shadow:none;border-width:1.5px;border-color:rgba(14,17,22,.9)}
+.pin.c-green-outline::before{border-width:3px}
+.pin.hit::after{animation:none;inset:-3px;border-width:2px;opacity:.9}
+.pin.sel::after{inset:-5px;border-width:2px}
+.pin.c-pending::after{animation-duration:1.8s;border-width:1.5px}
+@keyframes pop{from{transform:scale(1.5);opacity:.4}}
+@keyframes flash{0%{transform:scale(1.6)}}
+.leaflet-tile{filter:invert(1) hue-rotate(180deg) brightness(.78) contrast(.92) saturate(.15)}
+.leaflet-tooltip{border-radius:4px;border-color:var(--line);font-size:15px;font-weight:500}
+
+/* the code check banner: a notice with a rule down its side, not an alarm */
+#toast{background:#15191f;border:1px solid var(--line);border-left:4px solid var(--orange);border-radius:6px;box-shadow:0 12px 32px -12px #000}
+#toast .h{letter-spacing:.02em;text-transform:none;font-size:15px;font-weight:650}
+#toast .who{font-weight:650}
+#toast .why{color:#c9d0d8}
+#area{border-radius:8px;border-color:var(--line);background:rgba(18,22,28,.97);box-shadow:0 12px 32px -14px #000}
+.sumh{font-weight:600}.sumh b{font-weight:650}
+.sbar{border-radius:2px;height:10px}
+.contra{background:transparent;border:0;border-left:3px solid var(--red);border-radius:0;padding:2px 0 2px 12px}
+.contra b{font-weight:650}
+
+/* reading panel: serif quotations, because they are quotations */
+#panel{padding:26px 34px 44px}
+.eyebrow,h4,figcaption{text-transform:none;letter-spacing:0;font-size:14px;font-weight:500;color:var(--mute)}
+h2{font-weight:650;letter-spacing:-.015em}
+h3{font-weight:650}
+.pill{border-width:1px;border-radius:4px;text-transform:none;letter-spacing:0;font-size:14px;font-weight:600;padding:3px 9px}
+figure .pill{font-size:13px}
+blockquote{font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;font-weight:400;background:transparent;border-left-width:3px;border-radius:0;padding:4px 0 4px 20px;line-height:1.34}
+blockquote cite{font-family:"Inter","Helvetica Neue",Helvetica,Arial,system-ui,sans-serif;font-size:14px}
+figure blockquote.q{font-weight:400;border-left-width:3px;padding:2px 0 2px 14px}
+.crop,.mock{border-width:1px;border-radius:4px}
+.chip{background:transparent;border-color:var(--line);border-radius:4px;font-size:14px;color:#c9d0d8}
+.chip.ok{border-color:var(--line);color:var(--green)}
+.chip.rej{border-color:var(--line);color:var(--orange);font-weight:600}
+.chip.warn{border-color:var(--line);color:var(--amber)}
+.chip.you{background:transparent;border-color:var(--red);color:var(--text);font-weight:600}
+.answer .big{font-weight:600}
+.answer .n{font-weight:650}
+.greens button{background:transparent;border:0;border-bottom:1px solid var(--line);border-radius:0;padding:11px 2px;margin:0;font-size:18px}
+.greens button:hover,.greens.asks button:hover{background:#171c23;border-color:var(--line)}
+.k{border-width:1.5px;border-color:rgba(14,17,22,.9);width:12px;height:12px}
+.k.c-green-outline{border-width:3px}
+.switch{background:transparent;border-radius:6px}
+.switch h4{font-size:16px;font-weight:650;color:var(--text)}
+
+/* advocate: same surface as everything else, no tinted box */
+.adv{border:0;border-top:1px solid var(--line);border-radius:0;background:transparent;padding:22px 0 0;margin-top:28px}
+.badge,.badge.warn{border-color:var(--line);color:var(--mute);border-radius:4px;font-weight:500;font-size:13px}
+.adv .txt{background:transparent;border-radius:6px;font-size:16px}
+#log{border-top-width:0;background:var(--bar);box-shadow:0 -1px 0 var(--line);font-size:13px;color:var(--mute)}
+.ln .ty{color:#c9d0d8;font-weight:600}
+footer{font-size:14px;color:var(--mute)}
+dialog{border-radius:8px;border-color:var(--line)}
+.mc-tabs button{border-radius:6px;background:transparent;border-color:var(--line)}
+.mc-tabs button[aria-selected=true]{background:#1a2028;border-color:var(--text)}
+.mc-form label,.mc-h{text-transform:none;letter-spacing:0;font-weight:500}
+.never{font-weight:650}
+@media (max-width:1500px){.step,.step.on{padding:2px 8px}.step .nm{font-size:12px}}
 </style>
 </head>
 <body>
