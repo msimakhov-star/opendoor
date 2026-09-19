@@ -1,5 +1,5 @@
 {
- "method": "After the sweep, AI reviewers (not people) re-read red verdicts against the saved page text in texts/<code>.txt. Reds that a reviewer doubted were read again; a red stays red only if the page makes documents a condition of registering with no way in for people without them.",
+ "method": "Every red verdict of the full London sweep was re-read from the saved page text by three independent AI readers (a literal reader, the surgery's defence, a patient advocate). A red stays red only if at least 2 of 3 agree the page makes documents a condition of registering with no route for people without them. AI readers, not people.",
  "changed": [
   {
    "code": "H84062",
@@ -298,14 +298,7 @@
    ]
   }
  ],
- "kept": [
-  {
-   "code": "H83043",
-   "name": "SHIRLEY MEDICAL CENTRE",
-   "category": "demands_documents",
-   "why": "The page firmly asks people who register at the surgery to bring \"proof of address and ID\" and also links the national online form: a red with the self-contradiction flag, by the same rule as every other such page."
-  }
- ],
+ "kept": [],
  "three_reader_audit": {
   "method": "Every red verdict of the full London sweep was re-read from the saved page text by three independent AI readers (a literal reader, the surgery's defence, a patient advocate). A red stays red only if at least 2 of 3 agree the page makes documents a condition of registering with no route for people without them. AI readers, not people.",
   "audited": 96,
