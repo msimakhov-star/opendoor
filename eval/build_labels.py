@@ -50,7 +50,7 @@ def main() -> None:
         "# Human check of the reference labels (about 5 minutes)",
         "",
         "The reference labels in labels.json are LLM-produced (three independent blind LLM labellers, majority vote computed in code).",
-        "They are spot-checked by a person using this file. They are not labelled by a person from scratch, and no write-up may say so.",
+        "A person can check them using this file. Until then no write-up may say a person checked or labelled them.",
         "",
         f"Pages: {len(labels)}. Unanimous: {sum(l['unanimous'] for l in labels)}. Not unanimous: {len(split)}. "
         f"Quotes dropped because they were not found on the page: {len(dropped)}.",

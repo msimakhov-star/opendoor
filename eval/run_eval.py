@@ -1,6 +1,6 @@
 """Score a core-pipeline results.json against the reference labels. Run: uv run run_eval.py --results <path>
 
-Reference labels are LLM-produced (3 blind LLM labellers, majority in code) and spot-checked by a person. Not labelled by a person.
+Reference labels are LLM-produced (3 blind LLM labellers, majority in code). No person has checked them.
 Uses pydantic-evals (Dataset, Case, custom Evaluator), API read from the installed 2.46.0 source.
 """
 import argparse
@@ -49,6 +49,18 @@ def load_results(path: Path) -> dict[str, dict]:
     return {r["code"]: r for r in data}
 
 
+def page_text(results_path: Path, code: str) -> str:
+    """The page as the scored run captured it (<run>/texts/<code>.txt) when present, else the eval's own copy."""
+    run_copy = results_path.parent / "texts" / f"{code}.txt"
+    return norm((run_copy if run_copy.exists() else HERE / "texts" / f"{code}.txt").read_text(encoding="utf-8"))
+
+
+def shown_path(p: Path) -> str:
+    """Repo-relative from 'data/' when possible, never an absolute local path."""
+    parts = p.resolve().parts
+    return "/".join(parts[parts.index("data"):]) if "data" in parts else p.name
+
+
 def score(results_path: Path) -> tuple[dict, str]:
     labels = json.loads((HERE / "labels.json").read_text(encoding="utf-8"))
     ov_path = HERE / "overrides.json"
@@ -68,7 +80,7 @@ def score(results_path: Path) -> tuple[dict, str]:
                 name=l["code"],
                 inputs=l["code"],
                 expected_output={"category": l["category"], "quote": l["quote"]},
-                metadata={"unanimous": l["unanimous"], "text": norm((HERE / "texts" / f"{l['code']}.txt").read_text(encoding="utf-8"))},
+                metadata={"unanimous": l["unanimous"], "text": page_text(results_path, l["code"])},
             )
             for l in labels if l["code"] in pred
         ],
@@ -115,8 +127,8 @@ def score(results_path: Path) -> tuple[dict, str]:
     short = {c: c.replace("_documents", "").replace("_needed", "") for c in CATS}
     md = [
         "# Open Door: classifier eval", "",
-        f"Results file: `{results_path}`", "",
-        "Reference labels: LLM-produced (three blind LLM labellers, majority vote in code), spot-checked by a person via HUMAN_CHECK.md. "
+        f"Results file: `{shown_path(results_path)}`", "",
+        "Reference labels: LLM-produced (three blind LLM labellers, majority vote in code). No person has checked them yet. "
         "They are not labelled by a person. Small sample from one London borough: these numbers describe this run on these pages only.",
         "The tool reads website wording, not front-desk behaviour.", "",
         f"- Pages scored: {len(cases)} of {len(labels)} labelled" + (f" (missing from results: {', '.join(missing)})" if missing else ""),
