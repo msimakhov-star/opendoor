@@ -196,6 +196,11 @@ blockquote cite{display:block;font-size:15px;font-weight:400;font-style:normal;c
 .answer .sub{margin-bottom:12px}
 .answer .note{margin:6px 0 12px}
 .answer + .eyebrow{margin-top:30px}
+/* changing GP: a small card under the lists, text from NHS pages */
+.switch{margin:18px 0 0;padding:12px 16px;border:1px solid var(--line);border-radius:10px;background:#0b1119}
+.switch h4{margin:0 0 6px;color:var(--text);font-size:15px;letter-spacing:.06em}
+.switch p{margin:0 0 8px;font-size:15px;line-height:1.4;color:#c4cedb}
+.switch .links{display:flex;flex-wrap:wrap;gap:4px 18px;margin:0;font-size:15px}
 
 .split{margin-top:16px;cursor:zoom-in}
 .split .hint{margin-left:12px;font-size:14px;font-weight:600;letter-spacing:.02em;color:var(--mute);white-space:nowrap}
@@ -912,6 +917,18 @@ function pop(key, b) { // a number that changed since the last render pops, so t
   S.ans[key] = b.textContent;
   return b;
 }
+function switchCard() { // wording checked on digital.nhs.uk/services/gp2gp and the nhs.uk registration page
+  const c = el("section", "switch");
+  c.append(el("h4", "", "Changing GP?"), el("p", "", "Your electronic health record is sent from your old surgery to your new one through the NHS GP2GP service. " +
+    "The transfer is started by the new surgery's system when you register, not by you. A surgery may sometimes ask for extra documents to help find or transfer your records; " +
+    "Open Door shows that kind of request as amber."));
+  const l = el("p", "links");
+  for (const [t, u] of [["NHS England Digital: GP2GP", "https://digital.nhs.uk/services/gp2gp"], ["nhs.uk: how to register", NHS_URL]]) {
+    const a = el("a", "", t); a.href = u; a.target = "_blank"; a.rel = "noopener noreferrer"; l.append(a);
+  }
+  c.append(l);
+  return c;
+}
 function renderAnswer(panel, all) {
   const box = el("section", "answer"), ticked = lacking.size > 0;
   const says = all.filter(p => p.category === "says_not_needed"), none = all.filter(p => p.category === "no_mention");
@@ -934,6 +951,7 @@ function renderAnswer(panel, all) {
   const hl = nearList(hits, null, p => wanted(p).join(", "), "asks", 4);
   if (hl) box.append(hl);
   box.append(el("p", "note", (S.near ? "Distances from " + S.near + "." : "Distances from the middle of the searched area.") + " This is what each website says, not a promise of what happens at the front desk."));
+  box.append(switchCard());
   panel.append(box);
 }
 function renderOverview(panel) {
