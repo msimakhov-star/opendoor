@@ -26,7 +26,7 @@ header{display:flex;flex-wrap:wrap;align-items:center;gap:10px 20px;padding:10px
 input,select{background:#0a0f16;border:1px solid #2c3a4d;border-radius:8px;padding:8px 12px;height:42px}
 #postcode{width:160px;font-size:21px;font-weight:700;text-transform:uppercase}
 #limit{width:72px}
-#replay{max-width:180px}
+#replay{max-width:160px}
 .vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap} /* read by screen readers, not shown */
 .btn{background:#1a2432;border:1px solid #2c3a4d;border-radius:8px;padding:0 18px;height:42px;cursor:pointer;font-weight:600;text-decoration:none;color:var(--text);display:inline-flex;align-items:center}
 .btn:hover{background:#223044}
@@ -72,7 +72,7 @@ input,select{background:#0a0f16;border:1px solid #2c3a4d;border-radius:8px;paddi
 @keyframes tick{0%{transform:scale(1.25);text-shadow:0 0 18px var(--sc,#fff)}100%{transform:none}}
 .step.rej{animation:rej 1.2s ease-out}
 @keyframes rej{0%{border-color:var(--orange);box-shadow:0 0 34px 2px var(--orange)}100%{}}
-.tally{display:flex;gap:14px}
+.tally{display:flex;gap:18px}
 .tally span{display:flex;flex-direction:column;align-items:center;line-height:1}
 .tally b{font-size:28px;font-weight:800;font-variant-numeric:tabular-nums}
 .s-map{flex-grow:1.35}
@@ -284,12 +284,12 @@ dialog textarea{width:100%;height:46vh;background:#0a0f16;border:1px solid #2c3a
   <form class="controls" id="runform">
     <label for="postcode" class="vh">Postcode</label>
     <input id="postcode" value="E13 8AA" maxlength="40" autocomplete="off" spellcheck="false" aria-label="Postcode or postcode district">
-    <label for="limit">Max</label>
-    <input id="limit" type="number" min="1" max="1500" value="40" aria-label="Maximum number of practices">
+    <label for="limit" class="vh">Max</label>
+    <input id="limit" type="number" min="1" max="1500" value="40" aria-label="Maximum number of practices" title="Maximum number of practices">
     <button class="btn go" id="run" type="submit">Run</button>
     <select id="replay" aria-label="Replay a saved run"><option value="">Saved runs</option></select>
     <span class="seg" role="group" aria-label="Replay speed">
-      <button type="button" data-speed="1" aria-pressed="false">x1</button><button type="button" data-speed="4" aria-pressed="true">x4</button>
+      <button type="button" data-speed="1" aria-pressed="false">x1</button><button type="button" data-speed="4" aria-pressed="true">x4</button><button type="button" data-speed="16" aria-pressed="false">x16</button>
     </span>
     <span id="mode">READY</span>
   </form>
@@ -442,7 +442,7 @@ function setMarker(p) {
   if (!p.marker) {
     p.marker = L.marker([p.lat, p.lon], {icon: L.divIcon({className: cls, iconSize: [28, 28]})}).addTo(map).on("click", () => select(p.code));
     p.marker.bindTooltip(el("span", "", p.name || p.code), {direction: "top", offset: [0, -14]});
-    clearTimeout(fitTimer); fitTimer = setTimeout(fit, 400);
+    if (!fitTimer) fitTimer = setTimeout(() => { fitTimer = null; fit(); }, 700); // throttle, not debounce: a 1,156-practice run resolves one every few ms and a debounce never fired
   } else if (p.cls !== cls) p.marker.setIcon(L.divIcon({className: cls, iconSize: [28, 28]}));
   p.cls = cls;
   p.marker.setZIndexOffset((Z[p.category] || 0) + (S.sel === p.code ? 1000 : 0));
@@ -464,10 +464,10 @@ function apply(e) {
   switch (e.type) {
     case "run_started": S.fake = !!e.fake; S.prefixes = e.postcode_prefixes || []; S.near = e.near || null; setMode();
       if (S.mode === "replay") { // the box shows what is being replayed (CSS field-sizing crashed headless Chrome here, so size it by hand)
-        const pc = $("postcode"); pc.value = S.near || S.prefixes.join(" "); pc.style.width = ""; pc.style.width = Math.min(250, Math.max(160, pc.scrollWidth + 2)) + "px"; if (e.limit) $("limit").value = e.limit;
+        const pc = $("postcode"); pc.value = S.near || S.prefixes.join(" "); pc.style.width = ""; pc.style.width = Math.min(190, Math.max(160, pc.scrollWidth + 2)) + "px"; if (e.limit) $("limit").value = e.limit;
       } break;
     case "practices_found": S.found = e.count || 0; break;
-    case "resolved": Object.assign(p, {name: nice(e.name) || p.name, lat: e.lat, lon: e.lon, reg_url: e.reg_url});
+    case "resolved": S.mid = null; Object.assign(p, {name: nice(e.name) || p.name, lat: e.lat, lon: e.lon, reg_url: e.reg_url});
       if (S.P.size === 401) $("map").classList.add("many"); setMarker(p); break;
     case "captured": if (e.status === "ok" ? e.secs > 0 : e.status < 400) S.pages++; /* 0 s: a national form link, never loaded. The built in sample uses HTTP codes */ S.finished.add(e.code); Object.assign(p, {status: e.status, challenge: e.challenge, secs: e.secs});
       if (typeof e.t === "number" && typeof e.secs === "number") S.spans.push([e.t - e.secs, e.t]); break;
@@ -508,7 +508,7 @@ function setNum(id, v) { // number changes restart a short pop so the eye follow
   const n = $(id), s = String(v);
   if (n.textContent === s) return;
   n.textContent = s;
-  if (S.mode !== "ready") { n.classList.remove("tick"); void n.offsetWidth; n.classList.add("tick"); }
+  if (S.mode !== "ready" && n.animate) n.animate([{transform: "scale(1.25)", textShadow: "0 0 18px currentColor"}, {transform: "none"}], {duration: 600, easing: "ease-out"}); // no forced layout, unlike a class toggle
 }
 function counters() {
   const all = [...S.P.values()], c = counts();
@@ -522,7 +522,7 @@ function counters() {
   $("x-nhs").textContent = S.near ? "nearest to " + S.near : S.prefixes.length > 3 ? S.prefixes.length + " areas" : S.prefixes.join(", ");
   const peak = peakOverlap(S.spans);
   $("x-modal").textContent = S.mode === "ready" ? "" : S.peak != null ? S.peak + " at once" : S.done ? peak + " at once" : inflight + " in flight";
-  $("x-gem").textContent = S.calls != null ? plural(S.calls, "model call", "model calls") + (S.cached ? ", " + S.cached + " cached" : "") : S.mode === "ready" || S.done ? "" : queued + " waiting";
+  $("x-gem").textContent = S.calls != null ? (S.cached ? S.calls + " calls, " + S.cached + " cached" : plural(S.calls, "model call", "model calls")) : S.mode === "ready" || S.done ? "" : queued + " waiting";
   $("x-code").textContent = S.rejected + " rejected";
   $("x-code").classList.toggle("hot", S.rejected > 0);
   const lit = {nhs: S.found > 0, modal: S.pages > 0 || all.some(p => typeof p.lat === "number"), gem: classified > 0,
@@ -562,12 +562,13 @@ function describe(e) {
     default: return e.msg || "";
   }
 }
+let logScroll = 0;
 function logLine(e) {
   const log = $("log"), row = el("div", "ln" + (e.type === "quote_rejected" ? " rej" : e.type === "run_finished" ? " fin" : ""));
   row.append(el("span", "t", typeof e.t === "number" ? e.t.toFixed(1) + "s" : ""), el("span", "ty", LABEL[e.type] || String(e.type)), el("span", "", describe(e)));
   log.append(row);
   while (log.children.length > 300) log.firstChild.remove();
-  log.scrollTop = log.scrollHeight;
+  logScroll ||= requestAnimationFrame(() => { logScroll = 0; log.scrollTop = log.scrollHeight; }); // one layout per frame, not one per event
 }
 const note = msg => logLine({type: "note", msg});
 let toastTimer;
@@ -703,7 +704,7 @@ function renderArea() {
   card.replaceChildren();
   const x = el("button", "x", "Hide"); x.type = "button"; x.onclick = () => { card.hidden = true; fit(); };
   const left = el("div"), right = el("div");
-  left.append(el("p", "eyebrow", "Area summary" + (S.prefixes.length ? ", " + S.prefixes.join(", ") : "")));
+  left.append(el("p", "eyebrow", "Area summary" + (S.prefixes.length > 3 ? ", " + S.prefixes.length + " areas" : S.prefixes.length ? ", " + S.prefixes.join(", ") : "")));
   const h = el("p", "sumh");
   if (S.fin.error) h.append("Run failed: " + S.fin.error);
   else h.append(el("b", "", String(total)), " surgeries, ", el("b", "", String(S.pages)), " websites read in ", el("b", "", wall.toFixed(1)), " seconds");
@@ -750,7 +751,7 @@ function km(p, from) { // from a given place, else the backend's distance_km, el
   if (!from) {
     const d = typeof p.distance_km === "number" ? p.distance_km : (S.results[p.code] || {}).distance_km;
     if (typeof d === "number") return d;
-    from = mid();
+    from = S.mid ||= mid(); // once per render, not once per practice (1,156 x 1,156 made long frames)
   }
   return from && typeof p.lat === "number" ? kmBetween(from, p) : null;
 }
