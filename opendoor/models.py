@@ -60,6 +60,14 @@ class Finding(BaseModel):
     reason: str = Field("", description="One short plain-English sentence explaining the category.")
     retries: int = 0
     quote_verified: bool = False
+    from_cache: bool = False
+
+
+class SecondOpinion(BaseModel):
+    """A separate model call that argues the surgery's side before a surgery is shown red."""
+    verdict: Category
+    agreed: bool = Field(description="True when the second reader also says demands_documents.")
+    reason: str = Field("", description="One plain-English sentence, quoting the deciding words.")
 
 
 class PracticeResult(BaseModel):

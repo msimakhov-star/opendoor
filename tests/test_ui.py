@@ -52,12 +52,13 @@ def main():
     for needle in ("Two NHS websites that disagree", "Nothing is sent automatically", "Approve and open in my email",
                    "Reads what practice websites say, not what happens at the front desk", "Replay a saved run",
                    "I don't have:", 'data-doc="passport"', 'data-doc="photo_id"', 'data-doc="proof_of_address"', 'data-doc="immigration"',
-                   "lacking: [...lacking]", "NHS directory", "Modal browsers", "Gemini", "Code check", "Evidence", "Area summary",
+                   "NHS directory", "Modal browsers", "Pydantic AI + Gemini", "Output validator", "Evidence", "Area summary",
                    "say on their website", "you can register without", "for something you ticked", "not a promise"):
         assert needle in html, needle
     # the persona fallback in the page must use exactly the backend's four patterns
     js_types = json.loads(re.search(r"const DOC_TYPES = (\{.*?\});", html).group(1))
     assert js_types == {k: rx.pattern for k, rx in DOC_TYPES.items()}, "DOC_TYPES in index.html differs from opendoor/models.py"
+    assert "lacking" not in html.split('fetch("/api/run", ')[1][:200], "what the person does not have must not be sent to the server"
     print(f"ok: {len(fix['events'])} events, {len(results)} results, embedded copy matches, wording rules hold")
 
 

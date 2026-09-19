@@ -17,12 +17,12 @@
   "containers_peak": 96,
   "total": 200,
   "counts": {
-   "no_mention": 103,
    "demands_documents": 14,
-   "says_not_needed": 24,
    "asks_softly": 19,
-   "not_checked": 40,
-   "unclear": 0
+   "says_not_needed": 24,
+   "no_mention": 103,
+   "unclear": 0,
+   "not_checked": 40
   },
   "statuses": {
    "ok": 161,

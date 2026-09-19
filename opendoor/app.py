@@ -3,7 +3,6 @@
 """
 import argparse, json, os, re, threading
 from pathlib import Path
-from typing import Literal
 
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse, PlainTextResponse
@@ -11,7 +10,6 @@ from pydantic import BaseModel
 
 from opendoor import pipeline
 from opendoor.letter import draft_letter
-from opendoor.models import DOC_TYPES
 
 ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "data"
@@ -21,13 +19,12 @@ app = FastAPI(title="Open Door")
 
 class RunRequest(BaseModel):
     postcode: str = "E13"  # one postcode or outcode -> the `limit` nearest practices; several prefixes or an area -> sweep
-    limit: int = 40
-    lacking: list[Literal[tuple(DOC_TYPES)]] = []  # documents the user does not have; echoed in run_started, the UI filters
+    limit: int = 40  # what the person does not have is never sent here: the UI filters in the browser
 
 
 def run_dir(run_id: str) -> Path:
     """Frozen runs win over live ones. The id is checked because it comes from the URL and becomes a path."""
-    if not re.fullmatch(r"[\w.-]+", run_id) or ".." in run_id:
+    if not re.fullmatch(r"[\w-][\w.-]*", run_id) or ".." in run_id:
         raise HTTPException(400, "bad run id")
     for base in (DATA / "frozen", DATA / "runs"):
         if (base / run_id).is_dir():
@@ -45,18 +42,18 @@ def start_run(req: RunRequest):
     prefixes = pipeline.parse_prefixes(req.postcode)
     if not prefixes:
         raise HTTPException(400, "Give a postcode such as E13 8AA, a district such as E13, or an area such as SE.")
-    limit, lacking = max(1, min(req.limit, 1500)), list(dict.fromkeys(req.lacking))
+    limit = max(1, min(req.limit, 1500))
     run_id = pipeline.new_run_id(prefixes)
     state = LIVE[run_id] = {"events": [], "done": False}
 
     def work():
         try:
-            pipeline.run(prefixes, limit, run_id, state["events"].append, fake=bool(os.environ.get("OPENDOOR_FAKE")), lacking=lacking)
+            pipeline.run(prefixes, limit, run_id, state["events"].append, fake=bool(os.environ.get("OPENDOOR_FAKE")))
         finally:
             state["done"] = True
 
     threading.Thread(target=work, daemon=True).start()
-    return {"run_id": run_id, "lacking": lacking}
+    return {"run_id": run_id}
 
 
 @app.get("/api/run/{run_id}")

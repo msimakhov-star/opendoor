@@ -648,4 +648,4 @@
 {"type": "classified", "t": 59.31, "code": "E83007", "category": "not_checked", "colour": "grey", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
 {"type": "captured", "t": 59.45, "code": "F84022", "status": "error", "challenge": false, "secs": 26.2, "http_status": null}
 {"type": "classified", "t": 59.45, "code": "F84022", "category": "not_checked", "colour": "grey", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
-{"type": "run_finished", "t": 59.46, "counts": {"no_mention": 103, "demands_documents": 14, "says_not_needed": 24, "asks_softly": 19, "not_checked": 40, "unclear": 0}, "wall_secs": 59.5, "total": 200, "quotes_rejected": 1, "gemini_calls": 10, "error": null, "containers_peak": 96}
+{"type": "run_finished", "t": 59.46, "counts": {"demands_documents": 14, "asks_softly": 19, "says_not_needed": 24, "no_mention": 103, "unclear": 0, "not_checked": 40}, "wall_secs": 59.5, "total": 200, "quotes_rejected": 1, "gemini_calls": 10, "error": null, "containers_peak": 96}

@@ -3,7 +3,7 @@
 Checked against the live API on 2026-09-19:
 - PostCode is a PREFIX match on the whole postcode, so "E1" also returns E10 to E18 and E1W. We filter in code.
 - PostCode needs at least 2 characters AND a digit ("E" and "SE" are both rejected with 406), so an area like
-  "SE" is queried as SE1 .. SE9, which between them cover every SE district.
+  "SE" is queried as SE0 .. SE9, which between them cover every SE district (CR0 and HA0 are real districts).
 - Limit must be 1 to 1000. Offset pages. The list response already carries PostCode, no per-organisation call needed.
 - postcodes.io (checked the same day): /postcodes/<pc> and /outcodes/<oc> both give latitude, longitude, outcode.
   /outcodes/<oc>/nearest takes limit (default 10, capped at 100) and radius in metres (capped at 25000), sorted by
@@ -37,7 +37,7 @@ def matches(prefix: str, postcode: str) -> bool:
 
 
 def _queries(prefix: str) -> list[str]:
-    return [prefix + str(d) for d in range(1, 10)] if prefix.isalpha() else [prefix]
+    return [prefix + str(d) for d in range(10)] if prefix.isalpha() else [prefix]
 
 
 def _ord(client: httpx.Client, q: str) -> list[dict]:
@@ -66,11 +66,15 @@ def _geocode(client: httpx.Client, postcodes: list[str]) -> dict:
     return geo
 
 
+# ORD lists a few specialist services under the GP practice role. ponytail: name match only, extend when another shows up.
+NOT_GP = re.compile(r"DERMATOLOGY|GYNAECOLOGY", re.I)
+
+
 def _prefix_orgs(client: httpx.Client, prefix: str) -> list[dict]:
     """All practices for one prefix, geocoded, cached on disk so repeat runs (and the demo) do not hit the APIs again."""
     path = CACHE / f"{prefix}.json"
     if path.exists():
-        return json.loads(path.read_text())
+        return [o for o in json.loads(path.read_text()) if not NOT_GP.search(o["name"])]
     with ThreadPoolExecutor(4) as ex:
         raw = [o for page in ex.map(lambda q: _ord(client, q), _queries(prefix)) for o in page]
     raw = list({o["OrgId"]: o for o in raw if matches(prefix, o["PostCode"])}.values())
@@ -80,7 +84,7 @@ def _prefix_orgs(client: httpx.Client, prefix: str) -> list[dict]:
              "region": geo.get(o["PostCode"], {}).get("region")} for o in sorted(raw, key=lambda o: o["OrgId"])]
     CACHE.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(orgs, indent=1))
-    return orgs
+    return [o for o in orgs if not NOT_GP.search(o["name"])]
 
 
 PC = "https://api.postcodes.io"

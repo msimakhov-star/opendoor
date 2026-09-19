@@ -16,8 +16,9 @@ def test_prefix_matching_and_dedupe():
     assert m("E13", "E13 9AZ") and not m("E13", "E1 4AB")
     assert m("E", "E13 9AZ") and m("E", "E1W 2AA") and not m("E", "EC1A 1BB") and not m("E", "EN1 1AA")
     assert m("SE", "SE10 9GB") and m("EC1A", "EC1A 7BE") and not m("W", "WC1N 3JH") and not m("N", "NW1 0AA")
-    assert orgs._queries("E") == ["E%d" % d for d in range(1, 10)] and orgs._queries("E13") == ["E13"]
+    assert orgs._queries("E") == ["E%d" % d for d in range(10)] and orgs._queries("E13") == ["E13"]
     assert orgs.clean_prefix(" e13 ") == "E13"
+    assert orgs.NOT_GP.search("COMMUNITY DERMATOLOGY CLINIC") and not orgs.NOT_GP.search("RUSTON STREET CLINIC")
     assert pipeline.parse_prefixes(" e13  9az") == ["E13 9AZ"] and pipeline.parse_prefixes("e13, e6 E7,e13") == ["E13", "E6", "E7"]
     assert pipeline.parse_prefixes("E13") == ["E13"] and pipeline.parse_prefixes("E,N") == ["E", "N"]
     assert pipeline.parse_prefixes("SE") == ["SE"] and pipeline.parse_prefixes("London") == []
@@ -102,23 +103,27 @@ def test_peak_and_verdicts():
         shutil.rmtree(run_dir, ignore_errors=True)
 
 
-def test_api_echoes_lacking():
+def test_api():
     from fastapi.testclient import TestClient
     from opendoor import app as api
     calls = []
     real, api.pipeline.run = api.pipeline.run, lambda *a, **k: calls.append((a, k))
     try:
         c = TestClient(api.app)
-        r = c.post("/api/run", json={"postcode": "e13 8aa", "limit": 5, "lacking": ["passport", "immigration", "passport"]})
-        assert r.status_code == 200 and r.json()["lacking"] == ["passport", "immigration"], r.text
+        r = c.post("/api/run", json={"postcode": "e13 8aa", "limit": 5, "lacking": ["passport"]})  # an old client's extra field is ignored
+        assert r.status_code == 200 and set(r.json()) == {"run_id"}, r.text
         for _ in range(50):
             if calls:
                 break
             __import__("time").sleep(0.02)
         (args, kw), = calls
-        assert args[:2] == (["E13 8AA"], 5) and kw["lacking"] == ["passport", "immigration"]
-        assert c.post("/api/run", json={"postcode": "E13", "lacking": ["bank card"]}).status_code == 422
+        assert args[:2] == (["E13 8AA"], 5) and "lacking" not in kw
         assert c.post("/api/run", json={"postcode": "London"}).status_code == 400
+        for bad in (".", "..", ".hidden"):  # a run id must not start with a dot (URLs normalise "/./", so call run_dir itself)
+            try:
+                api.run_dir(bad); raise AssertionError(bad)
+            except api.HTTPException as e:
+                assert e.status_code == 400, bad
     finally:
         api.pipeline.run = real
 
@@ -133,7 +138,7 @@ def test_letter():
     assert r["quote"] in t and NHS_GUIDANCE_QUOTE in t and NHS_GUIDANCE_URL in t and r["reg_url"] in t and "2026-09-19" in t
     assert "contradicts the NHS guidance on nhs.uk" in t and not BANNED.search(t), BANNED.search(t)
     assert "national NHS registration form" not in t and "national NHS registration form" in draft_letter({**r, "self_contradiction": True})
-    assert not BANNED.search(draft_letter({**r, "self_contradiction": True, "category": "asks_softly"}))
+    assert draft_letter({**r, "category": "asks_softly"}) == ""  # amber does not contradict nhs.uk: no letter
     assert draft_letter({**r, "category": "says_not_needed"}) == "" and draft_letter({**r, "quote_verified": False}) == ""
 
 
@@ -145,14 +150,14 @@ def test_fake_pipeline_event_order():
     got, run_id = [], "test-fake-run"
     shutil.rmtree(pipeline.RUNS / run_id, ignore_errors=True)
     try:
-        s = pipeline.run(["E13 9AZ"], 40, run_id, got.append, fake=True, lacking=["passport"])
+        s = pipeline.run(["E13 9AZ"], 40, run_id, got.append, fake=True)
         d = pipeline.RUNS / run_id
         on_disk = [json.loads(l) for l in (d / "events.jsonl").read_text().splitlines()]
         assert on_disk == got and len(got) > len(gps)
         types = [e["type"] for e in got]
-        assert types[:3] == ["run_started", "warming", "practices_found"] and types[-1] == "run_finished" and types.count("run_finished") == 1
-        assert got[0]["lacking"] == ["passport"] == s["lacking"] and got[0]["near"] == "E13 9AZ" and got[2]["outcodes"] == ["E13"]
-        assert got[2]["count"] == len(gps) == s["total"] and got[-1]["containers_peak"] is None  # fake: no containers
+        assert types[:2] == ["run_started", "practices_found"] and types[-1] == "run_finished" and types.count("run_finished") == 1  # fake: no warming
+        assert "lacking" not in got[0] and "lacking" not in s and got[0]["near"] == "E13 9AZ" and got[1]["outcodes"] == ["E13"]
+        assert got[1]["count"] == len(gps) == s["total"] and got[-1]["containers_peak"] is None  # fake: no containers
         dist = {g["code"]: i / 10 for i, g in enumerate(gps)}
         for e in got:
             if e["type"] == "classified":

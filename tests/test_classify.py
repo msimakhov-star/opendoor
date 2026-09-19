@@ -31,6 +31,9 @@ def test_quote_problem():
     assert "empty" in classify.quote_problem(Finding(category="says_not_needed", quote=""), page)
     assert "names no document" in classify.quote_problem(Finding(category="demands_documents", quote="Welcome to the surgery."), page)
     assert classify.quote_problem(Finding(category="unclear", quote=""), page) is None
+    for word in ("illegal", "Unlawful", "a breach", "refuses", "refusal"):
+        assert "replaced" in classify._clean(Finding(category="unclear", reason="This is " + word)).reason, word
+    assert classify._clean(Finding(category="unclear", reason="Asks for ID.")).reason == "Asks for ID."
 
 
 def test_excerpt():
@@ -61,9 +64,9 @@ def test_retry_then_cache():
         assert (f.category, f.quote, f.retries, f.quote_verified) == ("demands_documents", TRUE, 1, True), f
         assert len(calls) == 2 and len(rejected) == 1 and rejected[0][:2] == ("T2", 1)
         replayed = []
-        again = asyncio.run(classify.classify_page("T2", PAGE, lambda *a: replayed.append(a)))  # second event loop, cache hit, stub would IndexError if called
+        again = asyncio.run(classify.classify_page("T2", PAGE, lambda *a, **k: replayed.append((*a, k))))  # second event loop, cache hit, stub would IndexError if called
     assert again == f and len(calls) == 2
-    assert replayed == rejected, (replayed, rejected)  # same events on a re-run, nothing invented
+    assert replayed == [(*x, {"cached": True}) for x in rejected], (replayed, rejected)  # same events on a re-run, marked as from the cache
 
 
 def test_never_verified_becomes_unclear():
@@ -72,9 +75,7 @@ def test_never_verified_becomes_unclear():
     with classify.agent.override(model=m):
         f = asyncio.run(classify.classify_page("T3", PAGE))
     assert f.category == "unclear" and f.quote == "" and not f.quote_verified and f.retries == len(calls) == 4, (f, calls)
-    replayed = []
-    asyncio.run(classify.classify_page("T3", PAGE, lambda *a: replayed.append(a)))
-    assert [r[1] for r in replayed] == [1, 2, 3, 4] and len(calls) == 4
+    assert not list(classify.CACHE.glob("*.json")), "a never-verified answer must not be cached"
 
 
 def test_unclear_needs_document_wording():

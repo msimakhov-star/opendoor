@@ -5,9 +5,10 @@ Test:   uv run modal run opendoor/modal_app.py::smoke     (one practice end to e
         uv run modal run opendoor/modal_app.py::boxes     (boxes quotes on fixture pages + nhs.uk, writes fixtures/boxed/)
         uv run modal run opendoor/modal_app.py::watch     (seeds the weekly re-check with the frozen Newham run and runs it once)
         uv run modal run opendoor/modal_app.py::hot --n 26  (keeps 26 capture containers up for a recording; --n 0 turns it off)
-Read only: never submits a form, never types into a field. At most 2 browser page loads per practice site per run:
-capture makes 1 (2 when it has to find the registration link on the homepage itself), and stores an offline MHTML
-snapshot so box can draw on the very same page without contacting the site again. recheck makes exactly 1 per practice.
+Read only: never submits a form, never types into a field. At most 2 page loads per practice site per run, counting every
+request: resolve reads only the practice's nhs.uk profile, never the practice site. capture loads the homepage and follows
+its registration link (2 loads), and stores an offline MHTML snapshot so box draws on the very same page without contacting
+the site again. box loads the live page only when capture made 1 load. recheck makes exactly 1 per practice.
 """
 import hashlib, html, json, re, time, urllib.parse, urllib.request, zlib
 from datetime import datetime, timezone
@@ -28,8 +29,8 @@ DOC_RE = re.compile(
     r"|utility bill|driving licen[cs]e|bank statement|tenancy agreement|council tax bill|immigration status|visa|biometric"
     r"|\bID\b|identification|birth certificate", re.I)
 # The national NHS registration form sits behind a "Human Verification" wall: never load it, just record the link.
+# links_national_form uses this too: the nhs.uk guidance article is not the registration form, so it does not count.
 NATIONAL = re.compile(r"^https?://(?:gp-registration\.nhs\.uk|register-with-gp\.)", re.I)
-NATIONAL_LINK = re.compile(NATIONAL.pattern + r"|^https?://(?:www\.)?nhs\.uk/.*register-with-a-gp", re.I)  # contract: links_national_form
 REG_LINK = re.compile(r"regist|new.?patient|join (?:the |our |this )?(?:practice|surgery)|join us", re.I)
 snaps = modal.Dict.from_name("opendoor-snapshots", create_if_missing=True)  # final_url -> {"mhtml": zlib bytes, "loads": n}
 COLOURS = {"red": "213,40,27", "green": "0,127,59", "amber": "237,139,0"}
@@ -57,18 +58,13 @@ def _reg_links(base, pairs):
 @app.function(image=image, max_containers=4, timeout=60)
 @modal.concurrent(max_inputs=25)
 def resolve(org: dict) -> dict:
-    """Adds site (from the practice's nhs.uk profile), reg_links and reg_url (from the practice homepage). Two GETs."""
+    """Adds site and reg_url (both the practice homepage, from its nhs.uk profile). One GET, to nhs.uk only: capture finds the
+    registration link in the browser, so the practice site gets at most 2 loads in a run."""
     out = {**org, "site": None, "reg_links": [], "reg_url": None, "error": None}
     try:
         _, p = _get("https://www.nhs.uk/services/gp-surgery/x/%s/contact-details-and-opening-times" % org["code"])
         m = re.search(r'contact_info_panel_website_link"[^>]*href="([^"]+)"', p)
-        if not m: return out
-        out["site"] = out["reg_url"] = html.unescape(m.group(1))
-        base, h = _get(out["site"])
-        # Sites behind a JS challenge (AWS WAF answers plain GETs with 202) give no links here: capture then finds the link in the browser.
-        out["reg_links"] = _reg_links(base, [(html.unescape(a.group(1)), norm(html.unescape(re.sub(r"<[^>]+>", " ", a.group(2)))))
-                                             for a in re.finditer(r'(?is)<a[^>]+href="([^"#]+)"[^>]*>(.*?)</a>', h)])
-        if out["reg_links"]: out["reg_url"] = out["reg_links"][0]
+        if m: out["site"] = out["reg_url"] = html.unescape(m.group(1))
     except Exception as e:
         out["error"] = f"{type(e).__name__}: {str(e)[:200]}"
     return out
@@ -128,11 +124,11 @@ def capture(target: dict) -> dict:
                 out["reg_links"], out["national_form_only"] = links, bool(links) and not own
                 if own:
                     out["reg_url"] = own[0]; st, out["loads"] = _goto(page, own[0]), 2
-                    pairs += _links(page)
+                    pairs = _links(page)  # links_national_form is about the page that was read, not the homepage
             txt = page.inner_text("body")
             out.update(http_status=st, final_url=page.url, title=page.title(), text=norm(txt)[:40_000], _png=page.screenshot(type="png"))
             out["challenge"] = bool(st in (401, 403, 429, 503) or (CHALLENGE.search(out["title"] + " " + txt[:3000]) and len(txt) < 3000))
-            out["links_national_form"] = any(NATIONAL_LINK.search(h) for h, _ in pairs + [[page.url, ""]])
+            out["links_national_form"] = any(NATIONAL.search(h) for h, _ in pairs + [[page.url, ""]])
             out["doc_hits"] = sorted({m.group(0).lower() for m in DOC_RE.finditer(out["text"])})
             if out["challenge"] or (st or 0) >= 400: out["status"] = "blocked"
             else:  # offline copy of exactly what was read, so box needs no further contact with the site
@@ -178,7 +174,8 @@ DRAW_JS = """([rect, rgb]) => {
 @app.function(image=image, max_containers=30, timeout=120, cpu=1.0, memory=2048, scaledown_window=900)
 def box(target: dict) -> dict:
     """target: {final_url or reg_url, quote, colour: red|green|amber}. quote_box is in pixels of the returned 1280x900 _png.
-    Draws on capture's offline snapshot when there is one. Loads the live page only if that keeps the site at 2 loads or fewer."""
+    Draws on capture's offline snapshot. Loads the live page only if that keeps the site at 2 loads (a practice page with no
+    snapshot is never loaded live; nhs.uk, which has none, is)."""
     from playwright.sync_api import sync_playwright
     t0, quote = time.time(), norm(target.get("quote"))
     urls = [u for u in (target.get("final_url"), target.get("reg_url"), target.get("site")) if u]
@@ -194,7 +191,7 @@ def box(target: dict) -> dict:
                 Path("/tmp/snap.mhtml").write_bytes(zlib.decompress(snap["mhtml"]))
                 page.goto("file:///tmp/snap.mhtml"); out["source"] = "snapshot"
                 hit = bool(quote) and page.evaluate(FIND_JS, quote)
-            if not hit and (not snap or snap["loads"] < 2):
+            if not hit and (snap["loads"] < 2 if snap else host(urls[0]) == "nhs.uk"):
                 _goto(page, urls[0]); out["source"] = "live"
                 hit = bool(quote) and page.evaluate(FIND_JS, quote)
             if hit:
@@ -301,7 +298,7 @@ def smoke(code: str = "F84093", name: str = "TOLLGATE MEDICAL CENTRE"):
     assert models.DOC_RE.pattern == DOC_RE.pattern and models.DOC_RE.flags == DOC_RE.flags, "DOC_RE drifted from models.py"
     assert (models.NHS_GUIDANCE_URL, models.NHS_GUIDANCE_QUOTE) == NHS
     assert NATIONAL.search("https://gp-registration.nhs.uk/F84681/gpregistration/landing") and NATIONAL.search("https://register-with-gp.ht1.uk/?gpCode=F84672")
-    assert NATIONAL_LINK.search(NHS[0]) and not NATIONAL.search(NHS[0]) and not NATIONAL_LINK.search("https://essexlodge.com/register-with-our-practice/")
+    assert not NATIONAL.search(NHS[0]) and not NATIONAL.search("https://essexlodge.com/register-with-our-practice/")
     assert _reg_links("https://a.nhs.uk/", [("/new-patients/", "Join"), ("https://klinik.example/x", "Register"), (NHS[0], "How to register"), ("/x.pdf", "Registration form"),
                                             ("https://gp-registration.nhs.uk/F1", "Register online")]) == ["https://a.nhs.uk/new-patients/", "https://gp-registration.nhs.uk/F1"]
     t = resolve.remote({"code": code, "name": name}); print("resolve:", json.dumps(t))

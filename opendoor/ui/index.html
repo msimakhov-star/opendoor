@@ -168,6 +168,7 @@ blockquote cite{display:block;font-size:15px;font-weight:400;font-style:normal;c
 .answer .big{font-size:29px;line-height:1.22;font-weight:700;margin:0 0 8px;letter-spacing:-.01em}
 .answer .n{font-size:46px;line-height:1;font-weight:800;color:var(--green);font-variant-numeric:tabular-nums;margin-right:6px;vertical-align:-3px}
 .answer .n.r{color:var(--red)}
+.answer .n.a{color:var(--amber);font-size:inherit;vertical-align:0}
 .answer .big.m{font-size:24px;margin-top:22px}
 .answer .big.m .n{font-size:38px}
 .answer .sub{margin-bottom:12px}
@@ -242,7 +243,7 @@ dialog textarea{width:100%;height:46vh;background:#0a0f16;border:1px solid #2c3a
   .step .row>b,.clock b{font-size:26px}.tally b{font-size:24px}.answer .big{font-size:25px}.answer .n{font-size:40px}
   .answer .big.m{font-size:21px;margin-top:16px}.answer .big.m .n{font-size:32px}.greens button{padding:8px 12px;font-size:17px}
   figure blockquote.q{font-size:16px}blockquote.nhs{font-size:24px}footer{padding:7px 22px;font-size:15px}}
-@media (max-width:1500px){.step{padding:5px 9px 6px}.step .u{font-size:12px}.tally{gap:9px}.arr{flex-basis:16px}.clock{min-width:80px;padding-left:10px}}
+@media (max-width:1500px){.step{padding:5px 9px 6px}.step .u{font-size:14px}.step .x{color:#c4cedb}.tally{gap:9px}.arr{flex-basis:16px}.clock{min-width:80px;padding-left:10px}}
 @media (max-width:900px){body{overflow:auto;display:block}main{grid-template-columns:1fr}#mapwrap{height:50vh}#area{position:static;grid-template-columns:1fr}#panel{border-left:0}
   .persona{margin-left:0}#chain{flex-wrap:wrap;gap:6px}.arr{display:none}.step{flex-basis:30%}}
 @media (prefers-reduced-motion:reduce){.pin::before,.pin::after,.tick,.step.rej,.arr.flow,#area,#toast,.sbar{animation:none!important}}
@@ -279,10 +280,10 @@ dialog textarea{width:100%;height:46vh;background:#0a0f16;border:1px solid #2c3a
   <div class="step s-modal" id="st-modal"><span class="nm">Modal browsers</span>
     <div class="row"><b id="c-pages">0</b><span class="u"><span>pages read</span><span class="x" id="x-modal"></span></span></div></div>
   <i class="arr" aria-hidden="true"></i>
-  <div class="step s-gem" id="st-gem"><span class="nm">Gemini</span>
+  <div class="step s-gem" id="st-gem"><span class="nm">Pydantic AI + Gemini</span>
     <div class="row"><b id="c-cls">0</b><span class="u"><span>pages classified</span><span class="x" id="x-gem"></span></span></div></div>
   <i class="arr" aria-hidden="true"></i>
-  <div class="step s-code" id="st-code"><span class="nm">Code check</span>
+  <div class="step s-code" id="st-code"><span class="nm">Output validator</span>
     <div class="row"><b id="c-ver">0</b><span class="u"><span>quotes verified</span><span class="x" id="x-code">0 rejected</span></span></div></div>
   <i class="arr" aria-hidden="true"></i>
   <div class="step s-ev" id="st-ev"><span class="nm">Evidence</span>
@@ -303,7 +304,7 @@ dialog textarea{width:100%;height:46vh;background:#0a0f16;border:1px solid #2c3a
 </main>
 
 <div id="log" role="log" aria-label="Live event log"></div>
-<footer>Reads what practice websites say, not what happens at the front desk. Source of the rule:
+<footer>Reads what practice websites say, not what happens at the front desk. Source of the guidance:
   <a href="https://www.nhs.uk/nhs-services/gps/how-to-register-with-a-gp-surgery/" target="_blank" rel="noopener noreferrer">nhs.uk</a></footer>
 
 <dialog id="dlg" aria-labelledby="dlg-title">
@@ -328,7 +329,8 @@ const NHS_QUOTE = "You do not need ID, proof of address or proof of immigration 
 const COLOUR = {demands_documents: "red", asks_softly: "amber", says_not_needed: "green", no_mention: "green-outline", unclear: "grey", not_checked: "grey"};
 const WORDS = {
   demands_documents: ["Demands documents", "This surgery's website says new patients must provide documents", "That contradicts the NHS guidance on nhs.uk."],
-  asks_softly: ["Asks softly", "This surgery's website asks for documents, but softly or inconsistently", "The NHS guidance on nhs.uk says none are needed."],
+  asks_softly: ["Asks softly", "This surgery's website asks for documents, but softly or inconsistently",
+    "nhs.uk says none are needed to register, and also that a surgery may ask for extra documents \"for other reasons, like helping to find or transfer your medical records\"."],
   says_not_needed: ["Says not needed", "This surgery's website says you can register without documents", "This matches the NHS guidance on nhs.uk."],
   no_mention: ["No mention", "Registration page found, with no document wording on it", "Nothing on the page contradicts the NHS guidance on nhs.uk."],
   unclear: ["Unclear", "The wording is ambiguous and we could not decide", "Read the page yourself before relying on it."],
@@ -391,8 +393,8 @@ function initMap() {
 function fit() {
   const pts = [...S.P.values()].filter(q => q.marker).map(q => q.marker.getLatLng());
   if (!map || !pts.length) return;
-  const card = $("area"), bottom = card.hidden ? 70 : card.offsetHeight + 50;
-  map.flyToBounds(L.latLngBounds(pts), {paddingTopLeft: [70, 70], paddingBottomRight: [70, bottom], maxZoom: 15, duration: 0.6});
+  const card = $("area"), bottom = card.hidden ? 30 : card.offsetHeight + 36;
+  map.flyToBounds(L.latLngBounds(pts), {paddingTopLeft: [30, 30], paddingBottomRight: [30, bottom], maxZoom: 15, duration: 0.6});
 }
 function setMarker(p) {
   if (!map || typeof p.lat !== "number" || typeof p.lon !== "number") return;
@@ -413,7 +415,7 @@ function setMarker(p) {
 function reset(mode, runId) {
   gen++;
   if (S) for (const p of S.P.values()) if (p.marker) p.marker.remove();
-  S = fresh(); S.mode = mode; S.runId = runId; S.start = performance.now();
+  S = fresh(); S.mode = mode; S.runId = runId; S.start = performance.now(); $("run").disabled = false;
   $("log").replaceChildren(); $("area").hidden = true; hideToast();
   setMode(); counters(); renderPanel();
 }
@@ -425,13 +427,13 @@ function apply(e) {
   switch (e.type) {
     case "run_started": S.fake = !!e.fake; S.prefixes = e.postcode_prefixes || []; S.near = e.near || null; setMode();
       if (S.mode === "replay") { // the box shows what is being replayed (CSS field-sizing crashed headless Chrome here, so size it by hand)
-        const pc = $("postcode"); pc.value = S.near || S.prefixes.join(" "); pc.style.width = ""; pc.style.width = Math.min(250, Math.max(160, pc.scrollWidth + 2)) + "px";
+        const pc = $("postcode"); pc.value = S.near || S.prefixes.join(" "); pc.style.width = ""; pc.style.width = Math.min(250, Math.max(160, pc.scrollWidth + 2)) + "px"; if (e.limit) $("limit").value = e.limit;
       } break;
     case "practices_found": S.found = e.count || 0; break;
     case "resolved": Object.assign(p, {name: nice(e.name) || p.name, lat: e.lat, lon: e.lon, reg_url: e.reg_url}); setMarker(p); break;
-    case "captured": if (e.status === "ok" || e.status < 400) S.pages++; /* the built in sample uses HTTP codes */ S.finished.add(e.code); Object.assign(p, {status: e.status, challenge: e.challenge, secs: e.secs});
+    case "captured": if (e.status === "ok" ? e.secs > 0 : e.status < 400) S.pages++; /* 0 s: a national form link, never loaded. The built in sample uses HTTP codes */ S.finished.add(e.code); Object.assign(p, {status: e.status, challenge: e.challenge, secs: e.secs});
       if (typeof e.t === "number" && typeof e.secs === "number") S.spans.push([e.t - e.secs, e.t]); break;
-    case "quote_rejected": S.rejected++; p.rejections++;
+    case "quote_rejected": if (e.cached) break; /* replayed from an earlier run's cache: logged, not counted */ S.rejected++; p.rejections++;
       $("st-code").classList.remove("rej"); void $("st-code").offsetWidth; $("st-code").classList.add("rej"); toast(p, e); break;
     case "classified": S.finished.add(e.code);
       if (S.toast === e.code && WORDS[e.category]) $("toast").append(el("p", "then", "Answered again: " + WORDS[e.category][0].toLowerCase() + (e.quote ? ', quote "' + e.quote + '"' : "")));
@@ -450,6 +452,7 @@ function finish(e) {
   if (e && typeof e.wall_secs === "number") S.elapsed = e.wall_secs;
   if (e && e.containers_peak != null) S.peak = e.containers_peak;
   if (e && typeof e.gemini_calls === "number") S.calls = e.gemini_calls;
+  if (e && typeof e.cache_hits === "number") S.cached = e.cache_hits;
   setMode(); counters(); renderArea(); fit();
   if (S.mode === "live") loadResults(S.runId, gen);
 }
@@ -473,14 +476,14 @@ function counters() {
   const verified = all.filter(p => p.quote).length, boxed = all.filter(p => p.boxed).length;
   setNum("c-found", S.found); setNum("c-pages", S.pages); setNum("c-cls", classified); setNum("c-ver", verified); setNum("c-box", boxed);
   setNum("c-red", c.red); setNum("c-amber", c.amber); setNum("c-green", c.green); setNum("c-none", c["green-outline"]);
-  $("x-nhs").textContent = S.near ? "nearest to " + S.near : S.prefixes.join(", ");
+  $("x-nhs").textContent = S.near ? "nearest to " + S.near : S.prefixes.length > 3 ? S.prefixes.length + " areas" : S.prefixes.join(", ");
   const peak = peakOverlap(S.spans);
-  $("x-modal").textContent = S.mode === "ready" ? "" : S.peak != null ? "peak " + S.peak + " containers" : S.done ? "peak " + peak + " at once" : inflight + " in flight";
-  $("x-gem").textContent = S.calls != null ? plural(S.calls, "model call", "model calls") : S.mode === "ready" || S.done ? "" : queued + " waiting";
-  $("x-code").textContent = plural(S.rejected, "misquote", "misquotes") + " rejected";
+  $("x-modal").textContent = S.mode === "ready" ? "" : S.peak != null ? S.peak + " at once" : S.done ? peak + " at once" : inflight + " in flight";
+  $("x-gem").textContent = S.calls != null ? plural(S.calls, "model call", "model calls") + (S.cached ? ", " + S.cached + " cached" : "") : S.mode === "ready" || S.done ? "" : queued + " waiting";
+  $("x-code").textContent = S.rejected + " rejected";
   $("x-code").classList.toggle("hot", S.rejected > 0);
-  const lit = {nhs: S.found > 0, modal: S.pages > 0 || all.some(p => typeof p.lat === "number"), gem: all.some(p => p.category),
-    code: verified > 0 || S.rejected > 0, ev: boxed > 0, map: all.some(p => p.category)};
+  const lit = {nhs: S.found > 0, modal: S.pages > 0 || all.some(p => typeof p.lat === "number"), gem: classified > 0,
+    code: verified > 0 || S.rejected > 0, ev: boxed > 0, map: c.red + c.amber + c.green + c["green-outline"] > 0};
   const steps = ["nhs", "modal", "gem", "code", "ev", "map"], arrows = document.querySelectorAll("#chain .arr");
   steps.forEach((k, i) => {
     $("st-" + k).classList.toggle("on", lit[k]);
@@ -497,18 +500,18 @@ function setMode() {
 function describe(e) {
   const n = e.code ? P(e.code).name : "";
   switch (e.type) {
-    case "run_started": return "postcodes " + (e.postcode_prefixes || []).join(", ") + ", limit " + e.limit +
-      (Array.isArray(e.lacking) && e.lacking.length ? ", person has no " + e.lacking.map(k => DOC_NAME[k] || k).join(", ") : "");
+    case "run_started": return "postcodes " + (e.postcode_prefixes || []).join(", ") + ", limit " + e.limit;
     case "warming": return "booting a Modal browser container while the practices are looked up";
     case "practices_found": return e.count + " GP practices from the NHS directory" + (Array.isArray(e.outcodes) && e.outcodes.length ? ", districts " + e.outcodes.join(", ") : "");
     case "resolved": return n + "  " + (host(e.reg_url) || "no registration page found");
     case "captured": return n + "  status " + e.status + (e.challenge ? ", bot challenge" : "") + (e.secs != null ? "  " + e.secs + "s" : "");
     case "classified": return n + "  " + e.category + (e.quote ? '  "' + e.quote + '"' : "");
-    case "quote_rejected": return n + "  attempt " + e.attempt + ": " + e.reason;
+    case "quote_rejected": return n + "  attempt " + e.attempt + (e.cached ? " (from an earlier run, verdict read from the cache)" : "") + ": " + e.reason;
     case "boxed": return n + "  sentence boxed on the screenshot";
-    case "run_finished": return [typeof e.wall_secs === "number" ? e.wall_secs.toFixed(1) + "s wall clock" : "",
+    case "run_finished": return [e.error ? "RUN FAILED: " + e.error : "", typeof e.wall_secs === "number" ? e.wall_secs.toFixed(1) + "s wall clock" : "",
       e.containers_peak != null ? "peak " + e.containers_peak + " containers" : "",
-      typeof e.gemini_calls === "number" ? plural(e.gemini_calls, "model call", "model calls") : ""].filter(Boolean).join(", ");
+      typeof e.gemini_calls === "number" ? plural(e.gemini_calls, "model call", "model calls") : "",
+      e.cache_hits ? e.cache_hits + " verdicts from the cache" : ""].filter(Boolean).join(", ");
     default: return e.msg || "";
   }
 }
@@ -523,7 +526,7 @@ const note = msg => logLine({type: "note", msg});
 let toastTimer;
 function toast(p, e) { // wall-clock seconds, not replay seconds, so it reads the same at x1 and x4
   const t = $("toast");
-  t.replaceChildren(el("p", "h", "Code check rejected the model's answer"), el("p", "who", p.name), el("p", "why", e.reason || "The quote was not found word for word on the page."),
+  t.replaceChildren(el("p", "h", "Output validator rejected the model's answer"), el("p", "who", p.name), el("p", "why", e.reason || "The quote was not found word for word on the page."),
     el("p", "why", "Sent back to Gemini to answer again (attempt " + ((e.attempt || 1) + 1) + ")."));
   t.onclick = () => select(p.code);
   t.hidden = false; S.toast = p.code;
@@ -577,7 +580,7 @@ async function startLive(postcode, limit) {
   const g = gen;
   $("run").disabled = true;
   try {
-    const r = await fetch("/api/run", {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify({postcode, limit, lacking: [...lacking]})});
+    const r = await fetch("/api/run", {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify({postcode, limit})});
     if (!r.ok) throw new Error("HTTP " + r.status);
     S.runId = (await r.json()).run_id;
   } catch (err) { note("could not start a run: " + err.message); S.mode = "ready"; setMode(); $("run").disabled = false; return; }
@@ -636,7 +639,9 @@ function renderArea() {
   const x = el("button", "x", "Hide"); x.type = "button"; x.onclick = () => { card.hidden = true; fit(); };
   const left = el("div"), right = el("div");
   left.append(el("p", "eyebrow", "Area summary" + (S.prefixes.length ? ", " + S.prefixes.join(", ") : "")));
-  const h = el("p", "sumh"); h.append(el("b", "", String(total)), " surgeries checked in ", el("b", "", wall.toFixed(1)), " seconds");
+  const h = el("p", "sumh");
+  if (S.fin.error) h.append("Run failed: " + S.fin.error);
+  else h.append(el("b", "", String(total)), " surgeries, ", el("b", "", String(S.pages)), " websites read in ", el("b", "", wall.toFixed(1)), " seconds");
   const bar = el("div", "sbar"), key = el("ul", "skey");
   for (const [k, label] of [["red", "demand documents"], ["amber", "ask softly"], ["green", "say not needed"], ["green-outline", "no document wording"], ["grey", "unclear or not read"]]) {
     if (!c[k]) continue;
@@ -707,7 +712,7 @@ function shot(src, caption, quote, tone, box) {
     if (!box || !(box.width > 0)) return;
     const W = img.naturalWidth, H = img.naturalHeight, pad = 36;
     let w = Math.min(W, 2 * H, Math.max(box.width + 2 * pad, 2 * (box.height + 2 * pad))), h = w / 2;
-    const x = Math.max(0, Math.min(W - w, box.x + box.width / 2 - w / 2)), y = Math.max(0, Math.min(H - h, box.y + box.height / 2 - h / 2));
+    const x = Math.max(0, Math.min(W - w, box.x + box.width / 2 - w / 2)), y = Math.max(0, Math.min(H - h, box.y - Math.min(0.3 * h, (h - box.height) / 2)));
     Object.assign(img.style, {width: W / w * 100 + "%", left: -x / w * 100 + "%", top: -y / h * 100 + "%"});
   };
   return f;
@@ -746,17 +751,21 @@ function renderPanel() {
     const s = el("section", "split"), cols = el("div", "cols");
     cols.append(underShot(shot(mine, "This surgery's website", p.quote, tone, p.boxed && r.quote_box), tone, w[0], p.quote, source),
       underShot(shot(shots ? shots + "nhs.png" : null, "nhs.uk", NHS_QUOTE, "green", S.nhsBox), "green", "NHS guidance", NHS_QUOTE, "Quoted from nhs.uk"));
-    s.append(el("h3", "", "Two NHS websites that disagree"), cols);
+    const red = p.category === "demands_documents";
+    s.append(el("h3", "", !red ? "This surgery's website next to nhs.uk" : /(^|\.)nhs\.uk$/.test(host(url)) ? "Two NHS websites that disagree" : "This surgery's website disagrees with nhs.uk"), cols);
     s.onclick = ev => { if (!ev.target.closest("a")) s.classList.toggle("big"); };
-    panel.append(s, ...explain);
-    if (chips.children.length) panel.append(chips);
     const adv = S.adv && S.adv[p.code];
-    if (adv && (adv.note || adv.letter)) panel.append(advocate(p, adv));
-    else {
-      const act = el("div", "actions"), b = el("button", "btn go", "Draft letter"); b.type = "button"; b.onclick = () => openLetter(p);
-      act.append(b, el("span", "note", "Nothing is sent automatically. You approve it and send it yourself."));
+    if (red && !(adv && adv.letter)) { // letters are for red only: nhs.uk allows asking for documents for other reasons, so amber does not contradict it
+      const act = el("div", "actions");
+      if (S.summary || S.mode === "sample") {
+        const b = el("button", "btn go", "Draft letter"); b.type = "button"; b.onclick = () => openLetter(p);
+        act.append(b, el("span", "note", "Nothing is sent automatically. You approve it and send it yourself."));
+      } else act.append(el("span", "note", "The draft letter is available when the run finishes."));
       panel.append(act);
     }
+    panel.append(s, ...explain);
+    if (chips.children.length) panel.append(chips);
+    if (adv && (adv.note || (red && adv.letter))) panel.append(advocate(p, red ? adv : {...adv, letter: null}));
   } else {
     panel.append(...explain);
     if (p.quote) {
@@ -778,7 +787,7 @@ function renderPanel() {
   const near = typeof p.lat === "number" ? nearList(greens, p, q => q.category === "no_mention" ? "no document wording" : "", "") : null;
   panel.append(el("p", "sub", near ? "Nearest surgeries whose websites do not ask for documents, distance from this one:" : "No green surgeries found nearby yet."));
   if (near) panel.append(near);
-  const g = el("p", "note", "The NHS guidance applies to every GP surgery in England. "), a = el("a", "", "Read it on nhs.uk");
+  const g = el("p", "note", "nhs.uk says: \"Everyone in England can register with a GP surgery or change their GP surgery for free.\" "), a = el("a", "", "Read it on nhs.uk");
   a.href = NHS_URL; a.target = "_blank"; a.rel = "noopener noreferrer"; g.append(a); panel.append(g);
 }
 function advocate(p, a) { // every string here came from the model or the metrics file: textContent only
@@ -807,18 +816,21 @@ function advocate(p, a) { // every string here came from the model or the metric
 function renderAnswer(panel, all) {
   const box = el("section", "answer"), ticked = lacking.size > 0;
   const says = all.filter(p => p.category === "says_not_needed"), none = all.filter(p => p.category === "no_mention");
-  const hits = all.filter(p => asks(p) && (!ticked || blocks(p)));
+  const reds = all.filter(p => p.category === "demands_documents" && (!ticked || blocks(p)));
+  const ambers = all.filter(p => p.category === "asks_softly" && (!ticked || blocks(p))), hits = [...reds, ...ambers];
+  const where = S.near ? " near you" : " in this area";
   box.append(el("p", "eyebrow", ticked ? "Your answer, without " + [...lacking].map(k => DOC_NAME[k]).join(", ") : "Your answer"));
   const big = el("p", "big");
-  big.append(el("b", "n", String(says.length)), (says.length === 1 ? " surgery near you says on its website" : " surgeries near you say on their website") +
-    " you can register without " + (ticked ? "these documents." : "documents."));
+  big.append(el("b", "n", String(says.length)), (says.length === 1 ? " surgery" + where + " says on its website" : " surgeries" + where + " say on their website") +
+    " you can register without documents.");
   box.append(big);
   if (none.length) box.append(el("p", "sub", plural(none.length, "more has", "more have") + " no document wording on the registration page."));
   const list = nearList([...says, ...none], null, p => p.category === "no_mention" ? "no document wording" : "");
   if (list) box.append(list);
   const m = el("p", "big m");
-  m.append(el("b", "n r", String(hits.length)), (hits.length === 1 ? " asks" : " ask") + (ticked ? " for something you ticked." : " for documents on their website."));
+  m.append(el("b", "n r", String(reds.length)), (reds.length === 1 ? " says on its website" : " say on their website") + " you must bring " + (ticked ? "something you ticked." : "documents."));
   box.append(m);
+  if (ambers.length) { const a = el("p", "sub"); a.append(el("b", "n a", String(ambers.length)), (ambers.length === 1 ? " more asks" : " more ask") + " for " + (ticked ? "something you ticked" : "documents") + ", softly or inconsistently."); box.append(a); }
   if (!ticked) box.append(el("p", "note", "Tick what you don't have at the top. The answer updates straight away, no new run."));
   const hl = nearList(hits, null, p => wanted(p).join(", "), "asks", 4);
   if (hl) box.append(hl);
@@ -826,9 +838,9 @@ function renderAnswer(panel, all) {
   panel.append(box);
 }
 function renderOverview(panel) {
-  const all = [...S.P.values()].filter(p => p.category);
+  const all = [...S.P.values()].filter(p => p.category && p.category !== "not_checked");
   if (all.length) renderAnswer(panel, all);
-  panel.append(el("p", "eyebrow", "The rule, in the NHS's own words"));
+  panel.append(el("p", "eyebrow", "The guidance, in the NHS's own words"));
   const q = el("blockquote", "nhs", NHS_QUOTE), c = el("cite"), a = el("a", "", "nhs.uk: how to register with a GP surgery");
   a.href = NHS_URL; a.target = "_blank"; a.rel = "noopener noreferrer"; c.append(a); q.append(c);
   panel.append(q);

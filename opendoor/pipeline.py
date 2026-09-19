@@ -86,23 +86,6 @@ async def _arun(orgs, R, emit, shots, resolve, capture, box, classify) -> int:
         r.status, r.reason = status, reason
         classified(r)
 
-    # ponytail: resolve finishes for everyone before capture starts (3s on a 5 practice run). Feed capture an async generator if the demo needs it faster.
-    targets = []
-    async for t in _amap(resolve, orgs):
-        if not isinstance(t, dict) or t.get("code") not in R:
-            continue
-        r = R[t["code"]]
-        r.site, r.reg_url = t.get("site"), t.get("reg_url")
-        emit("resolved", code=r.code, name=r.name, lat=r.lat, lon=r.lon, reg_url=r.reg_url)
-        if r.reg_url or r.site:
-            targets.append(t)
-        else:
-            finish(r, "error" if t.get("error") else "no_site", t.get("error") or "No website listed on the practice's nhs.uk profile.")
-    done = {t["code"] for t in targets}
-    for r in R.values():
-        if r.code not in done and r.status == "ok" and not r.reason:
-            finish(r, "error", "Could not look up the practice website.")
-
     async def box_one(job):  # box draws on capture's offline snapshot, found by final_url, so it rarely touches the site again
         try:
             b = await box.remote.aio(job) if hasattr(box, "remote") else box(job)
@@ -120,15 +103,20 @@ async def _arun(orgs, R, emit, shots, resolve, capture, box, classify) -> int:
             r.quote_box, r.shot = b["quote_box"], f"shots/{r.code}.png"
             emit("boxed", code=r.code, shot=r.shot)
 
+    def on_reject(code, attempt, reason, cached=False):
+        emit("quote_rejected", code=code, attempt=attempt, reason=reason, **({"cached": True} if cached else {}))
+
     async def classify_one(r, c):
         text = c.get("text") or ""
         if c.get("national_form_only"):
             f = Finding(category="no_mention", reason="The registration link goes straight to the national NHS registration form.")
+        elif not c.get("reg_links"):  # only the homepage was read (or a parked domain): that is not a registration page
+            f = Finding(category="not_checked", reason="No registration page found on the practice website.")
         elif len(text) < MIN_TEXT:
             f = Finding(category="not_checked", reason="The page had almost no readable text.")
         else:
             try:
-                f = await classify(r.code, text, on_reject=lambda code, attempt, reason: emit("quote_rejected", code=code, attempt=attempt, reason=reason))
+                f = await classify(r.code, text, on_reject=on_reject)
             except Exception as e:
                 f = Finding(category="not_checked", reason=f"Classifier error: {type(e).__name__}")
         apply_finding(r, f)
@@ -136,15 +124,17 @@ async def _arun(orgs, R, emit, shots, resolve, capture, box, classify) -> int:
         if r.quote_verified and r.quote and r.category in BOXED:
             await box_one({"code": r.code, "final_url": r.reg_url, "reg_url": r.reg_url, "quote": r.quote, "colour": r.colour})
 
-    tasks, captured, spans = [], set(), []
-    if not (CACHE / "nhs.png").exists():  # the nhs.uk reference screenshot, made once and reused by later runs
-        tasks.append(asyncio.create_task(box_one({"code": "nhs", "final_url": NHS_GUIDANCE_URL, "reg_url": NHS_GUIDANCE_URL,
-                                                  "quote": NHS_GUIDANCE_QUOTE, "colour": "green"})))
-    async for c in _amap(capture, targets):
-        if not isinstance(c, dict) or c.get("code") not in R:
-            continue
-        r = R[c["code"]]
-        captured.add(r.code)
+    spans = []
+
+    async def capture_one(t):
+        """Starts as soon as this practice is resolved, so the first pages are read while other practices are still looked up."""
+        r = R[t["code"]]
+        try:
+            c = await capture.remote.aio(t) if hasattr(capture, "remote") else capture(t)
+        except Exception:
+            c = None
+        if not isinstance(c, dict):
+            return finish(r, "error", "The page capture failed.")
         now = time.time()
         spans.append((now - (c.get("secs") or 0.0), now))  # when this call ran, by its own clock; 0 s calls never opened a browser
         if c.get("text"):  # kept so a human can check the classification against exactly what was read
@@ -159,20 +149,37 @@ async def _arun(orgs, R, emit, shots, resolve, capture, box, classify) -> int:
         r.checked_at = datetime.now(timezone.utc).isoformat(timespec="seconds")
         emit("captured", code=r.code, status=r.status, challenge=bool(c.get("challenge")), secs=r.secs, http_status=c.get("http_status"))
         if r.status == "ok":
-            tasks.append(asyncio.create_task(classify_one(r, c)))  # classification overlaps with the captures still running
+            await classify_one(r, c)
         else:
             finish(r, r.status, (c.get("error") or "The site did not let the automated browser read the page.").splitlines()[0])
-    for t in targets:
-        if t["code"] not in captured:
-            finish(R[t["code"]], "error", "The page capture failed.")
+
+    tasks = []
+    if not (CACHE / "nhs.png").exists():  # the nhs.uk reference screenshot, made once and reused by later runs
+        tasks.append(asyncio.create_task(box_one({"code": "nhs", "final_url": NHS_GUIDANCE_URL, "reg_url": NHS_GUIDANCE_URL,
+                                                  "quote": NHS_GUIDANCE_QUOTE, "colour": "green"})))
+    started = set()
+    async for t in _amap(resolve, orgs):
+        if not isinstance(t, dict) or t.get("code") not in R:
+            continue
+        r = R[t["code"]]
+        r.site, r.reg_url = t.get("site"), t.get("reg_url")
+        emit("resolved", code=r.code, name=r.name, lat=r.lat, lon=r.lon, reg_url=r.reg_url)
+        if r.reg_url or r.site:
+            started.add(r.code)
+            tasks.append(asyncio.create_task(capture_one(t)))
+        else:
+            finish(r, "error" if t.get("error") else "no_site", t.get("error") or "No website listed on the practice's nhs.uk profile.")
+    for r in R.values():
+        if r.code not in started and r.status == "ok" and not r.reason:
+            finish(r, "error", "Could not look up the practice website.")
     await asyncio.gather(*tasks)
     return peak_overlap(spans)
 
 
-def run(postcode_prefixes, limit, run_id=None, on_event=None, fake=False, region=None, lacking=()) -> dict:
+def run(postcode_prefixes, limit, run_id=None, on_event=None, fake=False, region=None) -> dict:
     """Blocking. Returns the summary. on_event(event_dict) is called for every event, in order.
     One full postcode or outcode (['E13 8AA'] or ['E13']) finds the `limit` nearest practices; anything else sweeps prefixes.
-    lacking (documents the user does not have) is only echoed in run_started: the UI does the filtering."""
+    What a person does not have never reaches the server: the UI filters in the browser."""
     t0 = time.time()
     run_id = run_id or new_run_id(postcode_prefixes)
     near = single_place(postcode_prefixes[0]) if len(postcode_prefixes) == 1 and not region else None
@@ -184,17 +191,17 @@ def run(postcode_prefixes, limit, run_id=None, on_event=None, fake=False, region
 
     def emit(type, **kw):
         nonlocal n_rejected
-        n_rejected += type == "quote_rejected"
+        n_rejected += type == "quote_rejected" and not kw.get("cached")  # a cache hit replays an earlier run's rejections
         ev = {"type": type, "t": round(time.time() - t0, 2), **kw}
         log.write(json.dumps(ev) + "\n")
         log.flush()
         if on_event:
             on_event(ev)
 
-    R, error, stats, calls0, peak, where = {}, None, {}, 0, None, {}
-    emit("run_started", postcode_prefixes=postcode_prefixes, limit=limit, run_id=run_id, fake=fake, near=near, lacking=list(lacking or []))
-    emit("warming")  # capture containers start booting while practices are found and resolved
+    R, error, stats, calls0, hits0, peak, where = {}, None, {}, 0, 0, None, {}
+    emit("run_started", postcode_prefixes=postcode_prefixes, limit=limit, run_id=run_id, fake=fake, near=near)
     if not fake:
+        emit("warming")  # a Modal browser container boots while practices are found and resolved
         threading.Thread(target=_warm, daemon=True).start()
     try:
         if near:
@@ -211,7 +218,7 @@ def run(postcode_prefixes, limit, run_id=None, on_event=None, fake=False, region
             import modal
             from opendoor import classify as cl  # lazy: pulls in pydantic-ai and logfire
             resolve, capture, box = (modal.Function.from_name("opendoor", n) for n in ("resolve", "capture", "box"))
-            classify, stats, calls0 = cl.classify_page, cl.STATS, cl.STATS["requests"]
+            classify, stats, calls0, hits0 = cl.classify_page, cl.STATS, cl.STATS["requests"], cl.STATS["cache_hits"]
         peak = asyncio.run(_arun(orgs, R, emit, shots, resolve, capture, box, classify))
         peak = None if fake else peak  # fake captures replay recorded timings, not containers
     except Exception as e:  # still write what we have and close the run, so the UI stops polling
@@ -224,7 +231,7 @@ def run(postcode_prefixes, limit, run_id=None, on_event=None, fake=False, region
     counts = {c: 0 for c in COLOUR} | Counter(r.category for r in results)
     summary = {
         "run_id": run_id, "postcode_prefixes": postcode_prefixes, "limit": limit, "fake": fake, "error": error,
-        "near": near, **where, "lacking": list(lacking or []), "containers_peak": peak,
+        "near": near, **where, "containers_peak": peak,
         "total": len(results), "counts": counts,
         "statuses": dict(Counter(r.status for r in results)),
         "self_contradictions": sum(r.self_contradiction for r in results),
@@ -232,6 +239,7 @@ def run(postcode_prefixes, limit, run_id=None, on_event=None, fake=False, region
         "quotes_boxed": sum(1 for r in results if r.quote_box),
         "quotes_rejected": n_rejected,
         "gemini_calls": stats.get("requests", 0) - calls0,
+        "cache_hits": stats.get("cache_hits", 0) - hits0,  # pages whose verdict came from an earlier run's disk cache
         "wall_secs": round(time.time() - t0, 1),
         "nhs": {"url": NHS_GUIDANCE_URL, "quote": NHS_GUIDANCE_QUOTE, "shot": "shots/nhs.png" if nhs else None,
                 "quote_box": json.loads((CACHE / "nhs.json").read_text()) if nhs and (CACHE / "nhs.json").exists() else None},
@@ -241,7 +249,7 @@ def run(postcode_prefixes, limit, run_id=None, on_event=None, fake=False, region
     if results and not fake:  # fake runs use a keyword classifier, never hand those verdicts on
         write_verdicts(results, run_dir)
     emit("run_finished", counts=counts, wall_secs=summary["wall_secs"], total=len(results), quotes_rejected=n_rejected,
-         gemini_calls=summary["gemini_calls"], error=error, containers_peak=peak)
+         gemini_calls=summary["gemini_calls"], cache_hits=summary["cache_hits"], error=error, containers_peak=peak)
     log.close()
     return summary
 
@@ -258,9 +266,9 @@ def _fakes():
     pages = {g["code"]: g for g in json.loads((probe / "results.json").read_text())["gps"]}
     state = {"rejected": False}
 
-    def resolve(org):
+    def resolve(org):  # the probe already found each registration link, so fake capture reads it as if followed from the homepage
         g = sites.get(org["code"], {})
-        return {**org, "site": g.get("site"), "reg_links": g.get("reg_links", []), "reg_url": g.get("url"), "error": None}
+        return {**org, "site": g.get("site"), "reg_links": g.get("reg_links") or ([g["url"]] if g.get("url") else []), "reg_url": g.get("url"), "error": None}
 
     def capture(t):
         g, fx, png = pages.get(t["code"], {}), ROOT / "fixtures" / "texts" / f"{t['code']}.txt", probe / "shots" / f"{t['code']}.png"

@@ -51,7 +51,7 @@ Rules:
 - Only wording about registering as a new patient counts. Documents asked for online services, the NHS App, prescriptions or travel do not count.
 - quote: copy ONE sentence character for character from the page text, the sentence named above for the category. Do not fix spelling, do not change punctuation, apostrophes or capital letters, do not join separate sentences, do not add an ellipsis. For demands_documents the quoted sentence must itself name a document. Leave quote empty only for no_mention.
 - documents: the document types the page asks for, lower case.
-- reason: one short plain English sentence describing the wording only. Never use the words illegal, unlawful, breach or refuses.
+- reason: one short plain English sentence describing the wording only. Make no legal judgement.
 - If you are unsure, choose unclear. Never guess. Never use not_checked."""
 
 
@@ -63,9 +63,19 @@ class Deps:
     rejections: list = field(default_factory=list)  # [attempt, reason] for every quote code really rejected
 
 
-async def _tell(on_reject, code: str, attempt: int, reason: str) -> None:
+# Legal-judgement words the UI must never show in a model-written reason. Spelled loosely so a grep for the words finds no shipped code.
+JUDGED = re.compile(r"il+egal|unla?wful|brea?ch|refus", re.I)
+
+
+def _clean(f: Finding) -> Finding:
+    if JUDGED.search(f.reason):
+        f.reason = "The model's wording was replaced; see the quote."
+    return f
+
+
+async def _tell(on_reject, code: str, attempt: int, reason: str, cached: bool = False) -> None:
     if on_reject:
-        r = on_reject(code, attempt, reason)
+        r = on_reject(code, attempt, reason, cached=True) if cached else on_reject(code, attempt, reason)
         if inspect.isawaitable(r):
             await r
 
@@ -142,11 +152,11 @@ async def classify_page(code: str, text: str, on_reject=None) -> Finding:
     if path.exists():
         STATS["cache_hits"] += 1
         hit = json.loads(path.read_text())
-        for attempt, reason in hit["rejections"]:  # replay the real rejections so a re-run emits the same events
-            await _tell(on_reject, code, attempt, reason)
-        return Finding.model_validate(hit["finding"])
+        for attempt, reason in hit["rejections"]:  # replayed, marked cached: they happened in the run that wrote the cache
+            await _tell(on_reject, code, attempt, reason, cached=True)
+        return _clean(Finding.model_validate(hit["finding"]))
 
-    deps = Deps(code=code, page=norm(text), on_reject=on_reject)
+    deps, keep = Deps(code=code, page=norm(text), on_reject=on_reject), True
     prompt = "Practice %s. Page text:\n\n%s" % (code, excerpt(text))
     async with _sem():
         for attempt in range(4):
@@ -160,6 +170,7 @@ async def classify_page(code: str, text: str, on_reject=None) -> Finding:
                 break
             except UnexpectedModelBehavior:  # quote rejected more often than the retry budget allows
                 f = Finding(category="unclear", reason="The model could not give a quote that is really on the page.")
+                keep = False  # also covers empty or malformed replies: try the model again next run, do not cache
                 break
             except ModelAPIError as e:
                 if not _rate_limited(e) or attempt == 3:
@@ -176,8 +187,10 @@ async def classify_page(code: str, text: str, on_reject=None) -> Finding:
         f.quote = ""
     f.quote_verified = bool(f.quote)
     f.retries = len(deps.rejections)
-    CACHE.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps({"finding": f.model_dump(), "rejections": deps.rejections}, indent=1))
+    _clean(f)
+    if keep:
+        CACHE.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps({"finding": f.model_dump(), "rejections": deps.rejections}, indent=1))
     return f
 
 
@@ -186,7 +199,7 @@ async def _demo() -> None:
     rejected = []
     files = sorted((ROOT / "fixtures" / "texts").glob("*.txt"))
     t0 = time.time()
-    out = await asyncio.gather(*[classify_page(p.stem, p.read_text(), lambda *a: rejected.append(a)) for p in files])
+    out = await asyncio.gather(*[classify_page(p.stem, p.read_text(), lambda *a, **k: rejected.append(a)) for p in files])
     for p, f in zip(files, out):
         print("%-7s %-18s r=%d %s" % (p.stem, f.category, f.retries, f.quote[:90]))
     for r in rejected:
