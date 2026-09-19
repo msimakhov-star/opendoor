@@ -143,6 +143,12 @@ uv run modal run opendoor/modal_app.py::watch
 ```
 The final command initialises the scheduled weekly process with the Newham dataset and triggers an initial pass.
 
+## Next
+
+* Search by town or street address using OpenStreetMap Nominatim and postcodes.io (a working version is on the branch address-search, not merged).
+* A listing of other NHS services that is clearly marked as not audited, because the NHS guidance Open Door checks is about registering with a GP surgery.
+* Reading the PDF registration forms with Gemini, since some surgeries put their document requests in a PDF.
+
 ## What it does not do
 
 The software analyses text appearing on websites rather than frontline reception practice, recognising that published phrases may not match interactions at the physical desk. In addition, nhs.uk explains: "Sometimes, a GP surgery may ask for extra documents or details for other reasons, like helping to find or transfer your medical records, or to prove you're the parent or guardian of a child you're registering." For this reason, a surgery page that merely requests documentation receives an amber classification rather than red, producing no draft letter. Reference labels for evaluation exercises were determined by artificial intelligence systems rather than human practitioners. Letters are prepared only as initial drafts, leaving dispatch decisions to human discretion. The project never states that a practice acted against the law, limiting its scope to noting that a red page "contradicts the NHS guidance on nhs.uk". Cookie dialogues and visual pop-ups can block the highlighted phrasing on captured viewports (seen in 4 entries in `london` and 7 in `london1200`), prompting the interface to mute affected screenshots. Furthermore, occasional links listed on nhs.uk do not direct to practice homepages, including an entry in `london` that pointed to an online directory and received an uninspected mark. No manual review was performed on the London red findings, as every check was handled by computational models.
