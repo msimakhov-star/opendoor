@@ -1,6 +1,6 @@
 # Open Door
 
-Open Door checks GP registration pages across an area, mapping which surgeries ask for documents that NHS rules say are not required. It proves each finding with the surgery's own sentence, checked by code against the page and shown boxed on a screenshot next to the nhs.uk guidance. This helps people without ID, proof of address or immigration papers, and the people who support them, while letters are drafted only for red surgeries and a person decides whether to send them.
+Open Door checks GP registration pages across an area, mapping which surgeries ask for documents that NHS rules say are not required. It backs each finding with the surgery's own sentence, checked by code against the page and shown boxed on a screenshot next to the nhs.uk guidance. This helps people without ID, proof of address or immigration papers, and the people who support them, while letters are drafted only for red surgeries and a person decides whether to send them.
 
 ![A GP surgery's website next to nhs.uk, each sentence boxed](docs/img/split-newham.png)
 
