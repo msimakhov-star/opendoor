@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" font-family="Helvetica, Arial, sans-serif" role="img" aria-labelledby="ttl dsc">
+  <title id="ttl">Open Door architecture</title>
+  <desc id="dsc">Left to right: a postcode and the documents the person does not have, NHS ORD directory and postcodes.io, parallel headless browsers on Modal, Gemini classifier through Pydantic AI with typed output, a code quote verifier with a retry loop, a live map with a split screen, the advocate through the Pydantic AI Gateway on a Modal-served open-weight model, and a human who approves the letter. Logfire traces run under everything.</desc>
+  <style>
+    .h1 { font-size: 34px; font-weight: 700; fill: #f2f5fb; }
+    .sub { font-size: 16px; fill: #aab6d3; }
+    .title { font-size: 21px; font-weight: 700; fill: #f2f5fb; }
+    .body { font-size: 16px; fill: #f2f5fb; }
+    .bold { font-weight: 700; }
+    .muted { fill: #aab6d3; }
+    .small { font-size: 14px; fill: #aab6d3; }
+    .mono { font-family: Menlo, Consolas, monospace; font-size: 15px; fill: #f2f5fb; }
+    .badge { font-size: 12px; font-weight: 700; letter-spacing: 0.6px; fill: #0b1020; text-anchor: middle; }
+    .num { font-size: 16px; font-weight: 700; fill: #f2f5fb; text-anchor: middle; }
+    .panel { fill: #141b2f; stroke-width: 2; }
+    .inner { fill: #0e1628; stroke-width: 1.5; }
+    .flow { fill: none; stroke: #c8d3ee; stroke-width: 3; }
+    .gd { stroke: #8ab4f8; } .gdf { fill: #8ab4f8; }
+    .mo { stroke: #7fee64; } .mof { fill: #7fee64; }
+    .py { stroke: #ff7ac6; } .pyf { fill: #ff7ac6; }
+    .he { stroke: #ffd23f; } .hef { fill: #ffd23f; }
+    .ne { stroke: #5a6a92; } .nef { fill: #c8d3ee; }
+  </style>
+  <defs>
+    <marker id="aN" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="14" markerHeight="14" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c8d3ee"/></marker>
+    <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="14" markerHeight="14" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#7fee64"/></marker>
+    <marker id="aH" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="24" markerHeight="24" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#ffd23f"/></marker>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="7"/></filter>
+  </defs>
+
+  <rect width="1600" height="900" fill="#0b1020"/>
+
+  <!-- Header -->
+  <text x="30" y="46" class="h1">Open Door <tspan font-weight="400" fill="#aab6d3">architecture</tspan></text>
+  <text x="30" y="76" class="sub">An agent reads what GP practice websites in England ask new patients for. Website wording only, not front-desk behaviour.</text>
+  <rect x="30" y="118" width="6" height="78" rx="3" fill="#3ddc84"/>
+  <text x="52" y="150" font-size="24" font-weight="700" fill="#f2f5fb">"You do not need ID, proof of address or proof of immigration status."</text>
+  <text x="52" y="182" class="sub">nhs.uk, How to register with a GP surgery. Pages that ask for documents contradict this guidance.</text>
+  <text x="1128" y="43" class="small" text-anchor="end">Partner tech</text>
+  <rect x="1140" y="24" width="180" height="28" rx="14" class="gdf"/><text x="1230" y="43" class="badge">GOOGLE DEEPMIND</text>
+  <rect x="1332" y="24" width="100" height="28" rx="14" class="mof"/><text x="1382" y="43" class="badge">MODAL</text>
+  <rect x="1444" y="24" width="126" height="28" rx="14" class="pyf"/><text x="1507" y="43" class="badge">PYDANTIC</text>
+
+  <!-- Pydantic AI frame around the classifier and the verifier -->
+  <rect x="924" y="98" width="660" height="402" rx="18" fill="#ff7ac6" fill-opacity="0.06" class="py" stroke-width="2"/>
+  <rect x="940" y="110" width="113" height="24" rx="12" class="pyf"/><text x="996.5" y="127" class="badge">PYDANTIC AI</text>
+  <text x="1064" y="127" class="small" fill="#ff7ac6" style="fill:#ff7ac6">one Agent: typed output, output validator, retries</text>
+
+  <!-- 1 Input -->
+  <rect x="30" y="236" width="170" height="250" rx="12" class="panel ne"/>
+  <rect x="42" y="248" width="54" height="24" rx="12" class="nef"/><text x="69" y="265" class="badge">USER</text>
+  <circle cx="56" cy="301" r="14" fill="#0b1020" class="ne" stroke-width="2"/><text x="56" y="307" class="num">1</text>
+  <text x="80" y="308" class="title">Input</text>
+  <text x="44" y="334" class="small">postcode</text>
+  <rect x="44" y="340" width="142" height="30" rx="6" class="inner ne"/><text x="56" y="361" class="mono">E13</text>
+  <text x="44" y="392" class="small">I don't have:</text>
+  <g font-size="13" fill="#f2f5fb">
+    <rect x="46" y="401" width="12" height="12" rx="2" fill="#ffd23f"/><path d="M48.5,407 l3,3 l5,-6" stroke="#0b1020" stroke-width="2" fill="none"/><text x="64" y="412">passport</text>
+    <rect x="46" y="419" width="12" height="12" rx="2" fill="#ffd23f"/><path d="M48.5,425 l3,3 l5,-6" stroke="#0b1020" stroke-width="2" fill="none"/><text x="64" y="430">photo ID</text>
+    <rect x="46" y="437" width="12" height="12" rx="2" fill="#ffd23f"/><path d="M48.5,443 l3,3 l5,-6" stroke="#0b1020" stroke-width="2" fill="none"/><text x="64" y="448">proof of address</text>
+    <rect x="46" y="455" width="12" height="12" rx="2" fill="none" stroke="#c8d3ee" stroke-width="1.5"/><text x="64" y="466">immigration docs</text>
+  </g>
+
+  <!-- 2 Directory -->
+  <rect x="236" y="236" width="230" height="250" rx="12" class="panel ne"/>
+  <rect x="248" y="248" width="130" height="24" rx="12" class="nef"/><text x="313" y="265" class="badge">OPEN NHS DATA</text>
+  <circle cx="262" cy="301" r="14" fill="#0b1020" class="ne" stroke-width="2"/><text x="262" y="307" class="num">2</text>
+  <text x="286" y="308" class="title">Find practices</text>
+  <text x="252" y="342" class="body bold">NHS ORD directory</text>
+  <text x="252" y="365" class="body muted">active GP practices</text>
+  <text x="252" y="388" class="body muted">for the postcode</text>
+  <text x="252" y="420" class="body bold">postcodes.io</text>
+  <text x="252" y="443" class="body muted">lat / lon for the map</text>
+  <text x="252" y="468" class="small">both keyless</text>
+
+  <!-- 3 Modal container -->
+  <rect x="502" y="236" width="400" height="250" rx="12" class="panel mo" stroke-width="3"/>
+  <rect x="508" y="242" width="388" height="238" rx="8" fill="none" class="mo" stroke-width="1.2" stroke-dasharray="7 5"/>
+  <rect x="518" y="250" width="60" height="24" rx="12" class="mof"/><text x="548" y="267" class="badge">MODAL</text>
+  <text x="884" y="267" class="small" text-anchor="end" style="fill:#7fee64">container wall</text>
+  <circle cx="532" cy="301" r="14" fill="#0b1020" class="mo" stroke-width="2"/><text x="532" y="307" class="num">3</text>
+  <text x="556" y="308" class="title">Parallel headless browsers</text>
+  <text x="520" y="332" class="body muted">Playwright Chromium, up to 100 containers</text>
+  <!-- resolve -->
+  <rect x="528" y="342" width="108" height="118" rx="8" class="inner mo" opacity="0.35"/>
+  <rect x="524" y="346" width="108" height="118" rx="8" class="inner mo" opacity="0.6"/>
+  <rect x="520" y="350" width="108" height="118" rx="8" class="inner mo"/>
+  <text x="530" y="376" class="mono bold">resolve</text>
+  <text x="530" y="400" class="small">find the</text>
+  <text x="530" y="419" class="small">registration</text>
+  <text x="530" y="438" class="small">page URL</text>
+  <!-- capture -->
+  <rect x="648" y="342" width="108" height="118" rx="8" class="inner mo" opacity="0.35"/>
+  <rect x="644" y="346" width="108" height="118" rx="8" class="inner mo" opacity="0.6"/>
+  <rect x="640" y="350" width="108" height="118" rx="8" class="inner mo"/>
+  <text x="650" y="376" class="mono bold">capture</text>
+  <text x="650" y="400" class="small">one load:</text>
+  <text x="650" y="419" class="small">visible text</text>
+  <text x="650" y="438" class="small">+ screenshot</text>
+  <!-- box -->
+  <rect x="768" y="342" width="108" height="118" rx="8" class="inner mo" opacity="0.35"/>
+  <rect x="764" y="346" width="108" height="118" rx="8" class="inner mo" opacity="0.6"/>
+  <rect x="760" y="350" width="108" height="118" rx="8" class="inner mo"/>
+  <text x="770" y="376" class="mono bold">box</text>
+  <text x="770" y="400" class="small">after step 5:</text>
+  <text x="770" y="419" class="small">outline the</text>
+  <text x="770" y="438" class="small">quote</text>
+
+  <!-- 4 Gemini classifier -->
+  <rect x="938" y="236" width="290" height="250" rx="12" class="panel gd"/>
+  <rect x="950" y="248" width="148" height="24" rx="12" class="gdf"/><text x="1024" y="265" class="badge">GOOGLE DEEPMIND</text>
+  <circle cx="964" cy="301" r="14" fill="#0b1020" class="gd" stroke-width="2"/><text x="964" y="307" class="num">4</text>
+  <text x="988" y="308" class="title">Gemini classifier</text>
+  <text x="954" y="340" class="mono">google:gemini-3.8-flash</text>
+  <text x="954" y="368" class="body bold">typed output: Finding</text>
+  <text x="954" y="391" class="body muted">category, verbatim quote,</text>
+  <text x="954" y="414" class="body muted">documents, reason</text>
+  <text x="954" y="446" class="small">pre-filter in code: no document</text>
+  <text x="954" y="465" class="small">phrase on the page, no model call</text>
+
+  <!-- 5 Quote verifier: the hero -->
+  <rect x="1284" y="236" width="286" height="250" rx="12" fill="none" class="he" stroke-width="8" opacity="0.55" filter="url(#glow)"/>
+  <rect x="1284" y="236" width="286" height="250" rx="12" class="panel he" stroke-width="4"/>
+  <rect x="1296" y="248" width="166" height="24" rx="12" class="hef"/><text x="1379" y="265" class="badge">CODE, NOT A MODEL</text>
+  <circle cx="1310" cy="301" r="14" fill="#0b1020" class="he" stroke-width="2"/><text x="1310" y="307" class="num">5</text>
+  <text x="1334" y="309" class="title" style="font-size:24px;fill:#ffd23f">Quote verifier</text>
+  <text x="1300" y="342" class="body">Is the quote really on the</text>
+  <text x="1300" y="365" class="body">page, character for character?</text>
+  <text x="1300" y="396" class="mono">@agent.output_validator</text>
+  <text x="1300" y="430" class="body"><tspan font-weight="700" fill="#3ddc84">YES</tspan>  quote verified, keep it</text>
+  <text x="1300" y="458" class="body"><tspan font-weight="700" fill="#ffd23f">NO</tspan>  ModelRetry, ask again</text>
+
+  <!-- The retry loop -->
+  <text x="1255" y="156" font-size="18" font-weight="700" fill="#ffd23f" text-anchor="middle">REJECTED: quote is not on the page, ask again</text>
+  <path d="M1427,234 C1427,148 1083,148 1083,232" fill="none" class="he" stroke-width="6" stroke-linecap="round" marker-end="url(#aH)"/>
+  <circle cx="1427" cy="236" r="7" class="hef"/>
+  <text x="1255" y="214" class="small" text-anchor="middle" style="fill:#f2f5fb">up to 3 retries, event <tspan font-family="Menlo, Consolas, monospace" fill="#ffd23f">quote_rejected</tspan></text>
+
+  <!-- Row 1 arrows -->
+  <path d="M200,361 H234" class="flow" marker-end="url(#aN)"/>
+  <path d="M466,361 H500" class="flow" marker-end="url(#aN)"/>
+  <path d="M902,361 H936" class="flow" marker-end="url(#aN)"/>
+  <path d="M1228,361 H1281" class="flow" marker-end="url(#aN)"/>
+
+  <!-- Verified quote goes back to Modal box -->
+  <path d="M1370,488 V522 H814 V470" fill="none" class="mo" stroke-width="2.5" stroke-dasharray="8 6" marker-end="url(#aG)"/>
+  <text x="1095" y="515" class="small" text-anchor="middle" style="fill:#7fee64">verified quote goes back to Modal: box the sentence on a screenshot</text>
+
+  <!-- Events to the UI -->
+  <path d="M1500,488 V562 H240 V598" class="flow" marker-end="url(#aN)"/>
+  <text x="760" y="553" class="small" text-anchor="middle">live events to the UI: resolved, captured, classified, quote_rejected, boxed, run_finished</text>
+
+  <!-- 6 Map UI -->
+  <rect x="30" y="600" width="420" height="190" rx="12" class="panel ne"/>
+  <rect x="42" y="612" width="69" height="24" rx="12" class="nef"/><text x="76.5" y="629" class="badge">WEB UI</text>
+  <circle cx="158" cy="624" r="6" fill="#ff5c5c"/><text x="170" y="629" class="small">demands</text>
+  <circle cx="244" cy="624" r="6" fill="#ffb020"/><text x="256" y="629" class="small">asks softly</text>
+  <circle cx="344" cy="624" r="6" fill="#3ddc84"/><text x="356" y="629" class="small">not needed</text>
+  <circle cx="56" cy="661" r="14" fill="#0b1020" class="ne" stroke-width="2"/><text x="56" y="667" class="num">6</text>
+  <text x="80" y="668" class="title">Live map + split screen</text>
+  <!-- mini map -->
+  <rect x="46" y="684" width="176" height="94" rx="6" class="inner ne"/>
+  <path d="M46,722 L222,704 M100,684 L128,778 M170,684 L196,778 M46,760 L222,748" stroke="#26314f" stroke-width="3" fill="none"/>
+  <circle cx="78" cy="708" r="7" fill="#ff5c5c"/><circle cx="118" cy="738" r="7" fill="#ffb020"/><circle cx="156" cy="702" r="7" fill="#3ddc84"/>
+  <circle cx="196" cy="732" r="7" fill="#ff5c5c"/><circle cx="68" cy="750" r="7" fill="#3ddc84"/><circle cx="150" cy="762" r="6" fill="none" stroke="#3ddc84" stroke-width="2.5"/>
+  <circle cx="204" cy="766" r="6" fill="#7b86a3"/>
+  <!-- mini split screen -->
+  <rect x="236" y="684" width="96" height="94" rx="6" class="inner ne"/>
+  <text x="284" y="702" class="small" text-anchor="middle">practice site</text>
+  <rect x="246" y="712" width="76" height="4" fill="#33405f"/><rect x="246" y="722" width="60" height="4" fill="#33405f"/>
+  <rect x="244" y="732" width="80" height="18" rx="3" fill="none" stroke="#ff5c5c" stroke-width="2.5"/><rect x="250" y="739" width="66" height="4" fill="#aab6d3"/>
+  <rect x="246" y="758" width="70" height="4" fill="#33405f"/><rect x="246" y="768" width="50" height="4" fill="#33405f"/>
+  <rect x="340" y="684" width="96" height="94" rx="6" class="inner ne"/>
+  <text x="388" y="702" class="small" text-anchor="middle">nhs.uk</text>
+  <rect x="350" y="712" width="76" height="4" fill="#33405f"/><rect x="350" y="722" width="60" height="4" fill="#33405f"/>
+  <rect x="348" y="732" width="80" height="18" rx="3" fill="none" stroke="#3ddc84" stroke-width="2.5"/><rect x="354" y="739" width="66" height="4" fill="#aab6d3"/>
+  <rect x="350" y="758" width="70" height="4" fill="#33405f"/><rect x="350" y="768" width="50" height="4" fill="#33405f"/>
+
+  <!-- 7 Advocate -->
+  <rect x="500" y="600" width="680" height="190" rx="12" class="panel py"/>
+  <rect x="512" y="612" width="183" height="24" rx="12" class="pyf"/><text x="603.5" y="629" class="badge">PYDANTIC AI GATEWAY</text>
+  <rect x="703" y="612" width="60" height="24" rx="12" class="mof"/><text x="733" y="629" class="badge">MODAL</text>
+  <circle cx="526" cy="661" r="14" fill="#0b1020" class="py" stroke-width="2"/><text x="526" y="667" class="num">7</text>
+  <text x="550" y="668" class="title">Advocate: patient note + practice letter</text>
+  <rect x="516" y="684" width="364" height="94" rx="8" class="inner py"/>
+  <text x="530" y="708" class="body bold">Gateway, route 'modal'</text>
+  <rect x="530" y="721" width="9" height="9" class="pyf"/><text x="548" y="731" class="small" style="fill:#f2f5fb">optimization rule: tone + wording rules</text>
+  <rect x="530" y="745" width="9" height="9" class="pyf"/><text x="548" y="755" class="small" style="fill:#f2f5fb">guardrail: redacts NHS + phone numbers</text>
+  <path d="M880,731 H914" class="flow" marker-end="url(#aN)"/>
+  <rect x="916" y="684" width="248" height="94" rx="8" class="inner mo"/>
+  <text x="930" y="708" class="body bold">Open-weight model</text>
+  <text x="930" y="731" class="small" style="fill:#f2f5fb">served on Modal</text>
+  <text x="930" y="755" class="small">OpenAI-compatible endpoint</text>
+
+  <!-- 8 Human -->
+  <rect x="1230" y="600" width="340" height="190" rx="12" class="panel" stroke="#f2f5fb"/>
+  <rect x="1242" y="612" width="166" height="24" rx="12" fill="#f2f5fb"/><text x="1325" y="629" class="badge">HUMAN IN THE LOOP</text>
+  <circle cx="1256" cy="661" r="14" fill="#0b1020" stroke="#f2f5fb" stroke-width="2"/><text x="1256" y="667" class="num">8</text>
+  <text x="1280" y="668" class="title">Human approval</text>
+  <circle cx="1532" cy="636" r="10" fill="#f2f5fb"/><path d="M1512,672 a20,18 0 0 1 40,0 z" fill="#f2f5fb"/>
+  <text x="1246" y="704" class="body">A person reads, edits and approves</text>
+  <text x="1246" y="727" class="body">the practice letter.</text>
+  <text x="1246" y="764" class="body bold">Nothing is sent automatically.</text>
+
+  <!-- Row 2 arrows -->
+  <path d="M450,695 H498" class="flow" marker-end="url(#aN)"/>
+  <path d="M1180,695 H1228" class="flow" marker-end="url(#aN)"/>
+
+  <!-- Logfire under everything -->
+  <rect x="30" y="812" width="1540" height="68" rx="12" fill="#ff7ac6" fill-opacity="0.10" class="py" stroke-width="2"/>
+  <rect x="46" y="822" width="157" height="24" rx="12" class="pyf"/><text x="124.5" y="839" class="badge">PYDANTIC LOGFIRE</text>
+  <text x="216" y="841" class="title" style="font-size:19px">Traces under everything</text>
+  <text x="46" y="868" class="small" style="fill:#f2f5fb">every Gemini call, every rejected quote and retry, every advocate call through the Gateway</text>
+  <rect x="1180" y="826" width="370" height="8" rx="4" class="pyf"/>
+  <rect x="1200" y="841" width="120" height="8" rx="4" class="gdf"/>
+  <rect x="1326" y="841" width="56" height="8" rx="4" class="hef"/>
+  <rect x="1388" y="841" width="90" height="8" rx="4" class="gdf"/>
+  <rect x="1484" y="856" width="60" height="8" rx="4" class="mof"/>
+</svg>

@@ -7,5 +7,6 @@ data/cache/
 *.pyc
 .DS_Store
 CONTRACT.md
-docs/
+/docs/internal/
 data/verdicts.json
+advocate/out/

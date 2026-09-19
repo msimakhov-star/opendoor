@@ -1,0 +1,10 @@
+[project]
+name = "opendoor-eval"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "pydantic>=2.13.5",
+    "pydantic-evals>=2.46.0",
+]

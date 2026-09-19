@@ -1,0 +1,62 @@
+[
+  {
+    "practice_name": "Example Surgery A",
+    "practice_url": "https://example-surgery-a.example.org/",
+    "page_url": "https://example-surgery-a.example.org/new-patients/",
+    "classification": "demands_documents",
+    "quote": "To register with the practice you must bring photographic ID (passport or driving licence) and proof of address dated within the last three months. We are unable to process your registration without these documents.",
+    "nhs_quote": "You do not need ID, proof of address or proof of immigration status.",
+    "nhs_url": "https://www.nhs.uk/nhs-services/gps/how-to-register-with-a-gp-surgery/",
+    "screenshot": "screenshots/example-surgery-a.png"
+  },
+  {
+    "practice_name": "Example Surgery B",
+    "practice_url": "https://example-surgery-b.example.org/",
+    "page_url": "https://example-surgery-b.example.org/register/",
+    "classification": "demands_documents",
+    "quote": "All new patients who have arrived from overseas must provide their passport and visa or Home Office documentation showing their immigration status before an application to register can be accepted.",
+    "nhs_quote": "You do not need ID, proof of address or proof of immigration status.",
+    "nhs_url": "https://www.nhs.uk/nhs-services/gps/how-to-register-with-a-gp-surgery/",
+    "screenshot": "screenshots/example-surgery-b.png"
+  },
+  {
+    "practice_name": "Example Surgery C",
+    "practice_url": "https://example-surgery-c.example.org/",
+    "page_url": "https://example-surgery-c.example.org/join-the-practice/",
+    "classification": "asks_softly",
+    "quote": "When you hand in your registration form, please bring photo ID and a recent utility bill or bank statement if you have them, as this helps us to match your medical records.",
+    "nhs_quote": "You do not need ID, proof of address or proof of immigration status.",
+    "nhs_url": "https://www.nhs.uk/nhs-services/gps/how-to-register-with-a-gp-surgery/",
+    "screenshot": "screenshots/example-surgery-c.png"
+  },
+  {
+    "practice_name": "Example Surgery D",
+    "practice_url": "https://example-surgery-d.example.org/",
+    "page_url": "https://example-surgery-d.example.org/registration/",
+    "classification": "asks_softly",
+    "quote": "We ask all new patients to show one form of identification and one proof of address at reception so that we can check you live within our practice area.",
+    "nhs_quote": "You do not need ID, proof of address or proof of immigration status.",
+    "nhs_url": "https://www.nhs.uk/nhs-services/gps/how-to-register-with-a-gp-surgery/",
+    "screenshot": "screenshots/example-surgery-d.png"
+  },
+  {
+    "practice_name": "Example Surgery E",
+    "practice_url": "https://example-surgery-e.example.org/",
+    "page_url": "https://example-surgery-e.example.org/how-to-register/",
+    "classification": "compliant",
+    "quote": "You do not need proof of address, proof of immigration status, photo ID or an NHS number to register with us. If you have no fixed address you can still register.",
+    "nhs_quote": "You do not need ID, proof of address or proof of immigration status.",
+    "nhs_url": "https://www.nhs.uk/nhs-services/gps/how-to-register-with-a-gp-surgery/",
+    "screenshot": "screenshots/example-surgery-e.png"
+  },
+  {
+    "practice_name": "Example Surgery F",
+    "practice_url": "https://example-surgery-f.example.org/",
+    "page_url": "https://example-surgery-f.example.org/new-patient-information/",
+    "classification": "unclear",
+    "quote": "Please contact reception for details of what to bring with you when you come in to complete your registration.",
+    "nhs_quote": "You do not need ID, proof of address or proof of immigration status.",
+    "nhs_url": "https://www.nhs.uk/nhs-services/gps/how-to-register-with-a-gp-surgery/",
+    "screenshot": "screenshots/example-surgery-f.png"
+  }
+]

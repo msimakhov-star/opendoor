@@ -1,0 +1,562 @@
+[
+ {
+  "code": "F84004",
+  "category": "demands_documents",
+  "quote": "You will need to produce proof of address and identification, complete some forms and attend for a New Patient Check appointment which the Receptionist will book for you.",
+  "unanimous": true,
+  "needs_human_check": false,
+  "borderline": false,
+  "votes": [
+   {
+    "category": "demands_documents",
+    "quote": "You will need to produce proof of address and identification, complete some forms and attend for a New Patient Check appointment which the Receptionist will book for you.",
+    "confidence": "high",
+    "note": "'You will need to produce' proof of address and identification; no softening anywhere. Also asks for children's full birth certificate. Quote substring check: passed."
+   },
+   {
+    "category": "demands_documents",
+    "quote": "You will need to produce proof of address and identification, complete some forms and attend for a New Patient Check appointment which the Receptionist will book for you.",
+    "confidence": "high",
+    "note": "\"You will need to produce\" with no softening clause anywhere on the page. Also asks for a full birth certificate for children. Page links to an online form too."
+   },
+   {
+    "category": "demands_documents",
+    "quote": "You will need to produce proof of address and identification, complete some forms and attend for a New Patient Check appointment which the Receptionist will book for you.",
+    "confidence": "high",
+    "note": "\"You will need to produce\" with no exception offered. Also asks for a full birth certificate for children. A reader without documents would not believe they can register. Quote verified as substring."
+   }
+  ]
+ },
+ {
+  "code": "F84006",
+  "category": "says_not_needed",
+  "quote": "If you don’t have proof of ID or address, you can still register.",
+  "unanimous": true,
+  "needs_human_check": false,
+  "borderline": false,
+  "votes": [
+   {
+    "category": "says_not_needed",
+    "quote": "If you don’t have proof of ID or address, you can still register.",
+    "confidence": "high",
+    "note": "Safe Surgeries text; also says reception won't ask for immigration documents. Page never asks for documents. Quote has a curly apostrophe. Substring check: passed."
+   },
+   {
+    "category": "says_not_needed",
+    "quote": "If you don’t have proof of ID or address, you can still register.",
+    "confidence": "high",
+    "note": "Safe Surgeries wording. The page never asks for documents; it also says reception will not ask for immigration documents. Only asks for form fields (date of arrival in UK), which is not a document."
+   },
+   {
+    "category": "says_not_needed",
+    "quote": "If you don’t have proof of ID or address, you can still register.",
+    "confidence": "high",
+    "note": "Safe Surgery page. Never asks for documents, says reception will not ask for immigration documents. Quote verified as substring (curly apostrophe kept)."
+   }
+  ]
+ },
+ {
+  "code": "F84010",
+  "category": "no_mention",
+  "quote": "",
+  "unanimous": true,
+  "needs_human_check": false,
+  "borderline": false,
+  "votes": [
+   {
+    "category": "no_mention",
+    "quote": "",
+    "confidence": "high",
+    "note": "Registration page, no document wording; DOC_RE gives zero hits."
+   },
+   {
+    "category": "no_mention",
+    "quote": "",
+    "confidence": "high",
+    "note": "Welcome text and a register link only. No document wording."
+   },
+   {
+    "category": "no_mention",
+    "quote": "",
+    "confidence": "high",
+    "note": "Registration page, welcome text and a register link only. No document wording."
+   }
+  ]
+ },
+ {
+  "code": "F84014",
+  "category": "demands_documents",
+  "quote": "Prospective patients should provide photo identification and proof of address (i.e. passport, full UK driver’s licence, bank statement, utility bill).",
+  "unanimous": true,
+  "needs_human_check": false,
+  "borderline": true,
+  "votes": [
+   {
+    "category": "demands_documents",
+    "quote": "Prospective patients should provide photo identification and proof of address (i.e. passport, full UK driver’s licence, bank statement, utility bill).",
+    "confidence": "medium",
+    "note": "BORDERLINE: verb is 'should provide', not must/need/required. No wording that registration is possible without documents, so asks_softly does not fit the contract definition either. Read as a directive; a stricter reader could say unclear. Curly apostrophe in quote. Substring check: passed."
+   },
+   {
+    "category": "demands_documents",
+    "quote": "Prospective patients should provide photo identification and proof of address (i.e. passport, full UK driver’s licence, bank statement, utility bill).",
+    "confidence": "high",
+    "note": "\"should provide\" with no statement that registration is possible without. Slightly weaker verb than must, but no softening clause on the page."
+   },
+   {
+    "category": "demands_documents",
+    "quote": "Prospective patients should provide photo identification and proof of address (i.e. passport, full UK driver’s licence, bank statement, utility bill).",
+    "confidence": "medium",
+    "note": "Wording is \"should provide\", not \"must\", but no exception or alternative is given anywhere on the page, so a reader without documents would not believe they can register. Medium only because of \"should\". Quote verified as substring."
+   }
+  ]
+ },
+ {
+  "code": "F84050",
+  "category": "says_not_needed",
+  "quote": "It is free to register with us, you do not have to provide photo ID or proof of address, and you do not need to prove your immigration status.",
+  "unanimous": true,
+  "needs_human_check": false,
+  "borderline": false,
+  "votes": [
+   {
+    "category": "says_not_needed",
+    "quote": "It is free to register with us, you do not have to provide photo ID or proof of address, and you do not need to prove your immigration status.",
+    "confidence": "high",
+    "note": "Explicit statement mirroring nhs.uk guidance; follows Safe Surgery principles. Substring check: passed."
+   },
+   {
+    "category": "says_not_needed",
+    "quote": "It is free to register with us, you do not have to provide photo ID or proof of address, and you do not need to prove your immigration status.",
+    "confidence": "high",
+    "note": "Explicit, mirrors the nhs.uk guidance. Safe Surgery page, links to the national NHS form."
+   },
+   {
+    "category": "says_not_needed",
+    "quote": "It is free to register with us, you do not have to provide photo ID or proof of address, and you do not need to prove your immigration status.",
+    "confidence": "high",
+    "note": "Explicit, mirrors the nhs.uk guidance, also covers people with no permanent address. Quote verified as substring."
+   }
+  ]
+ },
+ {
+  "code": "F84052",
+  "category": "no_mention",
+  "quote": "",
+  "unanimous": true,
+  "needs_human_check": false,
+  "borderline": false,
+  "votes": [
+   {
+    "category": "no_mention",
+    "quote": "",
+    "confidence": "high",
+    "note": "Registration page, no document wording; zero DOC_RE hits."
+   },
+   {
+    "category": "no_mention",
+    "quote": "",
+    "confidence": "high",
+    "note": "Register online link, boundary and named GP only. No document wording."
+   },
+   {
+    "category": "no_mention",
+    "quote": "",
+    "confidence": "high",
+    "note": "Registration page with online link, boundary and named GP text. No document wording."
+   }
+  ]
+ },
+ {
+  "code": "F84053",
+  "category": "demands_documents",
+  "quote": "Patients wishing to register with the practice must produce Proof of address Photo ID NHS Number",
+  "unanimous": true,
+  "needs_human_check": false,
+  "borderline": false,
+  "votes": [
+   {
+    "category": "demands_documents",
+    "quote": "Patients wishing to register with the practice must produce Proof of address Photo ID NHS Number",
+    "confidence": "high",
+    "note": "'must produce' followed by a flattened bullet list (no full stop in the source text, so the quote ends at the last list item). Substring check: passed."
+   },
+   {
+    "category": "demands_documents",
+    "quote": "Patients wishing to register with the practice must produce Proof of address Photo ID NHS Number",
+    "confidence": "high",
+    "note": "\"must produce\" followed by a bullet list (flattened, so the quote has no full stop). No softening clause. Also lists NHS Number as required."
+   },
+   {
+    "category": "demands_documents",
+    "quote": "Patients wishing to register with the practice must produce Proof of address Photo ID NHS Number",
+    "confidence": "high",
+    "note": "\"must produce\" followed by a bullet list (flattened in the text, so the quote has no full stop). No exception offered. Quote verified as substring."
+   }
+  ]
+ },
+ {
+  "code": "F84070",
+  "category": "no_mention",
+  "quote": "",
+  "unanimous": true,
+  "needs_human_check": false,
+  "borderline": false,
+  "votes": [
+   {
+    "category": "no_mention",
+    "quote": "",
+    "confidence": "high",
+    "note": "Captured page is the Services index, not the registration page itself; no document wording, zero DOC_RE hits."
+   },
+   {
+    "category": "no_mention",
+    "quote": "",
+    "confidence": "high",
+    "note": "This is a Services index page, not the registration page itself (only a link \"Registering with the surgery\"). No document wording. The real registration page was not captured."
+   },
+   {
+    "category": "no_mention",
+    "quote": "",
+    "confidence": "high",
+    "note": "No document wording. Caveat: the captured page is the Services index, not the registration page itself, so this says little about the practice's real registration wording."
+   }
+  ]
+ },
+ {
+  "code": "F84088",
+  "category": "no_mention",
+  "quote": "",
+  "unanimous": true,
+  "needs_human_check": false,
+  "borderline": false,
+  "votes": [
+   {
+    "category": "no_mention",
+    "quote": "",
+    "confidence": "high",
+    "note": "Captured page is the practice homepage, not a registration page; no document wording, zero DOC_RE hits."
+   },
+   {
+    "category": "no_mention",
+    "quote": "",
+    "confidence": "high",
+    "note": "Practice home page, not a registration page. No document wording. Registration page itself not captured."
+   },
+   {
+    "category": "no_mention",
+    "quote": "",
+    "confidence": "high",
+    "note": "No document wording. Caveat: captured page is the practice homepage, not a registration page."
+   }
+  ]
+ },
+ {
+  "code": "F84092",
+  "category": "no_mention",
+  "quote": "",
+  "unanimous": true,
+  "needs_human_check": false,
+  "borderline": false,
+  "votes": [
+   {
+    "category": "no_mention",
+    "quote": "",
+    "confidence": "high",
+    "note": "Captured page is a group homepage (First 4 Health); no document wording, zero DOC_RE hits."
+   },
+   {
+    "category": "no_mention",
+    "quote": "",
+    "confidence": "high",
+    "note": "Group (First 4 Health) home page, not a registration page. No document wording. Registration page itself not captured."
+   },
+   {
+    "category": "no_mention",
+    "quote": "",
+    "confidence": "high",
+    "note": "No document wording. Caveat: captured page is the First 4 Health group homepage, not a registration page."
+   }
+  ]
+ },
+ {
+  "code": "F84093",
+  "category": "asks_softly",
+  "quote": "It is not a requirement for adults to provide documentation but it is helpful for the registration process and beyond, so if you have it please do send it via email.",
+  "unanimous": true,
+  "needs_human_check": false,
+  "borderline": true,
+  "votes": [
+   {
+    "category": "asks_softly",
+    "quote": "It is not a requirement for adults to provide documentation but it is helpful for the registration process and beyond, so if you have it please do send it via email.",
+    "confidence": "high",
+    "note": "Page contradicts itself: the quoted sentence says not a requirement, but later says 'You will need to supply your NHS number (this is essential) and two forms of identification one of which must be photo ID', and 'For children we require a full birth certificate'. Self-contradiction fits asks_softly per contract. Substring check: passed."
+   },
+   {
+    "category": "asks_softly",
+    "quote": "It is not a requirement for adults to provide documentation but it is helpful for the registration process and beyond, so if you have it please do send it via email.",
+    "confidence": "high",
+    "note": "Page contradicts itself. Softening sentence quoted, but elsewhere: \"Once you have submitted the form please provide proof of address and photo ID via email\" and \"You will need to supply your NHS number (this is essential) and two forms of identification one of which must be photo ID and the other must show your name and address.\" Children: \"we require a full birth certificate\". Links to the national NHS form."
+   },
+   {
+    "category": "asks_softly",
+    "quote": "It is not a requirement for adults to provide documentation but it is helpful for the registration process and beyond, so if you have it please do send it via email.",
+    "confidence": "medium",
+    "note": "Page contradicts itself. It says documents are not a requirement for adults, yet also says \"please provide proof of address and photo ID via email\" and later \"You will need to supply your NHS number (this is essential) and two forms of identification one of which must be photo ID and the other must show your name and address.\" For children it says \"we require a full birth certificate\". A reader without documents would be unsure. Contract maps self-contradiction to asks_softly. Quote verified as substring."
+   }
+  ]
+ },
+ {
+  "code": "F84097",
+  "category": "no_mention",
+  "quote": "",
+  "unanimous": true,
+  "needs_human_check": false,
+  "borderline": false,
+  "votes": [
+   {
+    "category": "no_mention",
+    "quote": "",
+    "confidence": "high",
+    "note": "Registration page, no document wording; zero DOC_RE hits."
+   },
+   {
+    "category": "no_mention",
+    "quote": "",
+    "confidence": "high",
+    "note": "Register online link, boundary and named GP only. No document wording."
+   },
+   {
+    "category": "no_mention",
+    "quote": "",
+    "confidence": "high",
+    "note": "Registration page with online link, boundary and named GP text. No document wording."
+   }
+  ]
+ },
+ {
+  "code": "F84124",
+  "category": "no_mention",
+  "quote": "",
+  "unanimous": true,
+  "needs_human_check": false,
+  "borderline": true,
+  "votes": [
+   {
+    "category": "no_mention",
+    "quote": "",
+    "confidence": "medium",
+    "note": "Only DOC_RE hit is 'immigration status' in a Safe Surgery equal-access statement ('regardless of their immigration status'). It never mentions documents, so not an explicit says_not_needed. The pre-filter will NOT skip this page, so the classifier must handle it."
+   },
+   {
+    "category": "no_mention",
+    "quote": "",
+    "confidence": "medium",
+    "note": "Only related wording is equal access \"regardless of their immigration status\" (safe surgery statement). No document is mentioned and it does not explicitly say documents are not needed, so not says_not_needed. DOC_RE will hit \"immigration status\" so the model will be called on this page."
+   },
+   {
+    "category": "no_mention",
+    "quote": "",
+    "confidence": "medium",
+    "note": "Safe surgery statement promises equal access \"regardless of their immigration status\" but the page never mentions ID, proof of address or any document, neither asking nor waiving. Not explicit enough for says_not_needed. The pre-filter regex will hit \"immigration status\", so the classifier will be called here. A defensible alternative is unclear."
+   }
+  ]
+ },
+ {
+  "code": "F84641",
+  "category": "no_mention",
+  "quote": "",
+  "unanimous": true,
+  "needs_human_check": false,
+  "borderline": false,
+  "votes": [
+   {
+    "category": "no_mention",
+    "quote": "",
+    "confidence": "high",
+    "note": "Asks for form fields (date of arrival in UK, previous GP) but no documents; zero DOC_RE hits."
+   },
+   {
+    "category": "no_mention",
+    "quote": "",
+    "confidence": "high",
+    "note": "Lists form fields (incl. date of arrival in the UK) but no documents. No ID or proof of address wording."
+   },
+   {
+    "category": "no_mention",
+    "quote": "",
+    "confidence": "high",
+    "note": "Asks for form fields (previous address, date of arrival in the UK if applicable) but no documents. No document wording."
+   }
+  ]
+ },
+ {
+  "code": "F84642",
+  "category": "asks_softly",
+  "quote": "When you register with our GP Practice, we might ask for ID or proof of address.",
+  "unanimous": true,
+  "needs_human_check": false,
+  "borderline": true,
+  "votes": [
+   {
+    "category": "asks_softly",
+    "quote": "When you register with our GP Practice, we might ask for ID or proof of address.",
+    "confidence": "medium",
+    "note": "Safe Surgeries wording: 'might ask' then next sentence says 'if you don’t have any and you live in our practice area, you can still register with us', and 'We won’t ask you for immigration documents'. Matches asks_softly definition literally; a lenient reader could call it says_not_needed. Substring check: passed."
+   },
+   {
+    "category": "asks_softly",
+    "quote": "When you register with our GP Practice, we might ask for ID or proof of address.",
+    "confidence": "high",
+    "note": "Next sentence is the softening clause: \"However, if you don’t have any and you live in our practice area, you can still register with us.\" Also says they will not ask for immigration documents. Safe Surgeries sidebar."
+   },
+   {
+    "category": "asks_softly",
+    "quote": "When you register with our GP Practice, we might ask for ID or proof of address.",
+    "confidence": "medium",
+    "note": "Borderline with says_not_needed. Standard Safe Surgeries wording: next sentence is \"However, if you don’t have any and you live in our practice area, you can still register with us.\" and it adds that immigration documents will not be asked for. A reader without documents WOULD believe they can register, but the literal contract definition of asks_softly (asks, yet says registration is possible without) fits because of \"we might ask\". Both sentences verified as substrings."
+   }
+  ]
+ },
+ {
+  "code": "F84660",
+  "category": "asks_softly",
+  "quote": "Please note we may request that your share with us your proof of address (such as a recent utility bill or bank statement) and proof of ID and also your medical card if you have one.",
+  "unanimous": true,
+  "needs_human_check": false,
+  "borderline": false,
+  "votes": [
+   {
+    "category": "asks_softly",
+    "quote": "Please note we may request that your share with us your proof of address (such as a recent utility bill or bank statement) and proof of ID and also your medical card if you have one.",
+    "confidence": "high",
+    "note": "'may request' documents, then states not having them 'does not prevent you from registering'. Typo 'your share' is in the source. I chose this sentence because the follow-up sentence contains an en dash in the source. Substring check: passed."
+   },
+   {
+    "category": "asks_softly",
+    "quote": "Please note we may request that your share with us your proof of address (such as a recent utility bill or bank statement) and proof of ID and also your medical card if you have one.",
+    "confidence": "high",
+    "note": "Typo \"your share\" is in the source. Softening clause follows: \"If you do not have any of these items this does not prevent you from registering with the practice\"."
+   },
+   {
+    "category": "asks_softly",
+    "quote": "Please note we may request that your share with us your proof of address (such as a recent utility bill or bank statement) and proof of ID and also your medical card if you have one.",
+    "confidence": "high",
+    "note": "Textbook asks_softly: the page follows with a sentence saying that lacking these items does not prevent registration. I quoted the ask sentence because the reassurance sentence contains an en dash in the source. Typo \"your share\" is in the source. Quote verified as substring."
+   }
+  ]
+ },
+ {
+  "code": "F84670",
+  "category": "no_mention",
+  "quote": "",
+  "unanimous": true,
+  "needs_human_check": false,
+  "borderline": false,
+  "votes": [
+   {
+    "category": "no_mention",
+    "quote": "",
+    "confidence": "high",
+    "note": "Captured page is the practice homepage, not a registration page; zero DOC_RE hits."
+   },
+   {
+    "category": "no_mention",
+    "quote": "",
+    "confidence": "high",
+    "note": "Practice home page, not a registration page. No document wording. Registration page itself not captured."
+   },
+   {
+    "category": "no_mention",
+    "quote": "",
+    "confidence": "high",
+    "note": "No document wording. Caveat: captured page is the practice homepage, not a registration page."
+   }
+  ]
+ },
+ {
+  "code": "F84677",
+  "category": "no_mention",
+  "quote": "",
+  "unanimous": true,
+  "needs_human_check": false,
+  "borderline": false,
+  "votes": [
+   {
+    "category": "no_mention",
+    "quote": "",
+    "confidence": "high",
+    "note": "Captured page is the practice homepage, not a registration page; zero DOC_RE hits."
+   },
+   {
+    "category": "no_mention",
+    "quote": "",
+    "confidence": "high",
+    "note": "Practice home page, not a registration page. Only \"unique IDs\" in the cookie banner, which is not document wording. Registration page itself not captured."
+   },
+   {
+    "category": "no_mention",
+    "quote": "",
+    "confidence": "high",
+    "note": "No document wording (only \"unique IDs\" inside cookie consent text, which is not about patient documents and does not match the \\bID\\b regex). Caveat: captured page is the homepage, not a registration page."
+   }
+  ]
+ },
+ {
+  "code": "F84717",
+  "category": "demands_documents",
+  "quote": "Please ensure you complete all sections of the PRF1 form, as well as providing proof of address and photo ID by presenting in person at the surgery reception desk.",
+  "unanimous": true,
+  "needs_human_check": false,
+  "borderline": false,
+  "votes": [
+   {
+    "category": "demands_documents",
+    "quote": "Please ensure you complete all sections of the PRF1 form, as well as providing proof of address and photo ID by presenting in person at the surgery reception desk.",
+    "confidence": "high",
+    "note": "Multiple demands: the quoted sentence, 'You must provide photo ID' (UEL students), 'For children we require a full birth certificate', and for first-time UK registrants 'we will need' proof of residence plus driving licence or passport and proof of being Ordinarily Resident. No statement that registration is possible without them. Substring check: passed."
+   },
+   {
+    "category": "demands_documents",
+    "quote": "Please ensure you complete all sections of the PRF1 form, as well as providing proof of address and photo ID by presenting in person at the surgery reception desk.",
+    "confidence": "high",
+    "note": "Multiple demands: acceptable ID list (photo ID plus dated utility bill), \"For children we require a full birth certificate\", UEL students \"must provide photo ID\", first-time registrants \"we will need\" passport or driving licence and proof of being Ordinarily Resident. The only hedge is \"If you are unable to do this please contact the surgery\", which does not say registration is possible without documents."
+   },
+   {
+    "category": "demands_documents",
+    "quote": "Please ensure you complete all sections of the PRF1 form, as well as providing proof of address and photo ID by presenting in person at the surgery reception desk.",
+    "confidence": "high",
+    "note": "Multiple demands: documents under three months old that \"will prove you live inside the practice boundary\", \"You must provide photo ID\" for students, and for first-time UK registrants \"we will need\" passport or driving licence plus proof of being ordinarily resident. Only softener is \"contact the surgery ... for advice\", which does not say registration is possible without documents. Quote verified as substring."
+   }
+  ]
+ },
+ {
+  "code": "F84735",
+  "category": "asks_softly",
+  "quote": "If you can provide photo ID and proof of address to speed up the process and correctly match your details please email these with any account details crossed out.",
+  "unanimous": true,
+  "needs_human_check": false,
+  "borderline": true,
+  "votes": [
+   {
+    "category": "asks_softly",
+    "quote": "If you can provide photo ID and proof of address to speed up the process and correctly match your details please email these with any account details crossed out.",
+    "confidence": "medium",
+    "note": "Conditional 'If you can provide ... to speed up the process': an optional ask, not a requirement. Page does not explicitly say registration is possible without documents, only implies it. Substring check: passed."
+   },
+   {
+    "category": "asks_softly",
+    "quote": "If you can provide photo ID and proof of address to speed up the process and correctly match your details please email these with any account details crossed out.",
+    "confidence": "medium",
+    "note": "Conditional ask (\"If you can ... to speed up the process\"), so documents are framed as optional, but the page never states outright that you can register without them. Could be argued as unclear; not a demand."
+   },
+   {
+    "category": "asks_softly",
+    "quote": "If you can provide photo ID and proof of address to speed up the process and correctly match your details please email these with any account details crossed out.",
+    "confidence": "medium",
+    "note": "Conditional ask (\"If you can\", \"to speed up the process\"), so documents read as optional, but the page never states outright that you can register without them. Also offers an online route with no document wording. Medium because optionality is implied, not stated. Quote verified as substring."
+   }
+  ]
+ }
+]

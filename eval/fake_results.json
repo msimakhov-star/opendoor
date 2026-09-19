@@ -1,0 +1,145 @@
+{
+ "run_id": "fake",
+ "results": [
+  {
+   "code": "F84004",
+   "name": "F84004",
+   "category": "demands_documents",
+   "quote": "You will need to produce proof of address and identification, complete some forms and attend for a New Patient Check appointment which the Receptionist will book for you.",
+   "quote_verified": true
+  },
+  {
+   "code": "F84006",
+   "name": "F84006",
+   "category": "says_not_needed",
+   "quote": "If you don’t have proof of ID or address, you can still register.",
+   "quote_verified": true
+  },
+  {
+   "code": "F84010",
+   "name": "F84010",
+   "category": "no_mention",
+   "quote": "",
+   "quote_verified": false
+  },
+  {
+   "code": "F84014",
+   "name": "F84014",
+   "category": "asks_softly",
+   "quote": "Prospective patients should provide photo identification and proof of address (i.e. passport, full UK driver’s licence, bank statement, utility bill).",
+   "quote_verified": true
+  },
+  {
+   "code": "F84050",
+   "name": "F84050",
+   "category": "says_not_needed",
+   "quote": "It is free to register with us, you do not have to provide photo ID or proof of address, and you do not need to prove your immigration status.",
+   "quote_verified": true
+  },
+  {
+   "code": "F84052",
+   "name": "F84052",
+   "category": "no_mention",
+   "quote": "",
+   "quote_verified": false
+  },
+  {
+   "code": "F84053",
+   "name": "F84053",
+   "category": "demands_documents",
+   "quote": "Patients wishing to register with the practice must produce Proof of address Photo ID NHS Number",
+   "quote_verified": true
+  },
+  {
+   "code": "F84070",
+   "name": "F84070",
+   "category": "no_mention",
+   "quote": "",
+   "quote_verified": false
+  },
+  {
+   "code": "F84088",
+   "name": "F84088",
+   "category": "no_mention",
+   "quote": "",
+   "quote_verified": false
+  },
+  {
+   "code": "F84092",
+   "name": "F84092",
+   "category": "no_mention",
+   "quote": "",
+   "quote_verified": false
+  },
+  {
+   "code": "F84093",
+   "name": "F84093",
+   "category": "asks_softly",
+   "quote": "It is not a requirement for adults to provide documentation but it is helpful for the registration process and beyond, so if you have it please do send it via email.",
+   "quote_verified": true
+  },
+  {
+   "code": "F84097",
+   "name": "F84097",
+   "category": "no_mention",
+   "quote": "",
+   "quote_verified": false
+  },
+  {
+   "code": "F84124",
+   "name": "F84124",
+   "category": "says_not_needed",
+   "quote": "You do not need any documents to register with us.",
+   "quote_verified": true
+  },
+  {
+   "code": "F84641",
+   "name": "F84641",
+   "category": "no_mention",
+   "quote": "",
+   "quote_verified": false
+  },
+  {
+   "code": "F84642",
+   "name": "F84642",
+   "category": "asks_softly",
+   "quote": "When you register with our GP Practice, we might ask for ID or proof of address.",
+   "quote_verified": true
+  },
+  {
+   "code": "F84660",
+   "name": "F84660",
+   "category": "asks_softly",
+   "quote": "Please note we may request that your share with us your proof of address (such as a recent utility bill or bank statement) and proof of ID and also your medical card if you have one.",
+   "quote_verified": true
+  },
+  {
+   "code": "F84670",
+   "name": "F84670",
+   "category": "no_mention",
+   "quote": "",
+   "quote_verified": false
+  },
+  {
+   "code": "F84677",
+   "name": "F84677",
+   "category": "no_mention",
+   "quote": "",
+   "quote_verified": false
+  },
+  {
+   "code": "F84717",
+   "name": "F84717",
+   "category": "demands_documents",
+   "quote": "Please ensure you complete all sections of the PRF1 form, as well as providing proof of address and photo ID by presenting in person at the surgery reception desk.",
+   "quote_verified": true
+  },
+  {
+   "code": "F84735",
+   "name": "F84735",
+   "category": "asks_softly",
+   "quote": "If you can provide photo ID and proof of address to speed up the process and correctly match your details please email these with any account details crossed out.",
+   "quote_verified": true
+  }
+ ]
+}

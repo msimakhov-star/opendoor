@@ -1,0 +1,407 @@
+{
+  "label": "rule_on",
+  "dry_run": false,
+  "when_utc": "2026-09-19T13:41:56+00:00",
+  "records": [
+    {
+      "run": 1,
+      "kind": "note",
+      "verdict": {
+        "practice_name": "Example Surgery A",
+        "practice_url": "https://example-surgery-a.example.org/",
+        "page_url": "https://example-surgery-a.example.org/new-patients/",
+        "classification": "demands_documents",
+        "quote": "To register with the practice you must bring photographic ID (passport or driving licence) and proof of address dated within the last three months. We are unable to process your registration without these documents.",
+        "nhs_quote": "You do not need ID, proof of address or proof of immigration status.",
+        "nhs_url": "https://www.nhs.uk/nhs-services/gps/how-to-register-with-a-gp-surgery/",
+        "screenshot": "screenshots/example-surgery-a.png"
+      },
+      "advocate_sha256": "0bd552801e0557d407427dce2167e18d90587cc9198f4e6e313cc3825b97b946",
+      "trace_id": "01a0b9e455e569b669028266563cae58",
+      "model": "Qwen/Qwen2.5-7B-Instruct",
+      "input_tokens": 345,
+      "output_tokens": 114,
+      "latency_s": 11.16,
+      "output": "Dear Patient,\n\nThe page on your GP practice website says that you need to bring photographic ID (like a passport or driving licence) and proof of address to register. However, the NHS guidance says you do not need these documents to register.\n\nThis seems to contradict the NHS guidance on their website. The NHS says you do not need to bring any documents to register with a GP surgery.\n\nPlease update the page to reflect the correct information.\n\nThank you,\n[Your Name]\nExample Surgery A\n\nIf you have any questions, please contact us.\n\nPlease update the page.",
+      "metrics": {
+        "word_count": 97,
+        "sentence_count": 11,
+        "flesch_reading_ease": 74.9,
+        "flesch_kincaid_grade": 5.0,
+        "banned_terms": {
+          "illegal": 0,
+          "unlawful": 0,
+          "breaking the law": 0,
+          "refuses": 0,
+          "refused": 0,
+          "discriminat*": 0
+        },
+        "banned_total": 0,
+        "has_nhs_url": false,
+        "contains_quote": false,
+        "contains_nhs_quote": false,
+        "placeholders": 1
+      }
+    },
+    {
+      "run": 1,
+      "kind": "letter",
+      "verdict": {
+        "practice_name": "Example Surgery A",
+        "practice_url": "https://example-surgery-a.example.org/",
+        "page_url": "https://example-surgery-a.example.org/new-patients/",
+        "classification": "demands_documents",
+        "quote": "To register with the practice you must bring photographic ID (passport or driving licence) and proof of address dated within the last three months. We are unable to process your registration without these documents.",
+        "nhs_quote": "You do not need ID, proof of address or proof of immigration status.",
+        "nhs_url": "https://www.nhs.uk/nhs-services/gps/how-to-register-with-a-gp-surgery/",
+        "screenshot": "screenshots/example-surgery-a.png"
+      },
+      "advocate_sha256": "0bd552801e0557d407427dce2167e18d90587cc9198f4e6e313cc3825b97b946",
+      "trace_id": "01a0b9e4817fc67249e2a710a1d1045d",
+      "model": "Qwen/Qwen2.5-7B-Instruct",
+      "input_tokens": 346,
+      "output_tokens": 137,
+      "latency_s": 20.64,
+      "output": "Dear Example Surgery A Practice Manager,\n\nI recently visited your website to check the registration process for new patients. On the page \"New Patients,\" it states that \"To register with the practice you must bring photographic ID (passport or driving licence) and proof of address dated within the last three months. We are unable to process your registration without these documents.\"\n\nHowever, the NHS guidance on their website says that you do not need ID, proof of address, or proof of immigration status to register. This contradicts the information on your website.\n\nCould you please update the page to reflect the correct NHS guidance?\n\nThank you for your attention to this matter.\n\nBest regards,\n[Your Name]",
+      "metrics": {
+        "word_count": 116,
+        "sentence_count": 10,
+        "flesch_reading_ease": 63.8,
+        "flesch_kincaid_grade": 7.2,
+        "banned_terms": {
+          "illegal": 0,
+          "unlawful": 0,
+          "breaking the law": 0,
+          "refuses": 0,
+          "refused": 0,
+          "discriminat*": 0
+        },
+        "banned_total": 0,
+        "has_nhs_url": false,
+        "contains_quote": true,
+        "contains_nhs_quote": false,
+        "placeholders": 1
+      }
+    },
+    {
+      "run": 2,
+      "kind": "note",
+      "verdict": {
+        "practice_name": "Example Surgery B",
+        "practice_url": "https://example-surgery-b.example.org/",
+        "page_url": "https://example-surgery-b.example.org/register/",
+        "classification": "demands_documents",
+        "quote": "All new patients who have arrived from overseas must provide their passport and visa or Home Office documentation showing their immigration status before an application to register can be accepted.",
+        "nhs_quote": "You do not need ID, proof of address or proof of immigration status.",
+        "nhs_url": "https://www.nhs.uk/nhs-services/gps/how-to-register-with-a-gp-surgery/",
+        "screenshot": "screenshots/example-surgery-b.png"
+      },
+      "advocate_sha256": "0bd552801e0557d407427dce2167e18d90587cc9198f4e6e313cc3825b97b946",
+      "trace_id": "01a0b9e4d22362e3f4f59ccb1bbd43c6",
+      "model": "Qwen/Qwen2.5-7B-Instruct",
+      "input_tokens": 335,
+      "output_tokens": 167,
+      "latency_s": 20.439,
+      "output": "Dear Patient,\n\nThe website for Example Surgery B says that new patients who have arrived from overseas must provide their passport and visa or Home Office documentation showing their immigration status before they can register. However, the NHS guidance on nhs.uk states that you do not need to provide ID, proof of address, or proof of immigration status to register.\n\nThis finding contradicts the NHS guidance on nhs.uk.\n\nPlease update the page to reflect the correct information.\n\nThank you,\nExample Surgery B\n\nIf you have any questions or need further assistance, please contact us.\n\nSincerely,\nExample Surgery B\n\nNHS guidance: [https://www.nhs.uk/nhs-services/gps/how-to-register-with-a-gp-surgery/](https://www.nhs.uk/nhs-services/gps/how-to-register-with-a-gp-surgery/)",
+      "metrics": {
+        "word_count": 102,
+        "sentence_count": 13,
+        "flesch_reading_ease": 60.4,
+        "flesch_kincaid_grade": 6.8,
+        "banned_terms": {
+          "illegal": 0,
+          "unlawful": 0,
+          "breaking the law": 0,
+          "refuses": 0,
+          "refused": 0,
+          "discriminat*": 0
+        },
+        "banned_total": 0,
+        "has_nhs_url": true,
+        "contains_quote": false,
+        "contains_nhs_quote": false,
+        "placeholders": 0
+      }
+    },
+    {
+      "run": 2,
+      "kind": "letter",
+      "verdict": {
+        "practice_name": "Example Surgery B",
+        "practice_url": "https://example-surgery-b.example.org/",
+        "page_url": "https://example-surgery-b.example.org/register/",
+        "classification": "demands_documents",
+        "quote": "All new patients who have arrived from overseas must provide their passport and visa or Home Office documentation showing their immigration status before an application to register can be accepted.",
+        "nhs_quote": "You do not need ID, proof of address or proof of immigration status.",
+        "nhs_url": "https://www.nhs.uk/nhs-services/gps/how-to-register-with-a-gp-surgery/",
+        "screenshot": "screenshots/example-surgery-b.png"
+      },
+      "advocate_sha256": "0bd552801e0557d407427dce2167e18d90587cc9198f4e6e313cc3825b97b946",
+      "trace_id": "01a0b9e521fb57e8317eca818633c85c",
+      "model": "Qwen/Qwen2.5-7B-Instruct",
+      "input_tokens": 336,
+      "output_tokens": 189,
+      "latency_s": 21.133,
+      "output": "Dear Example Surgery B Practice Manager,\n\nWe noticed that your website says new patients who have arrived from overseas must provide their passport and visa or Home Office documentation before they can register. However, the NHS guidance on their website says you do not need ID, proof of address, or proof of immigration status to register.\n\nThe sentence from your website says:\n\"\u201cAll new patients who have arrived from overseas must provide their passport and visa or Home Office documentation showing their immigration status before an application to register can be accepted.\u201d\"\n\nThe sentence from the NHS guidance says:\n\"You do not need ID, proof of address or proof of immigration status.\"\n\nWe read this from your website:\nhttps://example-surgery-b.example.org/register/\n\nAnd this is the NHS guidance:\nhttps://www.nhs.uk/nhs-services/gps/how-to-register-with-a-gp-surgery/\n\nPlease update the page to match the NHS guidance.\n\nThank you,\n[Your Name]",
+      "metrics": {
+        "word_count": 137,
+        "sentence_count": 12,
+        "flesch_reading_ease": 65.6,
+        "flesch_kincaid_grade": 7.0,
+        "banned_terms": {
+          "illegal": 0,
+          "unlawful": 0,
+          "breaking the law": 0,
+          "refuses": 0,
+          "refused": 0,
+          "discriminat*": 0
+        },
+        "banned_total": 0,
+        "has_nhs_url": true,
+        "contains_quote": true,
+        "contains_nhs_quote": true,
+        "placeholders": 1
+      }
+    },
+    {
+      "run": 3,
+      "kind": "note",
+      "verdict": {
+        "practice_name": "Example Surgery C",
+        "practice_url": "https://example-surgery-c.example.org/",
+        "page_url": "https://example-surgery-c.example.org/join-the-practice/",
+        "classification": "asks_softly",
+        "quote": "When you hand in your registration form, please bring photo ID and a recent utility bill or bank statement if you have them, as this helps us to match your medical records.",
+        "nhs_quote": "You do not need ID, proof of address or proof of immigration status.",
+        "nhs_url": "https://www.nhs.uk/nhs-services/gps/how-to-register-with-a-gp-surgery/",
+        "screenshot": "screenshots/example-surgery-c.png"
+      },
+      "advocate_sha256": "0bd552801e0557d407427dce2167e18d90587cc9198f4e6e313cc3825b97b946",
+      "trace_id": "01a0b9e5748c08a31fa5036d4d0ba818",
+      "model": "Qwen/Qwen2.5-7B-Instruct",
+      "input_tokens": 348,
+      "output_tokens": 112,
+      "latency_s": 33.054,
+      "output": "Dear Patient,\n\nWhen you hand in your registration form, please bring photo ID and a recent utility bill or bank statement if you have them, as this helps us to match your medical records.\n\nHowever, the NHS guidance on nhs.uk states that you do not need ID, proof of address, or proof of immigration status to register.\n\nWe understand that the practice website page may be confusing. Please update the page to align with the NHS guidance.\n\nThank you for your understanding.\n\nSincerely,\n[Your Name]\nExample Surgery C\n\nPlease update the page.",
+      "metrics": {
+        "word_count": 93,
+        "sentence_count": 11,
+        "flesch_reading_ease": 73.6,
+        "flesch_kincaid_grade": 5.1,
+        "banned_terms": {
+          "illegal": 0,
+          "unlawful": 0,
+          "breaking the law": 0,
+          "refuses": 0,
+          "refused": 0,
+          "discriminat*": 0
+        },
+        "banned_total": 0,
+        "has_nhs_url": true,
+        "contains_quote": true,
+        "contains_nhs_quote": false,
+        "placeholders": 1
+      }
+    },
+    {
+      "run": 3,
+      "kind": "letter",
+      "verdict": {
+        "practice_name": "Example Surgery C",
+        "practice_url": "https://example-surgery-c.example.org/",
+        "page_url": "https://example-surgery-c.example.org/join-the-practice/",
+        "classification": "asks_softly",
+        "quote": "When you hand in your registration form, please bring photo ID and a recent utility bill or bank statement if you have them, as this helps us to match your medical records.",
+        "nhs_quote": "You do not need ID, proof of address or proof of immigration status.",
+        "nhs_url": "https://www.nhs.uk/nhs-services/gps/how-to-register-with-a-gp-surgery/",
+        "screenshot": "screenshots/example-surgery-c.png"
+      },
+      "advocate_sha256": "0bd552801e0557d407427dce2167e18d90587cc9198f4e6e313cc3825b97b946",
+      "trace_id": "01a0b9e5f5abaceccc46dc4ff3b806b4",
+      "model": "Qwen/Qwen2.5-7B-Instruct",
+      "input_tokens": 349,
+      "output_tokens": 155,
+      "latency_s": 23.876,
+      "output": "Dear Practice Manager,\n\nI recently visited your website to check the registration process. On the page \"Join the Practice,\" it says, \"When you hand in your registration form, please bring photo ID and a recent utility bill or bank statement if you have them, as this helps us to match your medical records.\"\n\nHowever, the NHS guidance on their website says, \"You do not need ID, proof of address or proof of immigration status.\"\n\nI noticed that the practice page asks for documents, but the NHS guidance does not mention that documents are required to register. This might cause confusion for new patients.\n\nCould you please update the page to match the NHS guidance and clarify that documents are not required to register?\n\nThank you for your help.\n\nBest regards,\n[Your Name]",
+      "metrics": {
+        "word_count": 132,
+        "sentence_count": 10,
+        "flesch_reading_ease": 71.0,
+        "flesch_kincaid_grade": 6.6,
+        "banned_terms": {
+          "illegal": 0,
+          "unlawful": 0,
+          "breaking the law": 0,
+          "refuses": 0,
+          "refused": 0,
+          "discriminat*": 0
+        },
+        "banned_total": 0,
+        "has_nhs_url": false,
+        "contains_quote": true,
+        "contains_nhs_quote": true,
+        "placeholders": 1
+      }
+    },
+    {
+      "run": 4,
+      "kind": "note",
+      "verdict": {
+        "practice_name": "Example Surgery D",
+        "practice_url": "https://example-surgery-d.example.org/",
+        "page_url": "https://example-surgery-d.example.org/registration/",
+        "classification": "asks_softly",
+        "quote": "We ask all new patients to show one form of identification and one proof of address at reception so that we can check you live within our practice area.",
+        "nhs_quote": "You do not need ID, proof of address or proof of immigration status.",
+        "nhs_url": "https://www.nhs.uk/nhs-services/gps/how-to-register-with-a-gp-surgery/",
+        "screenshot": "screenshots/example-surgery-d.png"
+      },
+      "advocate_sha256": "0bd552801e0557d407427dce2167e18d90587cc9198f4e6e313cc3825b97b946",
+      "trace_id": "01a0b9e652f0ca21c3f056824c36bf21",
+      "model": "Qwen/Qwen2.5-7B-Instruct",
+      "input_tokens": 340,
+      "output_tokens": 124,
+      "latency_s": 9.709,
+      "output": "Dear Patient,\n\nWe noticed that our practice website asks for identification and proof of address when you try to register. However, the NHS guidance says you don't need to provide these documents to register.\n\n\"Please show one form of identification and one proof of address at reception so that we can check you live within our practice area.\"\n\nThe NHS guidance on their website says you do not need to provide ID, proof of address, or proof of immigration status to register.\n\nWe hope this clears up any confusion. Please update the page to reflect the correct NHS guidance.\n\nThank you,\nExample Surgery D\n\nPlease update the page.",
+      "metrics": {
+        "word_count": 108,
+        "sentence_count": 10,
+        "flesch_reading_ease": 69.8,
+        "flesch_kincaid_grade": 6.2,
+        "banned_terms": {
+          "illegal": 0,
+          "unlawful": 0,
+          "breaking the law": 0,
+          "refuses": 0,
+          "refused": 0,
+          "discriminat*": 0
+        },
+        "banned_total": 0,
+        "has_nhs_url": false,
+        "contains_quote": false,
+        "contains_nhs_quote": false,
+        "placeholders": 0
+      }
+    },
+    {
+      "run": 4,
+      "kind": "letter",
+      "verdict": {
+        "practice_name": "Example Surgery D",
+        "practice_url": "https://example-surgery-d.example.org/",
+        "page_url": "https://example-surgery-d.example.org/registration/",
+        "classification": "asks_softly",
+        "quote": "We ask all new patients to show one form of identification and one proof of address at reception so that we can check you live within our practice area.",
+        "nhs_quote": "You do not need ID, proof of address or proof of immigration status.",
+        "nhs_url": "https://www.nhs.uk/nhs-services/gps/how-to-register-with-a-gp-surgery/",
+        "screenshot": "screenshots/example-surgery-d.png"
+      },
+      "advocate_sha256": "0bd552801e0557d407427dce2167e18d90587cc9198f4e6e313cc3825b97b946",
+      "trace_id": "01a0b9e678de5e2a70128988d125a42d",
+      "model": "Qwen/Qwen2.5-7B-Instruct",
+      "input_tokens": 341,
+      "output_tokens": 168,
+      "latency_s": 12.771,
+      "output": "Dear Practice Manager,\n\nWe noticed that the registration page on your website asks new patients to show identification and proof of address at reception. However, the NHS guidance on their website states that you do not need ID, proof of address, or proof of immigration status to register.\n\nThe sentence from your website says, \"We ask all new patients to show one form of identification and one proof of address at reception so that we can check you live within our practice area.\"\n\nThe NHS guidance page says, \"You do not need ID, proof of address or proof of immigration status.\"\n\nThis seems to contradict the NHS guidance. Could you please update the page to reflect the correct information?\n\nThank you!\n\nBest regards,\n[Your Name]  \n[Your Contact Information]  \n\nRequest: Please update the page to reflect the correct information from the NHS guidance.",
+      "metrics": {
+        "word_count": 142,
+        "sentence_count": 12,
+        "flesch_reading_ease": 68.5,
+        "flesch_kincaid_grade": 6.6,
+        "banned_terms": {
+          "illegal": 0,
+          "unlawful": 0,
+          "breaking the law": 0,
+          "refuses": 0,
+          "refused": 0,
+          "discriminat*": 0
+        },
+        "banned_total": 0,
+        "has_nhs_url": false,
+        "contains_quote": true,
+        "contains_nhs_quote": true,
+        "placeholders": 2
+      }
+    },
+    {
+      "run": 5,
+      "kind": "note",
+      "verdict": {
+        "practice_name": "Example Surgery A",
+        "practice_url": "https://example-surgery-a.example.org/",
+        "page_url": "https://example-surgery-a.example.org/new-patients/",
+        "classification": "demands_documents",
+        "quote": "To register with the practice you must bring photographic ID (passport or driving licence) and proof of address dated within the last three months. We are unable to process your registration without these documents.",
+        "nhs_quote": "You do not need ID, proof of address or proof of immigration status.",
+        "nhs_url": "https://www.nhs.uk/nhs-services/gps/how-to-register-with-a-gp-surgery/",
+        "screenshot": "screenshots/example-surgery-a.png"
+      },
+      "advocate_sha256": "0bd552801e0557d407427dce2167e18d90587cc9198f4e6e313cc3825b97b946",
+      "trace_id": "01a0b9e6aac317b8f57110780c5a457c",
+      "model": "Qwen/Qwen2.5-7B-Instruct",
+      "input_tokens": 345,
+      "output_tokens": 121,
+      "latency_s": 7.892,
+      "output": "Dear Patient,\n\nThe page on Example Surgery A's website says you need to bring photographic ID and proof of address to register. However, the NHS guidance says you do not need these documents to register.\n\nThis contradicts the NHS guidance on nhs.uk.\n\n\"Example Surgery A: To register with the practice you must bring photographic ID (passport or driving licence) and proof of address dated within the last three months. We are unable to process your registration without these documents.\"\n\nPlease update the page to reflect the correct NHS guidance.\n\nThank you,\n[Your Name]\n[Your Position at Example Surgery A]",
+      "metrics": {
+        "word_count": 100,
+        "sentence_count": 11,
+        "flesch_reading_ease": 64.8,
+        "flesch_kincaid_grade": 6.5,
+        "banned_terms": {
+          "illegal": 0,
+          "unlawful": 0,
+          "breaking the law": 0,
+          "refuses": 0,
+          "refused": 0,
+          "discriminat*": 0
+        },
+        "banned_total": 0,
+        "has_nhs_url": true,
+        "contains_quote": true,
+        "contains_nhs_quote": false,
+        "placeholders": 2
+      }
+    },
+    {
+      "run": 5,
+      "kind": "letter",
+      "verdict": {
+        "practice_name": "Example Surgery A",
+        "practice_url": "https://example-surgery-a.example.org/",
+        "page_url": "https://example-surgery-a.example.org/new-patients/",
+        "classification": "demands_documents",
+        "quote": "To register with the practice you must bring photographic ID (passport or driving licence) and proof of address dated within the last three months. We are unable to process your registration without these documents.",
+        "nhs_quote": "You do not need ID, proof of address or proof of immigration status.",
+        "nhs_url": "https://www.nhs.uk/nhs-services/gps/how-to-register-with-a-gp-surgery/",
+        "screenshot": "screenshots/example-surgery-a.png"
+      },
+      "advocate_sha256": "0bd552801e0557d407427dce2167e18d90587cc9198f4e6e313cc3825b97b946",
+      "trace_id": "01a0b9e6c997009730f927688129a464",
+      "model": "Qwen/Qwen2.5-7B-Instruct",
+      "input_tokens": 346,
+      "output_tokens": 156,
+      "latency_s": 11.883,
+      "output": "Dear Example Surgery A Practice Manager,\n\nI recently visited your website to check the registration process. I noticed that the page \"To register with the practice you must bring photographic ID (passport or driving licence) and proof of address dated within the last three months. We are unable to process your registration without these documents.\" contradicts the NHS guidance on nhs.uk, which states, \"You do not need ID, proof of address or proof of immigration status.\"\n\nI understand that your practice has a specific process, but the NHS guidance is clear that these documents are not required to register. This might cause confusion for patients trying to register.\n\nCould you please update the page to reflect the current NHS guidance?\n\nThank you for your attention to this matter.\n\nBest regards,\n[Your Name]",
+      "metrics": {
+        "word_count": 133,
+        "sentence_count": 12,
+        "flesch_reading_ease": 65.8,
+        "flesch_kincaid_grade": 6.8,
+        "banned_terms": {
+          "illegal": 0,
+          "unlawful": 0,
+          "breaking the law": 0,
+          "refuses": 0,
+          "refused": 0,
+          "discriminat*": 0
+        },
+        "banned_total": 0,
+        "has_nhs_url": true,
+        "contains_quote": true,
+        "contains_nhs_quote": true,
+        "placeholders": 1
+      }
+    }
+  ]
+}
