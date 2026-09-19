@@ -1,27 +1,34 @@
 """Open Door pipeline: find practices, resolve and capture on Modal, classify with Gemini, box the verified quotes.
 Writes data/runs/<run_id>/{events.jsonl, results.json, shots/<code>.png}. Reads website wording only, never front-desk behaviour.
 
-  uv run python -m opendoor.pipeline --postcode E13 --limit 40
-  uv run python -m opendoor.pipeline --postcode E13,E6,E7 --limit 40 --fake     (no Modal, no Gemini: probe data + keyword classifier)
+  uv run python -m opendoor.pipeline --postcode "E13 8AA" --limit 40            (one postcode or outcode: the 40 nearest practices)
+  uv run python -m opendoor.pipeline --postcode E13,E6,E7 --limit 40 --fake     (several prefixes: every practice in them. --fake: no Modal, no Gemini)
   uv run python -m opendoor.pipeline --london --limit 1500                      (every London postcode area)
 """
-import argparse, asyncio, json, re, shutil, time
+import argparse, asyncio, json, re, shutil, threading, time
 from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
 
-from opendoor.models import COLOUR, DOC_RE, NHS_GUIDANCE_QUOTE, NHS_GUIDANCE_URL, Finding, PracticeResult, norm
-from opendoor.orgs import LONDON_PREFIXES, find_practices
+from opendoor.models import COLOUR, DOC_RE, NHS_GUIDANCE_QUOTE, NHS_GUIDANCE_URL, Finding, PracticeResult, doc_types, norm
+from opendoor.orgs import LONDON_PREFIXES, find_nearest, find_practices, single_place
 
 ROOT = Path(__file__).resolve().parent.parent
 RUNS, CACHE = ROOT / "data" / "runs", ROOT / "data" / "cache"
+VERDICTS = ROOT / "data" / "verdicts.json"  # latest real run, one object per quoted practice, for a teammate
 BOXED = ("demands_documents", "asks_softly", "says_not_needed")  # categories whose verified quote gets boxed on a screenshot
 MIN_TEXT = 200  # a page with less visible text than this was not really read, so it must not show as green
 
 
 def parse_prefixes(s: str) -> list[str]:
-    """'E13 9AZ' -> ['E13'];  'e13, e6 E7' -> ['E13', 'E6', 'E7'];  'SE' -> ['SE'];  'London' -> []."""
-    return list(dict.fromkeys(re.findall(r"\b[A-Z]{1,2}(?:\d[A-Z\d]?)?\b", s.upper())))
+    """One place stays whole: 'e13 9az' -> ['E13 9AZ'], 'E13' -> ['E13'] (both mean: nearest practices).
+    Otherwise prefixes: 'e13, e6 E7' -> ['E13', 'E6', 'E7'];  'SE' -> ['SE'];  'London' -> []."""
+    one = single_place(s)
+    return [one] if one else list(dict.fromkeys(re.findall(r"\b[A-Z]{1,2}(?:\d[A-Z\d]?)?\b", s.upper())))
+
+
+def new_run_id(prefixes: list[str]) -> str:
+    return time.strftime("%Y%m%d-%H%M%S-") + "-".join(p.replace(" ", "") for p in prefixes)[:20]
 
 
 def apply_finding(r: PracticeResult, f: Finding) -> None:
@@ -29,6 +36,32 @@ def apply_finding(r: PracticeResult, f: Finding) -> None:
     r.documents, r.reason, r.retries = f.documents, f.reason, f.retries
     r.colour = COLOUR[r.category]
     r.self_contradiction = bool(r.links_national_form and r.category == "demands_documents")
+    r.doc_types = doc_types([r.quote] + r.documents) if r.colour in ("red", "amber") else []
+
+
+def peak_overlap(spans: list[tuple[float, float]]) -> int:
+    """Most (start, end) spans open at one moment. The peak always falls on some span's start."""
+    return max((sum(a <= s < b for a, b in spans) for s, _ in spans), default=0)
+
+
+def _warm(n: int):
+    """Boots capture containers while practices are found and resolved. Each Modal Function has its own container pool,
+    so it is capture itself that gets called: a target with no URL returns no_site at once and loads no page."""
+    try:  # a failed warm-up must never stop a run
+        import modal
+        modal.Function.from_name("opendoor", "capture").spawn_map([{"code": f"warm-{i}"} for i in range(min(n, 100))])
+    except Exception:
+        pass
+
+
+def write_verdicts(results: list[PracticeResult], run_dir: Path, path: Path = VERDICTS) -> int:
+    rows = [{"practice_name": r.name, "practice_url": r.site, "page_url": r.reg_url,
+             "classification": "compliant" if r.category in ("says_not_needed", "no_mention") else r.category,
+             "quote": r.quote, "nhs_quote": NHS_GUIDANCE_QUOTE, "nhs_url": NHS_GUIDANCE_URL,
+             "screenshot": str((run_dir / r.shot).resolve()) if r.shot else None}
+            for r in results if r.quote and r.category != "not_checked"]
+    path.write_text(json.dumps(rows, indent=1))
+    return len(rows)
 
 
 async def _amap(fn, inputs):
@@ -42,10 +75,15 @@ async def _amap(fn, inputs):
             yield fn(x)
 
 
-async def _arun(orgs, R, emit, shots, resolve, capture, box, classify):
+async def _arun(orgs, R, emit, shots, resolve, capture, box, classify) -> int:
+    """Returns the peak number of capture calls running at once, from each call's own runtime."""
+    def classified(r):
+        emit("classified", code=r.code, category=r.category, colour=r.colour, quote=r.quote, retries=r.retries,
+             doc_types=r.doc_types, distance_km=r.distance_km)
+
     def finish(r, status, reason):  # a practice that never reaches the classifier still gets its grey pin
         r.status, r.reason = status, reason
-        emit("classified", code=r.code, category=r.category, colour=r.colour, quote="", retries=0)
+        classified(r)
 
     # ponytail: resolve finishes for everyone before capture starts (3s on a 5 practice run). Feed capture an async generator if the demo needs it faster.
     targets = []
@@ -93,11 +131,11 @@ async def _arun(orgs, R, emit, shots, resolve, capture, box, classify):
             except Exception as e:
                 f = Finding(category="not_checked", reason=f"Classifier error: {type(e).__name__}")
         apply_finding(r, f)
-        emit("classified", code=r.code, category=r.category, colour=r.colour, quote=r.quote, retries=r.retries)
+        classified(r)
         if r.quote_verified and r.quote and r.category in BOXED:
             await box_one({"code": r.code, "final_url": r.reg_url, "reg_url": r.reg_url, "quote": r.quote, "colour": r.colour})
 
-    tasks, captured = [], set()
+    tasks, captured, spans = [], set(), []
     if not (CACHE / "nhs.png").exists():  # the nhs.uk reference screenshot, made once and reused by later runs
         tasks.append(asyncio.create_task(box_one({"code": "nhs", "final_url": NHS_GUIDANCE_URL, "reg_url": NHS_GUIDANCE_URL,
                                                   "quote": NHS_GUIDANCE_QUOTE, "colour": "green"})))
@@ -106,6 +144,8 @@ async def _arun(orgs, R, emit, shots, resolve, capture, box, classify):
             continue
         r = R[c["code"]]
         captured.add(r.code)
+        now = time.time()
+        spans.append((now - (c.get("secs") or 0.0), now))  # when this call ran, by its own clock; 0 s calls never opened a browser
         if c.get("text"):  # kept so a human can check the classification against exactly what was read
             (shots.parent / "texts").mkdir(exist_ok=True)
             (shots.parent / "texts" / f"{r.code}.txt").write_text(c["text"])
@@ -125,12 +165,16 @@ async def _arun(orgs, R, emit, shots, resolve, capture, box, classify):
         if t["code"] not in captured:
             finish(R[t["code"]], "error", "The page capture failed.")
     await asyncio.gather(*tasks)
+    return peak_overlap(spans)
 
 
-def run(postcode_prefixes, limit, run_id=None, on_event=None, fake=False, region=None) -> dict:
-    """Blocking. Returns the summary. on_event(event_dict) is called for every event, in order."""
+def run(postcode_prefixes, limit, run_id=None, on_event=None, fake=False, region=None, lacking=()) -> dict:
+    """Blocking. Returns the summary. on_event(event_dict) is called for every event, in order.
+    One full postcode or outcode (['E13 8AA'] or ['E13']) finds the `limit` nearest practices; anything else sweeps prefixes.
+    lacking (documents the user does not have) is only echoed in run_started: the UI does the filtering."""
     t0 = time.time()
-    run_id = run_id or time.strftime("%Y%m%d-%H%M%S-") + "-".join(postcode_prefixes)[:20]
+    run_id = run_id or new_run_id(postcode_prefixes)
+    near = single_place(postcode_prefixes[0]) if len(postcode_prefixes) == 1 and not region else None
     run_dir = RUNS / run_id
     shots = run_dir / "shots"
     shots.mkdir(parents=True, exist_ok=True)
@@ -146,12 +190,20 @@ def run(postcode_prefixes, limit, run_id=None, on_event=None, fake=False, region
         if on_event:
             on_event(ev)
 
-    R, error, stats, calls0 = {}, None, {}, 0
-    emit("run_started", postcode_prefixes=postcode_prefixes, limit=limit, run_id=run_id, fake=fake)
+    R, error, stats, calls0, peak, where = {}, None, {}, 0, None, {}
+    emit("run_started", postcode_prefixes=postcode_prefixes, limit=limit, run_id=run_id, fake=fake, near=near, lacking=list(lacking or []))
+    emit("warming")  # capture containers start booting while practices are found and resolved
+    if not fake:
+        threading.Thread(target=_warm, args=(limit,), daemon=True).start()
     try:
-        orgs = find_practices(postcode_prefixes, limit, region=region)
-        R = {o["code"]: PracticeResult(**{k: o.get(k) for k in ("code", "name", "postcode", "lat", "lon")}) for o in orgs}
-        emit("practices_found", count=len(orgs))
+        if near:
+            orgs, centre = find_nearest(near, limit)
+            where = {"centre": centre, "outcodes": sorted({o["postcode"].split()[0] for o in orgs}),
+                     "furthest_km": orgs[-1]["distance_km"] if orgs else None}
+        else:
+            orgs = find_practices(postcode_prefixes, limit, region=region)
+        R = {o["code"]: PracticeResult(**{k: o.get(k) for k in ("code", "name", "postcode", "lat", "lon", "distance_km")}) for o in orgs}
+        emit("practices_found", count=len(orgs), **where)
         if fake:
             resolve, capture, box, classify = _fakes()
         else:
@@ -159,7 +211,8 @@ def run(postcode_prefixes, limit, run_id=None, on_event=None, fake=False, region
             from opendoor import classify as cl  # lazy: pulls in pydantic-ai and logfire
             resolve, capture, box = (modal.Function.from_name("opendoor", n) for n in ("resolve", "capture", "box"))
             classify, stats, calls0 = cl.classify_page, cl.STATS, cl.STATS["requests"]
-        asyncio.run(_arun(orgs, R, emit, shots, resolve, capture, box, classify))
+        peak = asyncio.run(_arun(orgs, R, emit, shots, resolve, capture, box, classify))
+        peak = None if fake else peak  # fake captures replay recorded timings, not containers
     except Exception as e:  # still write what we have and close the run, so the UI stops polling
         error = f"{type(e).__name__}: {str(e)[:300]}"
 
@@ -170,6 +223,7 @@ def run(postcode_prefixes, limit, run_id=None, on_event=None, fake=False, region
     counts = {c: 0 for c in COLOUR} | Counter(r.category for r in results)
     summary = {
         "run_id": run_id, "postcode_prefixes": postcode_prefixes, "limit": limit, "fake": fake, "error": error,
+        "near": near, **where, "lacking": list(lacking or []), "containers_peak": peak,
         "total": len(results), "counts": counts,
         "statuses": dict(Counter(r.status for r in results)),
         "self_contradictions": sum(r.self_contradiction for r in results),
@@ -183,8 +237,10 @@ def run(postcode_prefixes, limit, run_id=None, on_event=None, fake=False, region
         "finished_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
     }
     (run_dir / "results.json").write_text(json.dumps({"summary": summary, "results": [r.model_dump() for r in results]}, indent=1))
+    if results and not fake:  # fake runs use a keyword classifier, never hand those verdicts on
+        write_verdicts(results, run_dir)
     emit("run_finished", counts=counts, wall_secs=summary["wall_secs"], total=len(results), quotes_rejected=n_rejected,
-         gemini_calls=summary["gemini_calls"], error=error)
+         gemini_calls=summary["gemini_calls"], error=error, containers_peak=peak)
     log.close()
     return summary
 

@@ -8,3 +8,4 @@ data/cache/
 .DS_Store
 CONTRACT.md
 docs/
+data/verdicts.json

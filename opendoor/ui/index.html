@@ -4,52 +4,87 @@
 <meta charset="utf-8">
 <title>Open Door</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:,">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
 <style>
 :root{--bg:#0a0e13;--bar:#0d131b;--panel:#111822;--line:#202c3b;--text:#eef3f8;--mute:#8b98a9;
-  --red:#ff4757;--amber:#ffb224;--green:#2fe08c;--grey:#6b7787;--orange:#ff8a1f;--blue:#4aa3ff}
+  --red:#ff4757;--amber:#ffb224;--green:#2fe08c;--grey:#6b7787;--orange:#ff8a1f;--blue:#4aa3ff;--violet:#b18cff;--teal:#2dd4bf}
 *{box-sizing:border-box}
 html,body{height:100%;margin:0}
-body{background:var(--bg);color:var(--text);display:grid;grid-template-rows:auto 1fr auto auto;overflow:hidden;
+body{background:var(--bg);color:var(--text);display:grid;grid-template-rows:auto auto 1fr auto auto;overflow:hidden;
   font:18px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif}
 a{color:var(--blue)}
 button,input,select,textarea{font:inherit;color:inherit}
 :focus-visible{outline:3px solid var(--blue);outline-offset:2px}
 
-header{display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;padding:12px 22px;background:var(--bar);border-bottom:1px solid var(--line)}
-.brand{display:flex;align-items:center;gap:12px;font-size:32px;font-weight:800;letter-spacing:-.02em;margin-right:6px}
+header{display:flex;flex-wrap:wrap;align-items:center;gap:10px 20px;padding:10px 22px;background:var(--bar);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:12px;font-size:30px;font-weight:800;letter-spacing:-.02em;margin-right:4px;white-space:nowrap}
 .door{width:20px;height:30px;border:3px solid var(--green);border-radius:3px;position:relative;transform:skewY(-8deg);box-shadow:0 0 16px -2px var(--green)}
 .door::after{content:"";position:absolute;right:3px;top:12px;width:4px;height:4px;border-radius:50%;background:var(--green)}
 .controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.controls label{font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--mute)}
-input,select{background:#0a0f16;border:1px solid #2c3a4d;border-radius:8px;padding:8px 12px;height:44px}
-#postcode{width:170px;font-size:22px;font-weight:700;text-transform:uppercase}
-#limit{width:76px}
-#replay{max-width:230px}
-.btn{background:#1a2432;border:1px solid #2c3a4d;border-radius:8px;padding:0 18px;height:44px;cursor:pointer;font-weight:600;text-decoration:none;color:var(--text);display:inline-flex;align-items:center}
+.controls label,.persona>span{font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--mute);font-weight:700;white-space:nowrap}
+input,select{background:#0a0f16;border:1px solid #2c3a4d;border-radius:8px;padding:8px 12px;height:42px}
+#postcode{width:160px;font-size:21px;font-weight:700;text-transform:uppercase}
+#limit{width:72px}
+#replay{max-width:220px}
+.btn{background:#1a2432;border:1px solid #2c3a4d;border-radius:8px;padding:0 18px;height:42px;cursor:pointer;font-weight:600;text-decoration:none;color:var(--text);display:inline-flex;align-items:center}
 .btn:hover{background:#223044}
-.btn.go{background:var(--green);border-color:var(--green);color:#04130b;font-size:20px;font-weight:800;padding:0 26px}
+.btn.go{background:var(--green);border-color:var(--green);color:#04130b;font-size:20px;font-weight:800;padding:0 24px}
 .btn.go:hover{filter:brightness(1.1)}
 .btn[disabled]{opacity:.5;cursor:default}
 .seg{display:inline-flex;border:1px solid #2c3a4d;border-radius:8px;overflow:hidden}
-.seg button{background:none;border:0;height:42px;padding:0 12px;cursor:pointer;color:var(--mute);font-weight:700}
+.seg button{background:none;border:0;height:40px;padding:0 12px;cursor:pointer;color:var(--mute);font-weight:700}
 .seg button[aria-pressed=true]{background:#2c3a4d;color:var(--text)}
 #mode{font-size:13px;font-weight:800;letter-spacing:.1em;padding:5px 10px;border-radius:6px;border:1px solid #2c3a4d;color:var(--mute);white-space:nowrap}
 #mode.live{color:#fff;background:var(--red);border-color:var(--red)}
 #mode.replay,#mode.sample{color:#1a1200;background:var(--amber);border-color:var(--amber)}
 #mode.done{color:#04130b;background:var(--green);border-color:var(--green)}
 
-.counters{display:flex;gap:26px;margin-left:auto;align-items:flex-end;flex-wrap:wrap}
-.c b{display:block;font-size:42px;line-height:1;font-weight:800;font-variant-numeric:tabular-nums}
-.c span{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--mute);white-space:nowrap}
-.c.red b{color:var(--red)}.c.amber b{color:var(--amber)}.c.green b{color:var(--green)}.c.rej b{color:var(--orange)}
-.c.outline b{color:transparent;-webkit-text-stroke:2px var(--green)}
-.c.flash b{animation:flash .9s}
-@keyframes flash{0%{transform:scale(1.7);text-shadow:0 0 24px var(--orange)}100%{transform:none}}
+/* persona: what the person does not have. Applied in the browser, no new run needed */
+.persona{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-left:auto}
+.persona button{height:38px;padding:0 14px 0 11px;border-radius:999px;border:1px solid #2c3a4d;background:#0a0f16;color:#c4cedb;font-size:16px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
+.persona button::before{content:"";width:14px;height:14px;border-radius:4px;border:2px solid #56657a;flex:none}
+.persona button:hover{border-color:#56657a}
+.persona button[aria-pressed=true]{border-color:var(--amber);color:#fff;background:rgba(255,178,36,.16)}
+.persona button[aria-pressed=true]::before{background:var(--amber);border-color:var(--amber);box-shadow:inset 0 0 0 2px #2a1d00}
+
+/* the chain: one lit step per stage of the pipeline, every number counted from events */
+#chain{display:flex;align-items:stretch;padding:8px 22px;background:#0b1017;border-bottom:1px solid var(--line)}
+.step{flex:1 1 0;min-width:0;padding:6px 12px 7px;border:1px solid var(--line);border-radius:10px;background:#0d141d;opacity:.4;transition:opacity .4s,border-color .4s,box-shadow .4s}
+.step.on{opacity:1;border-color:var(--sc);box-shadow:0 0 22px -8px var(--sc),inset 0 0 0 1px rgba(255,255,255,.03)}
+.step .nm{display:block;font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--sc);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.step .row{display:flex;align-items:center;gap:10px;margin-top:1px;min-width:0}
+.step .row>b{font-size:30px;line-height:1.05;font-weight:800;font-variant-numeric:tabular-nums}
+.step .u{display:flex;flex-direction:column;font-size:13px;line-height:1.25;color:#c4cedb;min-width:0;white-space:nowrap}
+.step .u>*{overflow:hidden;text-overflow:ellipsis}
+.step .x{color:var(--mute)}
+.step .x.hot{color:var(--orange);font-weight:800}
+.s-nhs{--sc:var(--blue)}.s-modal{--sc:var(--green)}.s-gem{--sc:var(--violet)}.s-code{--sc:var(--teal)}.s-ev{--sc:var(--amber)}.s-map{--sc:#dfe7f0}
+.arr{flex:0 0 24px;position:relative;align-self:center;height:2px;margin:0 3px 0 5px;background:#243142}
+.arr::after{content:"";position:absolute;right:-2px;top:-5px;border:6px solid transparent;border-left:8px solid #243142;border-right:0}
+.arr.on{background:linear-gradient(90deg,var(--green) 55%,transparent 0) 0 0/8px 2px}
+.arr.on::after{border-left-color:var(--green)}
+.arr.flow{animation:flow .5s linear infinite}
+@keyframes flow{to{background-position:8px 0}}
+.tick{animation:tick .6s ease-out}
+@keyframes tick{0%{transform:scale(1.4);text-shadow:0 0 18px var(--sc,#fff)}100%{transform:none}}
+.step.rej{animation:rej 1.2s ease-out}
+@keyframes rej{0%{border-color:var(--orange);box-shadow:0 0 34px 2px var(--orange)}100%{}}
+.tally{display:flex;gap:14px}
+.tally span{display:flex;flex-direction:column;align-items:center;line-height:1}
+.tally b{font-size:28px;font-weight:800;font-variant-numeric:tabular-nums}
+.s-map{flex-grow:1.35}
+.tally small{white-space:nowrap;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--mute);margin-top:3px}
+.tally .red b{color:var(--red)}.tally .amber b{color:var(--amber)}.tally .green b{color:var(--green)}
+.tally .outline b{color:transparent;-webkit-text-stroke:1.5px var(--green)}
+.clock{flex:0 0 auto;display:flex;flex-direction:column;justify-content:center;align-items:flex-end;padding-left:16px;min-width:96px}
+.clock b{font-size:30px;font-weight:800;font-variant-numeric:tabular-nums;line-height:1.05}
+.clock span{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--mute)}
 
 main{display:grid;grid-template-columns:minmax(0,1fr) minmax(520px,47vw);min-height:0}
-#map{min-height:0;background:var(--bg)}
-#nomap{display:none;place-items:center;color:var(--mute);padding:40px;text-align:center}
+#mapwrap{position:relative;min-height:0}
+#map{position:absolute;inset:0;background:var(--bg)}
+#nomap{display:none;place-items:center;color:var(--mute);padding:40px;text-align:center;height:100%}
 .leaflet-container{background:#15191f;font:inherit}
 .leaflet-tile{width:256.5px!important;height:256.5px!important} /* hides hairline seams between tiles at fractional zoom */
 .leaflet-tile-pane{filter:invert(1) hue-rotate(180deg) brightness(.82) contrast(.95) saturate(.3)}
@@ -60,7 +95,7 @@ main{display:grid;grid-template-columns:minmax(0,1fr) minmax(520px,47vw);min-hei
 .leaflet-tooltip-top::before{border-top-color:#2c3a4d}
 
 /* Leaflet positions the icon element with a transform, so the dot is drawn and animated on pseudo elements. */
-.pin{cursor:pointer}
+.pin{cursor:pointer;transition:opacity .35s}
 .pin::before{content:"";position:absolute;inset:3px;border-radius:50%;background:var(--c,var(--grey));border:2px solid rgba(255,255,255,.9);box-shadow:0 0 16px 3px var(--c,transparent)}
 .pin.c-red{--c:var(--red)}.pin.c-amber{--c:var(--amber)}.pin.c-green{--c:var(--green)}
 .pin.c-green-outline::before{background:var(--bg);border:4px solid var(--green);box-shadow:none}
@@ -68,11 +103,36 @@ main{display:grid;grid-template-columns:minmax(0,1fr) minmax(520px,47vw);min-hei
 .pin.c-pending::before{background:#9aa6b5;box-shadow:none}
 .pin.c-pending::after{content:"";position:absolute;inset:3px;border-radius:50%;border:2px solid #d5dde7;animation:ping 1.2s ease-out infinite}
 .pin.pop::before{animation:pop .55s cubic-bezier(.2,1.6,.4,1)}
-.pin.sel::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:3px solid #fff}
-@keyframes ping{to{transform:scale(2.8);opacity:0}}
+.pin.dim{opacity:.25}
+.pin.hit::after{content:"";position:absolute;inset:-4px;border-radius:50%;border:3px solid var(--c);animation:ping 1.3s ease-out infinite}
+.pin.sel::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:3px solid #fff;animation:none}
+@keyframes ping{to{transform:scale(2.6);opacity:0}}
 @keyframes pop{from{transform:scale(2.6);opacity:.2}}
 
-#panel{overflow-y:auto;background:var(--panel);border-left:1px solid var(--line);padding:24px 30px 40px}
+/* area summary: floats over the map once the run has finished */
+#area{position:absolute;left:12px;right:12px;bottom:24px;z-index:900;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:16px;align-items:start;
+  background:rgba(13,19,27,.96);border:1px solid #2c3a4d;border-radius:14px;padding:12px 16px 12px;box-shadow:0 20px 44px -12px #000;animation:rise .45s ease-out}
+#area[hidden]{display:none}
+#area .eyebrow{margin-bottom:2px}
+#area .x{background:none;border:0;color:var(--blue);cursor:pointer;font-size:14px;padding:0;margin-left:auto}
+#area .foot{display:flex;align-items:baseline;gap:12px;margin-top:8px}
+.sumh{font-size:21px;font-weight:700;margin:0;line-height:1.2}
+.sumh b{font-size:27px;font-variant-numeric:tabular-nums}
+.sbar{display:flex;gap:2px;height:14px;border-radius:7px;overflow:hidden;margin:8px 0 8px;animation:grow .8s ease-out;transform-origin:left}
+.sbar i{flex:1 1 0;min-width:6px;background:var(--c)}
+.sbar i.c-red{--c:var(--red)}.sbar i.c-amber{--c:var(--amber)}.sbar i.c-green{--c:var(--green)}.sbar i.c-grey{--c:var(--grey)}
+.sbar i.c-green-outline{background:transparent;box-shadow:inset 0 0 0 3px var(--green)}
+.skey{display:flex;flex-wrap:wrap;gap:2px 14px;font-size:14px;color:#c4cedb;list-style:none;padding:0;margin:0}
+.skey li{display:flex;align-items:center;gap:7px}
+.skey .k{width:12px;height:12px}
+.skey b{color:var(--text)}
+.contra{margin:0;font-size:16px;line-height:1.35;padding:9px 12px;border-radius:8px;background:rgba(255,71,87,.1);border:1px solid rgba(255,71,87,.45)}
+.contra b{color:var(--red);font-size:22px}
+#area .note{margin:0;font-size:13px;line-height:1.35}
+@keyframes rise{from{transform:translateY(20px);opacity:0}}
+@keyframes grow{from{transform:scaleX(0)}}
+
+#panel{overflow-y:auto;background:var(--panel);border-left:1px solid var(--line);padding:22px 30px 40px}
 .eyebrow{font-size:13px;text-transform:uppercase;letter-spacing:.12em;color:var(--mute);margin:0 0 8px}
 h2{font-size:34px;line-height:1.1;margin:0 0 10px;letter-spacing:-.01em}
 h3{font-size:24px;line-height:1.25;margin:12px 0 4px}
@@ -82,58 +142,72 @@ h4{font-size:15px;text-transform:uppercase;letter-spacing:.1em;color:var(--mute)
 .pill{display:inline-block;font-size:14px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:4px 12px;border-radius:999px;border:2px solid var(--c);color:var(--c);margin-bottom:12px}
 .t-red{--c:var(--red)}.t-amber{--c:var(--amber)}.t-green,.t-green-outline{--c:var(--green)}.t-grey,.t-pending{--c:#9aa6b5}
 blockquote{margin:14px 0;padding:16px 22px;border-left:6px solid var(--c,var(--mute));background:#0b1119;border-radius:0 10px 10px 0;font-size:28px;line-height:1.3;font-weight:600}
-blockquote.nhs{--c:var(--green);font-size:32px}
+blockquote.nhs{--c:var(--green);font-size:30px}
 blockquote.long{font-size:20px;font-weight:500}
 blockquote cite{display:block;font-size:15px;font-weight:400;font-style:normal;color:var(--mute);margin-top:10px}
-.chips{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 10px}
 .chip{font-size:15px;padding:5px 12px;border-radius:8px;background:#1a2432;border:1px solid #2c3a4d}
 .chip.ok{border-color:var(--green);color:var(--green)}
 .chip.rej{border-color:var(--orange);color:var(--orange);font-weight:800}
 .chip.warn{border-color:var(--amber);color:var(--amber)}
+.chip.you{border-color:var(--red);color:#fff;background:rgba(255,71,87,.16);font-weight:700}
 .back{float:right;background:none;border:0;color:var(--blue);cursor:pointer;padding:4px 0;font-size:16px}
 
-.split{margin-top:18px;cursor:zoom-in}
+/* patient answer: the default right panel */
+.answer .big{font-size:29px;line-height:1.22;font-weight:700;margin:0 0 8px;letter-spacing:-.01em}
+.answer .n{font-size:46px;line-height:1;font-weight:800;color:var(--green);font-variant-numeric:tabular-nums;margin-right:6px;vertical-align:-3px}
+.answer .n.r{color:var(--red)}
+.answer .big.m{font-size:24px;margin-top:22px}
+.answer .big.m .n{font-size:38px}
+.answer .sub{margin-bottom:12px}
+.answer .note{margin:6px 0 12px}
+.answer + .eyebrow{margin-top:30px}
+
+.split{margin-top:16px;cursor:zoom-in}
 .split h3{margin:0 0 12px;font-size:28px}
-.split .cols{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.split .cols{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
 .split.single .cols{grid-template-columns:1fr}
 figure{margin:0;min-width:0}
-figcaption{font-size:14px;text-transform:uppercase;letter-spacing:.08em;color:var(--mute);margin-bottom:6px}
-.crop{overflow:hidden;border-radius:8px;border:2px solid var(--c,#2c3a4d);background:#fff}
-.crop img{width:100%;display:block}
-.crop.zoomed{position:relative}
-.crop.zoomed img{position:absolute;max-width:none}
-/* full screen shows the whole screenshot, not the zoomed crop */
+figcaption{font-size:14px;text-transform:uppercase;letter-spacing:.08em;color:var(--mute);margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* both screenshots use the same 2:1 window, so they are always the same height */
+.crop{position:relative;aspect-ratio:2/1;overflow:hidden;border-radius:8px;border:2px solid var(--c,#2c3a4d);background:#fff}
+.crop img{position:absolute;left:0;top:0;width:100%;max-width:none;display:block}
+figure .pill{margin:10px 0 6px;font-size:12px;padding:3px 10px}
+figure blockquote.q{margin:0;font-size:18px;line-height:1.35;padding:10px 14px;border-left-width:5px;font-weight:600}
+figure blockquote.q cite{font-size:13px;margin-top:6px}
 .split.big .crop{aspect-ratio:auto!important}
 .split.big .crop img{position:static!important;width:100%!important}
-.mock{border-radius:8px;border:2px solid #2c3a4d;background:#f4f6f8;color:#1b2430;padding:16px;font-size:15px;min-height:180px}
+.split.big figure blockquote.q{font-size:26px}
+.mock{aspect-ratio:2/1;overflow:hidden;border-radius:8px;border:2px solid #2c3a4d;background:#f4f6f8;color:#1b2430;padding:14px;font-size:14px}
 .mock .bar{height:10px;border-radius:5px;background:#d5dbe3;margin:0 0 10px;width:70%}
 .mock .bar.s{width:45%}
 .mock .hit{display:inline-block;outline:3px solid var(--c);outline-offset:3px;border-radius:2px;margin:6px 0 12px;font-weight:600}
 .mock small{display:block;color:#5d6b7c;margin-top:8px}
 .split.big{position:fixed;inset:0;z-index:2000;margin:0;padding:28px 36px;background:rgba(6,9,13,.97);overflow:auto;cursor:zoom-out}
 .split.big h3{font-size:44px;text-align:center;margin-bottom:20px}
-.split.big .mock{font-size:22px;padding:28px}
+.split.big .mock{font-size:22px;padding:28px;aspect-ratio:auto;min-height:300px}
 
 .greens{list-style:none;padding:0;margin:0}
-.greens button{width:100%;display:flex;align-items:center;gap:12px;text-align:left;background:#0b1119;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin-bottom:8px;cursor:pointer;font-size:19px}
+.greens button{width:100%;display:flex;align-items:center;gap:12px;text-align:left;background:#0b1119;border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin-bottom:7px;cursor:pointer;font-size:19px}
 .greens button:hover{border-color:var(--green)}
+.greens.asks button:hover{border-color:var(--red)}
 .greens .d{margin-left:auto;color:var(--mute);font-size:16px;white-space:nowrap}
 .k{flex:none;width:16px;height:16px;border-radius:50%;background:var(--c);border:2px solid rgba(255,255,255,.85)}
 .k.c-red{--c:var(--red)}.k.c-amber{--c:var(--amber)}.k.c-green{--c:var(--green)}.k.c-grey{--c:var(--grey)}.k.c-pending{--c:#9aa6b5}
 .k.c-green-outline{background:transparent;border:4px solid var(--green)}
 .legend{display:grid;gap:8px;margin:0;padding:0;list-style:none;font-size:17px}
 .legend li{display:flex;align-items:center;gap:12px}
-.actions{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:22px}
+.actions{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:18px}
 .note{color:var(--mute);font-size:16px}
 
-#log{height:104px;overflow-y:auto;padding:8px 22px;background:#07090d;border-top:1px solid var(--line);color:#b8c3d0;
+#log{height:92px;overflow-y:auto;padding:8px 22px;background:#07090d;border-top:1px solid var(--line);color:#b8c3d0;
   font:15px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
 .ln{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .ln .t{display:inline-block;width:70px;color:var(--mute)}
 .ln .ty{display:inline-block;width:160px;font-weight:700;color:#dbe4ee}
 .ln.rej,.ln.rej .ty,.ln.rej .t{color:var(--orange);font-weight:800}
 .ln.fin .ty{color:var(--green)}
-footer{padding:10px 22px;background:var(--bar);border-top:1px solid var(--line);font-size:16px;color:#cbd5e1}
+footer{padding:9px 22px;background:var(--bar);border-top:1px solid var(--line);font-size:16px;color:#cbd5e1}
 
 dialog{background:var(--panel);color:var(--text);border:1px solid #2c3a4d;border-radius:14px;padding:26px 28px;width:min(820px,92vw)}
 dialog::backdrop{background:rgba(4,6,9,.8)}
@@ -143,9 +217,14 @@ dialog textarea{width:100%;height:46vh;background:#0a0f16;border:1px solid #2c3a
 
 /* laptop screens: keep the split screen above the fold */
 @media (max-height:960px){h2{font-size:28px}h3{font-size:20px}blockquote{font-size:22px;padding:12px 18px}.split h3{font-size:24px}
-  #log{height:84px}.c b{font-size:36px}#panel{padding-top:16px}header{padding:8px 22px}}
-@media (max-width:900px){body{overflow:auto;display:block}main{grid-template-columns:1fr}#map{height:50vh}#panel{border-left:0}.counters{margin-left:0}}
-@media (prefers-reduced-motion:reduce){.pin::before,.pin::after,.c.flash b{animation:none!important}}
+  #log{height:66px}#panel{padding-top:16px}header{padding:7px 22px}.brand{font-size:26px}#chain{padding:6px 22px}
+  .step .row>b,.clock b{font-size:26px}.tally b{font-size:24px}.answer .big{font-size:25px}.answer .n{font-size:40px}
+  .answer .big.m{font-size:21px;margin-top:16px}.answer .big.m .n{font-size:32px}.greens button{padding:8px 12px;font-size:17px}
+  figure blockquote.q{font-size:16px}blockquote.nhs{font-size:24px}footer{padding:7px 22px;font-size:15px}}
+@media (max-width:1500px){.step{padding:5px 9px 6px}.step .u{font-size:12px}.tally{gap:9px}.arr{flex-basis:16px}.clock{min-width:80px;padding-left:10px}}
+@media (max-width:900px){body{overflow:auto;display:block}main{grid-template-columns:1fr}#mapwrap{height:50vh}#area{position:static;grid-template-columns:1fr}#panel{border-left:0}
+  .persona{margin-left:0}#chain{flex-wrap:wrap;gap:6px}.arr{display:none}.step{flex-basis:30%}}
+@media (prefers-reduced-motion:reduce){.pin::before,.pin::after,.tick,.step.rej,.arr.flow,#area,.sbar{animation:none!important}}
 </style>
 </head>
 <body>
@@ -153,7 +232,7 @@ dialog textarea{width:100%;height:46vh;background:#0a0f16;border:1px solid #2c3a
   <div class="brand"><span class="door" aria-hidden="true"></span>Open Door</div>
   <form class="controls" id="runform">
     <label for="postcode">Postcode</label>
-    <input id="postcode" value="E13, E6, E7" maxlength="40" autocomplete="off" spellcheck="false" aria-label="Postcode or postcode district">
+    <input id="postcode" value="E13 8AA" maxlength="40" autocomplete="off" spellcheck="false" aria-label="Postcode or postcode district">
     <label for="limit">Max</label>
     <input id="limit" type="number" min="1" max="1500" value="40" aria-label="Maximum number of practices">
     <button class="btn go" id="run" type="submit">Run</button>
@@ -163,21 +242,41 @@ dialog textarea{width:100%;height:46vh;background:#0a0f16;border:1px solid #2c3a
     </span>
     <span id="mode">READY</span>
   </form>
-  <div class="counters" aria-live="off">
-    <div class="c"><b id="c-found">0</b><span>practices found</span></div>
-    <div class="c"><b id="c-pages">0</b><span>pages read</span></div>
-    <div class="c"><b id="c-cont">0</b><span id="c-cont-l">containers running (est.)</span></div>
-    <div class="c rej" id="c-rej-box"><b id="c-rej">0</b><span>quotes rejected by code</span></div>
-    <div class="c red"><b id="c-red">0</b><span>red</span></div>
-    <div class="c amber"><b id="c-amber">0</b><span>amber</span></div>
-    <div class="c green"><b id="c-green">0</b><span>green</span></div>
-    <div class="c outline"><b id="c-none">0</b><span>no mention</span></div>
-    <div class="c"><b id="c-secs">0.0</b><span>seconds</span></div>
+  <div class="persona" role="group" aria-labelledby="persona-l">
+    <span id="persona-l">I don't have:</span>
+    <button type="button" data-doc="passport" aria-pressed="false">Passport</button>
+    <button type="button" data-doc="photo_id" aria-pressed="false">Photo ID</button>
+    <button type="button" data-doc="proof_of_address" aria-pressed="false">Proof of address</button>
+    <button type="button" data-doc="immigration" aria-pressed="false">Immigration papers</button>
   </div>
 </header>
 
+<section id="chain" aria-label="Pipeline, live counts">
+  <div class="step s-nhs" id="st-nhs"><span class="nm">NHS directory</span>
+    <div class="row"><b id="c-found">0</b><span class="u"><span>practices found</span><span class="x" id="x-nhs"></span></span></div></div>
+  <i class="arr" aria-hidden="true"></i>
+  <div class="step s-modal" id="st-modal"><span class="nm">Modal browsers</span>
+    <div class="row"><b id="c-pages">0</b><span class="u"><span>pages read</span><span class="x" id="x-modal"></span></span></div></div>
+  <i class="arr" aria-hidden="true"></i>
+  <div class="step s-gem" id="st-gem"><span class="nm">Gemini</span>
+    <div class="row"><b id="c-cls">0</b><span class="u"><span>pages classified</span><span class="x" id="x-gem"></span></span></div></div>
+  <i class="arr" aria-hidden="true"></i>
+  <div class="step s-code" id="st-code"><span class="nm">Code check</span>
+    <div class="row"><b id="c-ver">0</b><span class="u"><span>quotes verified</span><span class="x" id="x-code">0 rejected</span></span></div></div>
+  <i class="arr" aria-hidden="true"></i>
+  <div class="step s-ev" id="st-ev"><span class="nm">Evidence</span>
+    <div class="row"><b id="c-box">0</b><span class="u"><span>sentences boxed</span><span class="x">on screenshots</span></span></div></div>
+  <i class="arr" aria-hidden="true"></i>
+  <div class="step s-map" id="st-map"><span class="nm">Map</span>
+    <div class="row tally"><span class="red"><b id="c-red">0</b><small>red</small></span><span class="amber"><b id="c-amber">0</b><small>amber</small></span><span class="green"><b id="c-green">0</b><small>green</small></span><span class="outline"><b id="c-none">0</b><small>no mention</small></span></div></div>
+  <div class="clock"><b id="c-secs">0.0</b><span>seconds</span></div>
+</section>
+
 <main>
-  <div id="map"><div id="nomap">Map library did not load (no network). The run still works: see the panel and the event log.</div></div>
+  <div id="mapwrap">
+    <div id="map"><div id="nomap">Map library did not load (no network). The run still works: see the panel and the event log.</div></div>
+    <section id="area" aria-live="polite" hidden></section>
+  </div>
   <aside id="panel" aria-live="polite"></aside>
 </main>
 
@@ -208,14 +307,20 @@ const COLOUR = {demands_documents: "red", asks_softly: "amber", says_not_needed:
 const WORDS = {
   demands_documents: ["Demands documents", "This surgery's website says new patients must provide documents", "That contradicts the NHS guidance on nhs.uk."],
   asks_softly: ["Asks softly", "This surgery's website asks for documents, but softly or inconsistently", "The NHS guidance on nhs.uk says none are needed."],
-  says_not_needed: ["Says not needed", "This surgery says you can register without documents", "This matches the NHS guidance on nhs.uk."],
+  says_not_needed: ["Says not needed", "This surgery's website says you can register without documents", "This matches the NHS guidance on nhs.uk."],
   no_mention: ["No mention", "Registration page found, with no document wording on it", "Nothing on the page contradicts the NHS guidance on nhs.uk."],
   unclear: ["Unclear", "The wording is ambiguous and we could not decide", "Read the page yourself before relying on it."],
   not_checked: ["Not checked", "We could not read this surgery's website", "It was blocked, missing, or failed to load. This says nothing about the surgery."],
 };
 const LABEL = {run_started: "started", practices_found: "found", resolved: "resolved", captured: "captured", classified: "classified",
-  quote_rejected: "QUOTE REJECTED", boxed: "boxed", run_finished: "finished", note: "note"};
+  quote_rejected: "QUOTE REJECTED", boxed: "boxed", run_finished: "finished", note: "note", warming: "warming"};
 const Z = {demands_documents: 600, asks_softly: 500, says_not_needed: 400, no_mention: 300};
+const BOXED = new Set(["demands_documents", "asks_softly", "says_not_needed"]);
+// Same four patterns as DOC_TYPES in opendoor/models.py (tests/test_ui.py checks they match).
+// Used only when a run was saved before the backend sent doc_types.
+const DOC_TYPES = {"passport": "passport", "photo_id": "photo(?:graphic)? ?(?:id|identification)|driving licen[cs]e|\\bID\\b|identification|identity", "proof_of_address": "proof of (?:address|residence|residency)|utility bill|bank statement|tenancy agreement|council tax bill", "immigration": "immigration|visa|biometric|residence permit|brp\\b|home office"};
+const DOC_RX = Object.fromEntries(Object.entries(DOC_TYPES).map(([k, s]) => [k, new RegExp(s, "i")]));
+const DOC_NAME = {passport: "passport", photo_id: "photo ID", proof_of_address: "proof of address", immigration: "immigration papers"};
 
 const $ = id => document.getElementById(id);
 const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; };
@@ -224,17 +329,34 @@ const host = u => { const s = safeUrl(u); return s ? new URL(s).host.replace(/^w
 const colourOf = p => !p.category ? "pending" : (Object.values(COLOUR).includes(p.colour) ? p.colour : COLOUR[p.category] || "grey");
 const KEEP = new Set(["NHS", "GP", "UK", "PMS"]);
 const nice = n => n && n === n.toUpperCase() ? n.split(" ").map(w => KEEP.has(w) || /\d/.test(w) ? w : w.charAt(0) + w.slice(1).toLowerCase()).join(" ") : n;
-const miles = (a, b) => { // haversine
+const plural = (n, one, many) => n + " " + (n === 1 ? one : many);
+const kmBetween = (a, b) => { // haversine
   const r = x => x * Math.PI / 180, dLat = r(b.lat - a.lat), dLon = r(b.lon - a.lon);
   const h = Math.sin(dLat / 2) ** 2 + Math.cos(r(a.lat)) * Math.cos(r(b.lat)) * Math.sin(dLon / 2) ** 2;
-  return 3958.8 * 2 * Math.asin(Math.sqrt(h));
+  return 6371 * 2 * Math.asin(Math.sqrt(h));
 };
+// Most capture spans (t - secs, t) open at one moment: how many pages the Modal browsers were loading at once.
+const peakOverlap = spans => spans.reduce((m, [s]) => Math.max(m, spans.filter(([a, b]) => a <= s && s < b).length), 0);
 
 let S, map, fitTimer, gen = 0, speed = 4, api = false, sample = null;
+const lacking = new Set(); // persona: document types the person does not have
 function fresh() {
-  return {mode: "ready", runId: null, P: new Map(), results: {}, found: 0, pages: 0, rejected: 0, peak: null,
-    finished: new Set(), done: false, polldone: false, since: 0, queue: [], replay: null, idx: 0, vt: 0, start: 0, elapsed: 0, sel: null};
+  return {mode: "ready", runId: null, P: new Map(), results: {}, summary: null, found: 0, pages: 0, rejected: 0, peak: null, calls: null,
+    fin: null, prefixes: [], near: null, spans: [], finished: new Set(), done: false, polldone: false, since: 0, queue: [], replay: null, idx: 0,
+    vt: 0, start: 0, elapsed: 0, sel: null};
 }
+
+/* ---------- persona: which red and amber surgeries ask for something this person does not have ---------- */
+function docTypes(p) {
+  const r = S.results[p.code] || {};
+  if (Array.isArray(p.doc_types)) return p.doc_types;
+  if (Array.isArray(r.doc_types)) return r.doc_types;
+  const text = [p.quote || r.quote || "", ...(r.documents || [])].join(" | ");
+  return Object.keys(DOC_RX).filter(k => DOC_RX[k].test(text));
+}
+const asks = p => p.category === "demands_documents" || p.category === "asks_softly";
+const blocks = p => asks(p) && docTypes(p).some(d => lacking.has(d));
+const wanted = p => docTypes(p).filter(d => !lacking.size || lacking.has(d)).map(d => DOC_NAME[d] || d);
 
 /* ---------- map ---------- */
 function initMap() {
@@ -244,18 +366,24 @@ function initMap() {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
   new ResizeObserver(() => map.invalidateSize()).observe($("map"));
 }
+function fit() {
+  const pts = [...S.P.values()].filter(q => q.marker).map(q => q.marker.getLatLng());
+  if (!map || !pts.length) return;
+  const card = $("area"), bottom = card.hidden ? 70 : card.offsetHeight + 50;
+  map.flyToBounds(L.latLngBounds(pts), {paddingTopLeft: [70, 70], paddingBottomRight: [70, bottom], maxZoom: 15, duration: 0.6});
+}
 function setMarker(p) {
   if (!map || typeof p.lat !== "number" || typeof p.lon !== "number") return;
-  const cls = "pin c-" + colourOf(p) + (p.category ? " pop" : "") + (S.sel === p.code ? " sel" : "");
-  const icon = L.divIcon({className: cls, iconSize: [28, 28]});
-  if (p.marker) p.marker.setIcon(icon);
-  else {
-    p.marker = L.marker([p.lat, p.lon], {icon}).addTo(map).on("click", () => select(p.code));
+  const c = colourOf(p), popNow = !!p.category && p.shownCat !== p.category;
+  p.shownCat = p.category;
+  const persona = lacking.size && asks(p) ? (blocks(p) ? " hit" : " dim") : "";
+  const cls = "pin c-" + c + (popNow ? " pop" : "") + persona + (S.sel === p.code ? " sel" : "");
+  if (!p.marker) {
+    p.marker = L.marker([p.lat, p.lon], {icon: L.divIcon({className: cls, iconSize: [28, 28]})}).addTo(map).on("click", () => select(p.code));
     p.marker.bindTooltip(el("span", "", p.name || p.code), {direction: "top", offset: [0, -14]});
-    clearTimeout(fitTimer);
-    fitTimer = setTimeout(() => map.flyToBounds(L.latLngBounds([...S.P.values()].filter(q => q.marker).map(q => q.marker.getLatLng())),
-      {padding: [70, 70], maxZoom: 15, duration: 0.6}), 400);
-  }
+    clearTimeout(fitTimer); fitTimer = setTimeout(fit, 400);
+  } else if (p.cls !== cls) p.marker.setIcon(L.divIcon({className: cls, iconSize: [28, 28]}));
+  p.cls = cls;
   p.marker.setZIndexOffset((Z[p.category] || 0) + (S.sel === p.code ? 1000 : 0));
 }
 
@@ -264,22 +392,26 @@ function reset(mode, runId) {
   gen++;
   if (S) for (const p of S.P.values()) if (p.marker) p.marker.remove();
   S = fresh(); S.mode = mode; S.runId = runId; S.start = performance.now();
-  $("log").replaceChildren();
+  $("log").replaceChildren(); $("area").hidden = true;
   setMode(); counters(); renderPanel();
 }
 const P = code => { if (!S.P.has(code)) S.P.set(code, {code, name: code, rejections: 0}); return S.P.get(code); };
 
 function apply(e) {
   const p = e.code ? P(e.code) : null;
+  if (p && typeof e.distance_km === "number") p.distance_km = e.distance_km;
   switch (e.type) {
-    case "run_started": S.fake = !!e.fake; setMode(); break;
+    case "run_started": S.fake = !!e.fake; S.prefixes = e.postcode_prefixes || []; S.near = e.near || null; setMode(); break;
     case "practices_found": S.found = e.count || 0; break;
     case "resolved": Object.assign(p, {name: nice(e.name) || p.name, lat: e.lat, lon: e.lon, reg_url: e.reg_url}); setMarker(p); break;
-    case "captured": S.pages++; S.finished.add(e.code); Object.assign(p, {status: e.status, challenge: e.challenge, secs: e.secs}); break;
+    case "captured": S.pages++; S.finished.add(e.code); Object.assign(p, {status: e.status, challenge: e.challenge, secs: e.secs});
+      if (typeof e.t === "number" && typeof e.secs === "number") S.spans.push([e.t - e.secs, e.t]); break;
     case "quote_rejected": S.rejected++; p.rejections++;
-      $("c-rej-box").classList.remove("flash"); void $("c-rej-box").offsetWidth; $("c-rej-box").classList.add("flash"); break;
+      $("st-code").classList.remove("rej"); void $("st-code").offsetWidth; $("st-code").classList.add("rej"); break;
     case "classified": S.finished.add(e.code);
-      Object.assign(p, {category: e.category, colour: e.colour, quote: e.quote || "", retries: e.retries || 0}); setMarker(p); break;
+      Object.assign(p, {category: e.category, colour: e.colour, quote: e.quote || "", retries: e.retries || 0});
+      if (Array.isArray(e.doc_types)) p.doc_types = e.doc_types;
+      setMarker(p); break;
     case "boxed": p.boxed = true; p.shot = e.shot; break;
     case "run_finished": finish(e); break;
   }
@@ -288,10 +420,11 @@ function apply(e) {
 }
 function finish(e) {
   if (S.done) return;
-  S.done = true;
+  S.done = true; S.fin = e || {};
   if (e && typeof e.wall_secs === "number") S.elapsed = e.wall_secs;
   if (e && e.containers_peak != null) S.peak = e.containers_peak;
-  setMode();
+  if (e && typeof e.gemini_calls === "number") S.calls = e.gemini_calls;
+  setMode(); counters(); renderArea(); fit();
   if (S.mode === "live") loadResults(S.runId, gen);
 }
 function counts() {
@@ -299,15 +432,34 @@ function counts() {
   for (const p of S.P.values()) if (p.category) c[colourOf(p)]++;
   return c;
 }
+function setNum(id, v) { // number changes restart a short pop so the eye follows the pipeline
+  const n = $(id), s = String(v);
+  if (n.textContent === s) return;
+  n.textContent = s;
+  if (S.mode !== "ready") { n.classList.remove("tick"); void n.offsetWidth; n.classList.add("tick"); }
+}
 function counters() {
-  const c = counts();
-  // Estimate: practices not yet captured or classified, plus quoted pages still waiting for their boxed screenshot.
-  const waitingBox = [...S.P.values()].filter(p => p.quote && p.category && !p.boxed && p.category !== "unclear").length;
+  const all = [...S.P.values()], c = counts();
+  const waitingBox = all.filter(p => p.quote && BOXED.has(p.category) && !p.boxed).length;
   const inflight = S.done ? 0 : Math.max(0, S.found - S.finished.size) + waitingBox;
-  $("c-found").textContent = S.found; $("c-pages").textContent = S.pages; $("c-cont").textContent = inflight;
-  $("c-cont-l").textContent = S.done && S.peak != null ? "containers, peak " + S.peak : "containers running (est.)";
-  $("c-rej").textContent = S.rejected; $("c-red").textContent = c.red; $("c-amber").textContent = c.amber;
-  $("c-green").textContent = c.green; $("c-none").textContent = c["green-outline"];
+  const classified = all.filter(p => p.category && p.category !== "not_checked").length;
+  const queued = all.filter(p => p.status === "ok" && !p.category).length;
+  const verified = all.filter(p => p.quote).length, boxed = all.filter(p => p.boxed).length;
+  setNum("c-found", S.found); setNum("c-pages", S.pages); setNum("c-cls", classified); setNum("c-ver", verified); setNum("c-box", boxed);
+  setNum("c-red", c.red); setNum("c-amber", c.amber); setNum("c-green", c.green); setNum("c-none", c["green-outline"]);
+  $("x-nhs").textContent = S.near ? "nearest to " + S.near : S.prefixes.join(", ");
+  const peak = peakOverlap(S.spans);
+  $("x-modal").textContent = S.mode === "ready" ? "" : S.peak != null ? "peak " + S.peak + " containers" : S.done ? "peak " + peak + " at once" : inflight + " in flight";
+  $("x-gem").textContent = S.calls != null ? plural(S.calls, "model call", "model calls") : S.mode === "ready" || S.done ? "" : queued + " waiting";
+  $("x-code").textContent = S.rejected + " misquotes rejected";
+  $("x-code").classList.toggle("hot", S.rejected > 0);
+  const lit = {nhs: S.found > 0, modal: S.pages > 0 || all.some(p => typeof p.lat === "number"), gem: all.some(p => p.category),
+    code: verified > 0 || S.rejected > 0, ev: boxed > 0, map: all.some(p => p.category)};
+  const steps = ["nhs", "modal", "gem", "code", "ev", "map"], arrows = document.querySelectorAll("#chain .arr");
+  steps.forEach((k, i) => {
+    $("st-" + k).classList.toggle("on", lit[k]);
+    if (i) { arrows[i - 1].classList.toggle("on", lit[k]); arrows[i - 1].classList.toggle("flow", lit[k] && !S.done && S.mode !== "ready"); }
+  });
   $("c-secs").textContent = S.elapsed.toFixed(1);
 }
 function setMode() {
@@ -319,15 +471,18 @@ function setMode() {
 function describe(e) {
   const n = e.code ? P(e.code).name : "";
   switch (e.type) {
-    case "run_started": return "postcodes " + (e.postcode_prefixes || []).join(", ") + ", limit " + e.limit;
-    case "practices_found": return e.count + " GP practices from the NHS directory";
+    case "run_started": return "postcodes " + (e.postcode_prefixes || []).join(", ") + ", limit " + e.limit +
+      (Array.isArray(e.lacking) && e.lacking.length ? ", person has no " + e.lacking.map(k => DOC_NAME[k] || k).join(", ") : "");
+    case "warming": return "starting Modal browser containers while the practices are looked up";
+    case "practices_found": return e.count + " GP practices from the NHS directory" + (Array.isArray(e.outcodes) && e.outcodes.length ? ", districts " + e.outcodes.join(", ") : "");
     case "resolved": return n + "  " + (host(e.reg_url) || "no registration page found");
     case "captured": return n + "  status " + e.status + (e.challenge ? ", bot challenge" : "") + (e.secs != null ? "  " + e.secs + "s" : "");
     case "classified": return n + "  " + e.category + (e.quote ? '  "' + e.quote + '"' : "");
     case "quote_rejected": return n + "  attempt " + e.attempt + ": " + e.reason;
     case "boxed": return n + "  sentence boxed on the screenshot";
-    case "run_finished": return (typeof e.wall_secs === "number" ? e.wall_secs.toFixed(1) + "s wall clock" : "") +
-      (e.containers_peak != null ? ", peak " + e.containers_peak + " containers" : "");
+    case "run_finished": return [typeof e.wall_secs === "number" ? e.wall_secs.toFixed(1) + "s wall clock" : "",
+      e.containers_peak != null ? "peak " + e.containers_peak + " containers" : "",
+      typeof e.gemini_calls === "number" ? plural(e.gemini_calls, "model call", "model calls") : ""].filter(Boolean).join(", ");
     default: return e.msg || "";
   }
 }
@@ -363,9 +518,12 @@ async function loadResults(runId, g) {
     if (!r.ok) throw new Error(r.status);
     const j = await r.json(), list = asList(j);
     if (g !== gen) return;
-    S.nhsBox = j && j.summary && j.summary.nhs && j.summary.nhs.quote_box;
+    S.summary = j && j.summary || null;
+    if (S.summary && S.summary.near) S.near = S.summary.near;
+    S.nhsBox = S.summary && S.summary.nhs && S.summary.nhs.quote_box;
     for (const x of list) if (x && x.code) S.results[x.code] = x;
-    renderPanel();
+    for (const p of S.P.values()) setMarker(p);
+    renderArea(); renderPanel(); if (S.done) fit();
   } catch (err) { note("results not available: " + err.message); }
 }
 async function startLive(postcode, limit) {
@@ -373,7 +531,7 @@ async function startLive(postcode, limit) {
   const g = gen;
   $("run").disabled = true;
   try {
-    const r = await fetch("/api/run", {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify({postcode, limit})});
+    const r = await fetch("/api/run", {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify({postcode, limit, lacking: [...lacking]})});
     if (!r.ok) throw new Error("HTTP " + r.status);
     S.runId = (await r.json()).run_id;
   } catch (err) { note("could not start a run: " + err.message); S.mode = "ready"; setMode(); $("run").disabled = false; return; }
@@ -422,6 +580,38 @@ async function listRuns() {
   sel.add(new Option("Built in sample run", "__sample"));
 }
 
+/* ---------- area summary card, over the map, once the run has finished ---------- */
+function renderArea() {
+  const card = $("area");
+  if (!S.done) { card.hidden = true; return; }
+  const c = counts(), total = Object.values(c).reduce((a, b) => a + b, 0);
+  const wall = typeof S.fin.wall_secs === "number" ? S.fin.wall_secs : S.elapsed;
+  card.replaceChildren();
+  const x = el("button", "x", "Hide"); x.type = "button"; x.onclick = () => { card.hidden = true; fit(); };
+  const left = el("div"), right = el("div");
+  left.append(el("p", "eyebrow", "Area summary" + (S.prefixes.length ? ", " + S.prefixes.join(", ") : "")));
+  const h = el("p", "sumh"); h.append(el("b", "", String(total)), " surgeries checked in ", el("b", "", wall.toFixed(1)), " seconds");
+  const bar = el("div", "sbar"), key = el("ul", "skey");
+  for (const [k, label] of [["red", "demand documents"], ["amber", "ask softly"], ["green", "say not needed"], ["green-outline", "no document wording"], ["grey", "unclear or not read"]]) {
+    if (!c[k]) continue;
+    const seg = el("i", "c-" + k); seg.style.flexGrow = c[k]; seg.title = c[k] + " " + label; bar.append(seg);
+    const li = el("li"); li.append(el("span", "k c-" + k), el("b", "", String(c[k])), el("span", "", label)); key.append(li);
+  }
+  left.append(h, bar, key);
+  const res = Object.values(S.results);
+  if (res.length) {
+    const n = res.filter(r => r.self_contradiction).length, p = el("p", "contra");
+    p.append(el("b", "", String(n)), " " + (n === 1 ? "surgery links" : "surgeries link") + " to the national NHS registration form, which needs no documents, and still " +
+      (n === 1 ? "demands" : "demand") + " documents on the same page.");
+    right.append(p);
+  }
+  const all = [...S.P.values()], foot = el("div", "foot");
+  foot.append(el("p", "note", plural(all.filter(p => p.quote).length, "quote", "quotes") + " checked word for word by code, " +
+    plural(S.rejected, "misquote", "misquotes") + " rejected, " + plural(all.filter(p => p.boxed).length, "sentence", "sentences") + " boxed on screenshots."), x);
+  right.append(foot); card.append(left, right);
+  card.hidden = false;
+}
+
 /* ---------- right panel ---------- */
 function select(code) {
   const old = S.sel; S.sel = code;
@@ -429,25 +619,35 @@ function select(code) {
   if (code) setMarker(P(code));
   renderPanel(); $("panel").scrollTop = 0;
 }
-function greensNear(from, skip) {
-  const out = [...S.P.values()].filter(p => (p.category === "says_not_needed" || p.category === "no_mention") && p.code !== skip && typeof p.lat === "number");
-  for (const p of out) p._d = from ? miles(from, p) : 0;
-  return out.sort((a, b) => (a.category === b.category ? a._d - b._d : a.category === "says_not_needed" ? -1 : 1)).slice(0, 5);
+function mid() {
+  const pts = [...S.P.values()].filter(p => typeof p.lat === "number");
+  return pts.length ? {lat: pts.reduce((s, p) => s + p.lat, 0) / pts.length, lon: pts.reduce((s, p) => s + p.lon, 0) / pts.length} : null;
 }
-function greenList(from, skip) {
-  const ul = el("ul", "greens"), list = greensNear(from, skip);
-  for (const p of list) {
+function km(p, from) { // from a given place, else the backend's distance_km, else from the middle of the searched area
+  if (!from) {
+    const d = typeof p.distance_km === "number" ? p.distance_km : (S.results[p.code] || {}).distance_km;
+    if (typeof d === "number") return d;
+    from = mid();
+  }
+  return from && typeof p.lat === "number" ? kmBetween(from, p) : null;
+}
+const RANK = {says_not_needed: 0, no_mention: 1};
+function nearList(items, from, tag, cls, max = 5) {
+  const rows = items.map(p => ({p, d: km(p, from)})).sort((a, b) => (RANK[a.p.category] ?? 2) - (RANK[b.p.category] ?? 2) || (a.d ?? 1e9) - (b.d ?? 1e9));
+  if (!rows.length) return null;
+  const ul = el("ul", "greens" + (cls ? " " + cls : ""));
+  for (const {p, d} of rows.slice(0, max)) {
     const li = el("li"), b = el("button"); b.type = "button";
-    b.append(el("span", "k c-" + colourOf(p)), el("span", "", p.name),
-      el("span", "d", (p.category === "no_mention" ? "no document wording, " : "") + (from ? p._d.toFixed(1) + " miles" : "")));
+    b.append(el("span", "k c-" + colourOf(p)), el("span", "", p.name), el("span", "d", [tag(p), d != null ? d.toFixed(1) + " km" : ""].filter(Boolean).join(", ")));
     b.onclick = () => select(p.code);
     li.append(b); ul.append(li);
   }
-  return list.length ? ul : null;
+  if (rows.length > max) { const li = el("li", "note", "and " + (rows.length - max) + " more on the map"); ul.append(li); }
+  return ul;
 }
 function mock(quote, tone, why) {
   const m = el("div", "mock t-" + tone);
-  m.append(el("div", "bar"), el("div", "bar s"), el("span", "hit", quote || "(no sentence quoted)"), el("div", "bar"), el("small", "", why));
+  m.append(el("div", "bar"), el("div", "bar s"), el("span", "hit", quote || "(no sentence quoted)"), el("small", "", why));
   return m;
 }
 function shot(src, caption, quote, tone, box) {
@@ -459,83 +659,115 @@ function shot(src, caption, quote, tone, box) {
   img.onerror = () => wrap.replaceWith(mock(quote, tone, "Screenshot not available. Showing the quoted sentence."));
   img.onload = () => { // quote_box is in pixels of the PNG: show a 2:1 window around it, never upscaled past the PNG
     if (!box || !(box.width > 0)) return;
-    const W = img.naturalWidth, H = img.naturalHeight, pad = 60;
-    let w = box.width + 2 * pad, h = box.height + 2 * pad;
-    if (h < w * 0.5) h = w * 0.5; else w = h / 0.5;
-    w = Math.min(W, w); h = Math.min(H, h);
+    const W = img.naturalWidth, H = img.naturalHeight, pad = 36;
+    let w = Math.min(W, 2 * H, Math.max(box.width + 2 * pad, 2 * (box.height + 2 * pad))), h = w / 2;
     const x = Math.max(0, Math.min(W - w, box.x + box.width / 2 - w / 2)), y = Math.max(0, Math.min(H - h, box.y + box.height / 2 - h / 2));
-    wrap.classList.add("zoomed"); wrap.style.aspectRatio = w + " / " + h;
     Object.assign(img.style, {width: W / w * 100 + "%", left: -x / w * 100 + "%", top: -y / h * 100 + "%"});
   };
   return f;
+}
+function underShot(fig, tone, label, quote, source) {
+  const q = el("blockquote", "q t-" + tone, quote || "(no sentence quoted)");
+  q.append(el("cite", "", source));
+  fig.append(el("span", "pill t-" + tone, label), q);
+  return fig;
 }
 function renderPanel() {
   const panel = $("panel"), p = S.sel ? S.P.get(S.sel) : null;
   panel.replaceChildren();
   if (!p) return renderOverview(panel);
   const r = S.results[p.code] || {}, tone = colourOf(p), w = WORDS[p.category];
-  const back = el("button", "back", "Back to overview"); back.type = "button"; back.onclick = () => select(null);
+  const back = el("button", "back", "Back to your answer"); back.type = "button"; back.onclick = () => select(null);
   panel.append(back, el("div", "pill t-" + tone, w ? w[0] : "Reading now"), el("h2", "", p.name));
   const meta = el("p", "meta", [p.code, r.postcode].filter(Boolean).join("  ") + "  ");
   const url = safeUrl(p.reg_url || r.reg_url || r.site);
   if (url) { const a = el("a", "", host(url)); a.href = url; a.target = "_blank"; a.rel = "noopener noreferrer"; meta.append(a); }
-  panel.append(meta, el("h3", "", w ? w[1] : "Reading this surgery's website now"), el("p", "sub", w ? w[2] : "The result appears here as soon as the page is classified."));
+  panel.append(meta);
+  const explain = [el("h3", "", w ? w[1] : "Reading this surgery's website now"), el("p", "sub", w ? w[2] : "The result appears here as soon as the page is classified.")];
 
-  if (p.quote) {
-    const q = el("blockquote", "t-" + tone + (p.quote.length > 200 ? " long" : ""), p.quote);
-    q.append(el("cite", "", "Quoted from " + (host(url) || "the practice website")));
-    panel.append(q);
-  }
   const chips = el("div", "chips");
+  if (lacking.size && blocks(p)) chips.append(el("span", "chip you", "Asks for something you ticked: " + wanted(p).join(", ")));
   if (p.quote && r.quote_verified) chips.append(el("span", "chip ok", "Quote verified by code: found word for word on the page"));
-  if (p.rejections) chips.append(el("span", "chip rej", "Code rejected " + p.rejections + (p.rejections === 1 ? " misquote" : " misquotes") + " from the model first"));
+  if (p.rejections) chips.append(el("span", "chip rej", "Code rejected " + plural(p.rejections, "misquote", "misquotes") + " from the model first"));
   if (r.self_contradiction) chips.append(el("span", "chip warn", "Same page links to the national NHS form, which needs no documents"));
   if ((r.documents || []).length) chips.append(el("span", "chip", "Asks for: " + r.documents.join(", ")));
   if (p.challenge) chips.append(el("span", "chip", "Site showed a bot challenge"));
 
   const shots = S.mode !== "sample" && S.runId ? "/shots/" + encodeURIComponent(S.runId) + "/" : null;
   const mine = shots ? shots + encodeURIComponent(p.code) + ".png" + (p.boxed ? "?boxed=1" : "") : null;
-  if (p.category === "demands_documents" || p.category === "asks_softly") {
+  const source = "Quoted from " + (host(url) || "the practice website");
+  if (asks(p)) {
     const s = el("section", "split"), cols = el("div", "cols");
-    cols.append(shot(mine, "This surgery's website", p.quote, tone, p.boxed && r.quote_box), shot(shots ? shots + "nhs.png" : null, "nhs.uk", NHS_QUOTE, "green", S.nhsBox));
+    cols.append(underShot(shot(mine, "This surgery's website", p.quote, tone, p.boxed && r.quote_box), tone, w[0], p.quote, source),
+      underShot(shot(shots ? shots + "nhs.png" : null, "nhs.uk", NHS_QUOTE, "green", S.nhsBox), "green", "NHS guidance", NHS_QUOTE, "Quoted from nhs.uk"));
     s.append(el("h3", "", "Two NHS websites that disagree"), cols);
-    s.onclick = () => s.classList.toggle("big");
-    panel.append(s);
+    s.onclick = ev => { if (!ev.target.closest("a")) s.classList.toggle("big"); };
+    panel.append(s, ...explain);
+    if (chips.children.length) panel.append(chips);
     const act = el("div", "actions"), b = el("button", "btn go", "Draft letter"); b.type = "button"; b.onclick = () => openLetter(p);
     act.append(b, el("span", "note", "Nothing is sent automatically. You approve it and send it yourself."));
     panel.append(act);
-  } else if (p.category && p.category !== "not_checked") {
-    const s = el("section", "split single"), cols = el("div", "cols");
-    cols.append(shot(mine, "This surgery's website", p.quote, tone, p.boxed && r.quote_box));
-    s.append(cols); s.onclick = () => s.classList.toggle("big");
-    panel.append(s);
+  } else {
+    panel.append(...explain);
+    if (p.quote) {
+      const q = el("blockquote", "t-" + tone + (p.quote.length > 200 ? " long" : ""), p.quote);
+      q.append(el("cite", "", source));
+      panel.append(q);
+    }
+    if (p.category && p.category !== "not_checked") {
+      const s = el("section", "split single"), cols = el("div", "cols");
+      cols.append(shot(mine, "This surgery's website", p.quote, tone, p.boxed && r.quote_box));
+      s.append(cols); s.onclick = () => s.classList.toggle("big");
+      panel.append(s);
+    }
+    if (chips.children.length) panel.append(chips);
   }
-  if (chips.children.length) panel.append(chips);
   if (r.reason) panel.append(el("p", "note", "Why: " + r.reason));
   panel.append(el("h4", "", "What can I do"));
-  const near = typeof p.lat === "number" ? greenList(p, p.code) : null;
-  panel.append(el("p", "sub", near ? "Nearest surgeries whose websites do not ask for documents:" : "No green surgeries found nearby yet."));
+  const greens = [...S.P.values()].filter(q => RANK[q.category] != null && q.code !== p.code);
+  const near = typeof p.lat === "number" ? nearList(greens, p, q => q.category === "no_mention" ? "no document wording" : "", "") : null;
+  panel.append(el("p", "sub", near ? "Nearest surgeries whose websites do not ask for documents, distance from this one:" : "No green surgeries found nearby yet."));
   if (near) panel.append(near);
   const g = el("p", "note", "The NHS guidance applies to every GP surgery in England. "), a = el("a", "", "Read it on nhs.uk");
   a.href = NHS_URL; a.target = "_blank"; a.rel = "noopener noreferrer"; g.append(a); panel.append(g);
 }
+function renderAnswer(panel, all) {
+  const box = el("section", "answer"), ticked = lacking.size > 0;
+  const says = all.filter(p => p.category === "says_not_needed"), none = all.filter(p => p.category === "no_mention");
+  const hits = all.filter(p => asks(p) && (!ticked || blocks(p)));
+  box.append(el("p", "eyebrow", ticked ? "Your answer, without " + [...lacking].map(k => DOC_NAME[k]).join(", ") : "Your answer"));
+  const big = el("p", "big");
+  big.append(el("b", "n", String(says.length)), (says.length === 1 ? " surgery near you says on its website" : " surgeries near you say on their website") +
+    " you can register without " + (ticked ? "these documents." : "documents."));
+  box.append(big);
+  if (none.length) box.append(el("p", "sub", plural(none.length, "more has", "more have") + " no document wording on the registration page."));
+  const list = nearList([...says, ...none], null, p => p.category === "no_mention" ? "no document wording" : "");
+  if (list) box.append(list);
+  const m = el("p", "big m");
+  m.append(el("b", "n r", String(hits.length)), (hits.length === 1 ? " asks" : " ask") + (ticked ? " for something you ticked." : " for documents on their website."));
+  box.append(m);
+  if (!ticked) box.append(el("p", "note", "Tick what you don't have at the top. The answer updates straight away, no new run."));
+  const hl = nearList(hits, null, p => wanted(p).join(", "), "asks", 4);
+  if (hl) box.append(hl);
+  box.append(el("p", "note", (S.near ? "Distances from " + S.near + "." : "Distances from the middle of the searched area.") + " This is what each website says, not a promise of what happens at the front desk."));
+  panel.append(box);
+}
 function renderOverview(panel) {
+  const all = [...S.P.values()].filter(p => p.category);
+  if (all.length) renderAnswer(panel, all);
   panel.append(el("p", "eyebrow", "The rule, in the NHS's own words"));
   const q = el("blockquote", "nhs", NHS_QUOTE), c = el("cite"), a = el("a", "", "nhs.uk: how to register with a GP surgery");
   a.href = NHS_URL; a.target = "_blank"; a.rel = "noopener noreferrer"; c.append(a); q.append(c);
-  panel.append(q, el("p", "sub", "Open Door reads the registration page of every GP surgery near a postcode and shows which ones say something different. Click a dot."));
+  panel.append(q);
+  if (!all.length) panel.append(el("p", "sub", "Open Door reads the registration page of every GP surgery near a postcode and shows which ones say something different. " +
+    "Tick what you don't have at the top, then run a postcode or replay a saved run."));
   const lg = el("ul", "legend");
   for (const [k, t] of [["red", "Says you must bring documents"], ["amber", "Asks for documents, softly or inconsistently"], ["green", "Says documents are not needed"],
     ["green-outline", "No document wording on the page"], ["grey", "Unclear, or could not be checked"], ["pending", "Being read right now"]]) {
     const li = el("li"); li.append(el("span", "k c-" + k), el("span", "", t)); lg.append(li);
   }
-  panel.append(el("h4", "", "Map key"), lg, el("h4", "", "What can I do"));
-  const pts = [...S.P.values()].filter(p => typeof p.lat === "number");
-  const mid = pts.length ? {lat: pts.reduce((s, p) => s + p.lat, 0) / pts.length, lon: pts.reduce((s, p) => s + p.lon, 0) / pts.length} : null;
-  const list = greenList(mid, null);
-  panel.append(el("p", "sub", list ? "Surgeries whose websites do not ask for documents, closest to the middle of this search first:" :
-    "Run a postcode. Surgeries whose websites do not ask for documents will be listed here."));
-  if (list) panel.append(list);
+  panel.append(el("h4", "", "Map key"), lg);
+  if (lacking.size) panel.append(el("p", "note", "With boxes ticked, a pulsing ring marks surgeries that ask for something you ticked. Faded ones only ask for documents you have."));
 }
 
 /* ---------- letter: a human approves, nothing is sent from here ---------- */
@@ -577,6 +809,13 @@ for (const b of document.querySelectorAll("[data-speed]")) b.onclick = () => {
   speed = +b.dataset.speed;
   for (const o of document.querySelectorAll("[data-speed]")) o.setAttribute("aria-pressed", String(o === b));
   setMode();
+};
+for (const b of document.querySelectorAll("[data-doc]")) b.onclick = () => { // persona: applied live, no re-run
+  const k = b.dataset.doc;
+  if (lacking.has(k)) lacking.delete(k); else lacking.add(k);
+  b.setAttribute("aria-pressed", String(lacking.has(k)));
+  for (const p of S.P.values()) setMarker(p);
+  renderPanel();
 };
 document.addEventListener("keydown", ev => { if (ev.key === "Escape") { const big = document.querySelector(".split.big"); if (big) big.classList.remove("big"); else if (S.sel && !$("dlg").open) select(null); } });
 

@@ -8,7 +8,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
-from opendoor.models import COLOUR, PracticeResult  # noqa: E402
+from opendoor.models import COLOUR, DOC_TYPES, PracticeResult  # noqa: E402
 
 HTML = ROOT / "opendoor/ui/index.html"
 FIX = ROOT / "fixtures/sample_run.json"
@@ -47,11 +47,17 @@ def main():
     assert json.loads(TAG.search(html).group(2)) == fix, "embedded sample differs from the fixture: run with --embed"
     for name, text in (("index.html", html), ("sample_run.json", FIX.read_text())):
         assert not re.search("[–—]", text), f"en or em dash in {name}"
-        assert not re.search(r"illegal|unlawful|breach|refuses patients", text, re.I), f"banned wording in {name}"
+        assert not re.search(r"illegal|unlawful|breach|refuse", text, re.I), f"banned wording in {name}"
     assert not re.search(r"innerHTML|insertAdjacentHTML|document\.write", html.split("<script>")[-1].replace("never innerHTML", "")), "use textContent"
     for needle in ("Two NHS websites that disagree", "Nothing is sent automatically", "Approve and open in my email",
-                   "Reads what practice websites say, not what happens at the front desk", "Replay a saved run"):
+                   "Reads what practice websites say, not what happens at the front desk", "Replay a saved run",
+                   "I don't have:", 'data-doc="passport"', 'data-doc="photo_id"', 'data-doc="proof_of_address"', 'data-doc="immigration"',
+                   "lacking: [...lacking]", "NHS directory", "Modal browsers", "Gemini", "Code check", "Evidence", "Area summary",
+                   "say on their website", "you can register without", "for something you ticked", "not a promise"):
         assert needle in html, needle
+    # the persona fallback in the page must use exactly the backend's four patterns
+    js_types = json.loads(re.search(r"const DOC_TYPES = (\{.*?\});", html).group(1))
+    assert js_types == {k: rx.pattern for k, rx in DOC_TYPES.items()}, "DOC_TYPES in index.html differs from opendoor/models.py"
     print(f"ok: {len(fix['events'])} events, {len(results)} results, embedded copy matches, wording rules hold")
 
 

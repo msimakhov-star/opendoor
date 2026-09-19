@@ -1,13 +1,16 @@
-"""Open Door on Modal: resolve(org), capture(target), box(target).
+"""Open Door on Modal: resolve(org), capture(target), box(target), plus warm(), recheck(practices) and the weekly() cron.
 Deploy: uv run modal deploy opendoor/modal_app.py
 Test:   uv run modal run opendoor/modal_app.py::smoke     (one practice end to end)
         uv run modal run opendoor/modal_app.py::newham    (24 Newham practices, writes fixtures/pages/)
         uv run modal run opendoor/modal_app.py::boxes     (boxes quotes on fixture pages + nhs.uk, writes fixtures/boxed/)
+        uv run modal run opendoor/modal_app.py::watch     (seeds the weekly re-check with the frozen Newham run and runs it once)
+        uv run modal run opendoor/modal_app.py::hot --n 26  (keeps 26 capture containers up for a recording; --n 0 turns it off)
 Read only: never submits a form, never types into a field. At most 2 browser page loads per practice site per run:
 capture makes 1 (2 when it has to find the registration link on the homepage itself), and stores an offline MHTML
-snapshot so box can draw on the very same page without contacting the site again.
+snapshot so box can draw on the very same page without contacting the site again. recheck makes exactly 1 per practice.
 """
-import html, json, re, time, urllib.parse, urllib.request, zlib
+import hashlib, html, json, re, time, urllib.parse, urllib.request, zlib
+from datetime import datetime, timezone
 from pathlib import Path
 import modal
 
@@ -88,7 +91,8 @@ def _goto(page, url):
 LINKS_JS = "els => els.map(e => [e.href, (e.innerText || e.textContent || '').replace(/\\s+/g, ' ').trim()])"
 
 
-@app.function(image=image, max_containers=100, timeout=120, cpu=1.0, memory=2048)
+# Idle containers stay up 15 min (Modal allows 2 s to 20 min), so a rehearsal and the recorded take share warm containers.
+@app.function(image=image, max_containers=100, timeout=120, cpu=1.0, memory=2048, scaledown_window=900)
 def capture(target: dict) -> dict:
     from playwright.sync_api import sync_playwright
     t0, url = time.time(), target.get("reg_url") or target.get("site")
@@ -158,7 +162,7 @@ DRAW_JS = """([rect, rgb]) => {
 }"""
 
 
-@app.function(image=image, max_containers=30, timeout=120, cpu=1.0, memory=2048)
+@app.function(image=image, max_containers=30, timeout=120, cpu=1.0, memory=2048, scaledown_window=900)
 def box(target: dict) -> dict:
     """target: {final_url or reg_url, quote, colour: red|green|amber}. quote_box is in pixels of the returned 1280x900 _png.
     Draws on capture's offline snapshot when there is one. Loads the live page only if that keeps the site at 2 loads or fewer."""
@@ -196,6 +200,67 @@ def box(target: dict) -> dict:
         if browser: browser.close()
     out["secs"] = round(time.time() - t0, 1)
     return out
+
+
+@app.function(image=image, timeout=120)
+def warm() -> float:
+    """Launches chromium once and returns the seconds it took: proves the browser image boots. Every Modal Function has its
+    own container pool, so this does not warm capture's containers; scaledown_window and the `hot` entrypoint do that."""
+    from playwright.sync_api import sync_playwright
+    t0 = time.time()
+    with sync_playwright() as p:
+        p.chromium.launch().close()
+    return round(time.time() - t0, 2)
+
+
+# ---------- weekly re-check: no Gemini, no secrets, only capture + a Volume ----------
+watch_vol = modal.Volume.from_name("opendoor-watch", create_if_missing=True)
+SNAP, PRACTICES = Path("/watch/snapshot.json"), Path("/watch/practices.json")  # snapshot: code -> {sha256, doc_hits, fetched}
+# The hash covers the page's document sentences (normalised, lowercased, as a sorted set), not the whole page: whole-page text
+# differs between two loads a minute apart on pages with the Google Translate picker, whose ~290 language names Google localises
+# by the Modal worker's region (English, Dutch, Italian, German seen today).
+# ponytail: sentences over 600 chars are skipped (a widget glued to a sentence); doc_hits still covers them. Upgrade: strip the widget in the DOM.
+def _fingerprint(text):
+    doc = sorted({s.lower() for s in re.split(r"(?<=[.!?:])\s+", norm(text)) if len(s) <= 600 and DOC_RE.search(s)})
+    return hashlib.sha256("\n".join(doc).encode()).hexdigest()
+
+
+def _changed(prev, cur):
+    """Codes whose document-sentence hash or doc_hits differ from the previous snapshot. A code seen for the first time is new, not changed."""
+    return sorted(c for c, v in cur.items() if c in prev and (v["sha256"], v["doc_hits"]) != (prev[c]["sha256"], prev[c]["doc_hits"]))
+
+
+@app.function(image=image, volumes={"/watch": watch_vol}, timeout=900)
+def recheck(practices: list[dict]) -> dict:
+    """practices: [{code, name, site, reg_url}]. One capture per practice, of its known registration page only (reg_links is
+    preset so capture never follows a link), in parallel. A blocked or failed load never overwrites the last good snapshot."""
+    watch_vol.reload()
+    t0, prev = time.time(), json.loads(SNAP.read_text()) if SNAP.exists() else {}
+    targets = [{"code": p["code"], "name": p.get("name"), "site": p.get("site"), "reg_url": p["reg_url"], "reg_links": [p["reg_url"]]}
+               for p in practices if p.get("reg_url")]
+    cur, not_read = {}, {t["code"]: "no result" for t in targets}
+    for c in capture.map(targets, order_outputs=False, return_exceptions=True):
+        if not isinstance(c, dict): continue
+        if c["status"] != "ok":
+            not_read[c["code"]] = (c["error"] or c["status"]).split("\n")[0][:80]; continue
+        not_read.pop(c["code"], None)
+        cur[c["code"]] = {"sha256": _fingerprint(c["text"]), "doc_hits": c["doc_hits"], "fetched": datetime.now(timezone.utc).isoformat(timespec="seconds")}
+    SNAP.write_text(json.dumps({**prev, **cur}, indent=1))
+    PRACTICES.write_text(json.dumps(practices))
+    watch_vol.commit()
+    return {"checked": len(targets), "read": len(cur), "not_read": not_read, "new": sorted(set(cur) - set(prev)),
+            "changed": _changed(prev, cur), "wall_secs": round(time.time() - t0, 1)}
+
+
+@app.function(image=image, volumes={"/watch": watch_vol}, schedule=modal.Cron("0 6 * * 1", timezone="Europe/London"), timeout=1000)
+def weekly():
+    """Mondays 06:00 London time: re-checks the practices the last recheck saved to the Volume."""
+    watch_vol.reload()
+    if not PRACTICES.exists():
+        return print("no practices.json on the opendoor-watch Volume yet: run the watch entrypoint once")
+    r = recheck.remote(json.loads(PRACTICES.read_text()))
+    print(json.dumps(r))
+    return r
 
 
 # ---------- local entrypoints (testing only) ----------
@@ -265,3 +330,30 @@ def boxes(limit: int = 6):
     for b in box.map(jobs, order_outputs=False, return_exceptions=True):
         if not isinstance(b, dict): print("EXC", repr(b)); continue
         _save(b, "boxed", b["code"]); print(f"{b['code']:7} found={b['found']} src={b['source']} box={b['quote_box']} {b['secs']}s {b['error'] or ''} | {b['quote'][:90]}")
+
+
+@app.local_entrypoint()
+def watch(run: str = "newham"):
+    """Seeds the weekly re-check with a frozen run's practices and runs recheck once on the DEPLOYED app (the one the cron uses).
+    Run it twice: the second run should report 0 changed. Peak containers = highest capture runner count seen, polled every second."""
+    a, b = {"sha256": "a", "doc_hits": []}, {"sha256": "a", "doc_hits": ["passport"]}
+    assert _changed({"X": a, "Y": a}, {"X": a, "Y": b, "Z": b}) == ["Y"] and _changed({}, {"X": a}) == []
+    page = lambda widget, rule="Please bring a passport.": f"Menu: {widget} Powered by Translate. Open 8am. {rule}"
+    assert _fingerprint(page("Abkhaz Afar " * 150)) == _fingerprint(page("Abchasisch (lat. Schrift) " * 100)) == _fingerprint(page("x") + " Closed Sunday.")
+    assert _fingerprint(page("x")) != _fingerprint(page("x", "You do not need ID."))
+    ps = [{k: r.get(k) for k in ("code", "name", "site", "reg_url")} for r in json.loads((ROOT / "data" / "frozen" / run / "results.json").read_text())["results"]]
+    rc, cap = (modal.Function.from_name("opendoor", n) for n in ("recheck", "capture"))
+    t0, peak, fc = time.time(), 0, rc.spawn(ps)
+    while True:
+        try:
+            r = fc.get(timeout=1); break
+        except (TimeoutError, modal.exception.TimeoutError):
+            peak = max(peak, cap.get_current_stats().num_total_runners)
+    print(json.dumps({**r, "practices": len(ps), "local_wall_secs": round(time.time() - t0, 1), "capture_containers_peak": peak}))
+
+
+@app.local_entrypoint()
+def hot(n: int = 26):
+    """Keeps n capture containers running, idle ones billed, so a recorded run has no cold starts. --n 0 turns it off; a redeploy also resets it."""
+    modal.Function.from_name("opendoor", "capture").update_autoscaler(min_containers=n)
+    print(f"capture min_containers={n}")

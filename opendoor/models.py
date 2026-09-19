@@ -30,6 +30,28 @@ def norm(s: str) -> str:
     return re.sub(r"\s+", " ", s or "").strip()
 
 
+# Persona filter: the four things a person can tick as "I don't have". Code only, no LLM.
+DOC_TYPES = {
+    "passport": re.compile(r"passport", re.I),
+    "photo_id": re.compile(r"photo(?:graphic)? ?(?:id|identification)|driving licen[cs]e|\bID\b|identification|identity", re.I),
+    "proof_of_address": re.compile(r"proof of (?:address|residence|residency)|utility bill|bank statement|tenancy agreement|council tax bill", re.I),
+    "immigration": re.compile(r"immigration|visa|biometric|residence permit|brp\b|home office", re.I),
+}
+
+
+def doc_types(texts: list[str]) -> list[str]:
+    """Map free-text document names (from the quote and Finding.documents) to the four persona types."""
+    joined = " | ".join(texts or [])
+    return [k for k, rx in DOC_TYPES.items() if rx.search(joined)]
+
+
+if __name__ == "__main__":
+    assert doc_types(["Proof of address", "Photo ID"]) == ["photo_id", "proof_of_address"]
+    assert doc_types(["passport or visa"]) == ["passport", "immigration"]
+    assert doc_types([]) == []
+    print("models ok")
+
+
 class Finding(BaseModel):
     """What the classifier returns for one registration page."""
     category: Category
@@ -57,6 +79,8 @@ class PracticeResult(BaseModel):
     quote_verified: bool = False
     quote_box: Optional[dict] = None
     documents: list[str] = Field(default_factory=list)
+    doc_types: list[str] = Field(default_factory=list, description="Subset of passport, photo_id, proof_of_address, immigration, from models.doc_types(). Only for red and amber.")
+    distance_km: Optional[float] = None
     reason: str = ""
     self_contradiction: bool = False
     shot: Optional[str] = None  # path relative to the run folder, e.g. "shots/F84004.png"

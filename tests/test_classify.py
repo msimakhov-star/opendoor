@@ -34,9 +34,15 @@ def test_quote_problem():
 
 
 def test_excerpt():
-    text = "x " * 10000 + TRUE + " y" * 10000
+    assert classify.excerpt(PAGE) == classify.norm(PAGE)  # short page goes whole
+    menu = "Home Appointments Prescriptions Services Contact " * 300  # unpunctuated, 15,000 characters
+    soft = "It is not a requirement for adults to provide documentation."  # no document phrase from DOC_RE
+    filler = "We are open from 8 to 6 on weekdays. " * 200
+    text = menu + TRUE + " " + filler + soft + " " + filler + "Welcome."
     e = classify.excerpt(text)
-    assert len(e) <= 6000 and TRUE in e
+    assert len(e) <= 10000 and TRUE in e and soft in e and "[...]" in e, e[:300]
+    page = classify.norm(text)
+    assert all(seg.strip() in page for seg in e.split("[...]")), "every passage is verbatim page text"
 
 
 def test_prefilter_makes_no_call():
@@ -54,8 +60,10 @@ def test_retry_then_cache():
         f = asyncio.run(classify.classify_page("T2", PAGE, lambda *a: rejected.append(a)))
         assert (f.category, f.quote, f.retries, f.quote_verified) == ("demands_documents", TRUE, 1, True), f
         assert len(calls) == 2 and len(rejected) == 1 and rejected[0][:2] == ("T2", 1)
-        again = asyncio.run(classify.classify_page("T2", PAGE))  # second event loop, cache hit, stub would IndexError if called
+        replayed = []
+        again = asyncio.run(classify.classify_page("T2", PAGE, lambda *a: replayed.append(a)))  # second event loop, cache hit, stub would IndexError if called
     assert again == f and len(calls) == 2
+    assert replayed == rejected, (replayed, rejected)  # same events on a re-run, nothing invented
 
 
 def test_never_verified_becomes_unclear():
@@ -64,6 +72,19 @@ def test_never_verified_becomes_unclear():
     with classify.agent.override(model=m):
         f = asyncio.run(classify.classify_page("T3", PAGE))
     assert f.category == "unclear" and f.quote == "" and not f.quote_verified and f.retries == len(calls) == 4, (f, calls)
+    replayed = []
+    asyncio.run(classify.classify_page("T3", PAGE, lambda *a: replayed.append(a)))
+    assert [r[1] for r in replayed] == [1, 2, 3, 4] and len(calls) == 4
+
+
+def test_unclear_needs_document_wording():
+    classify.CACHE = Path(tempfile.mkdtemp())
+    m, calls = model({"category": "unclear", "quote": ""}, {"category": "unclear", "quote": "photo ID and proof of address"})
+    with classify.agent.override(model=m):
+        f = asyncio.run(classify.classify_page("T4", PAGE))
+        g = asyncio.run(classify.classify_page("T5", PAGE + " Parking at the back."))
+    assert f.category == "no_mention" and f.quote == "", f
+    assert g.category == "unclear" and g.quote_verified, g
 
 
 if __name__ == "__main__":
