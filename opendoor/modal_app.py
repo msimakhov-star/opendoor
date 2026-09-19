@@ -91,6 +91,19 @@ def _goto(page, url):
 LINKS_JS = "els => els.map(e => [e.href, (e.innerText || e.textContent || '').replace(/\\s+/g, ' ').trim()])"
 
 
+def _links(page):
+    """Every link on the page. A page that navigates itself right after loading (a script redirect, a consent reload) destroys
+    the context mid-read: wait for that navigation, which the site started and we did not, then read once more."""
+    try:
+        return page.eval_on_selector_all("a[href]", LINKS_JS)
+    except Exception as e:
+        if "context was destroyed" not in str(e): raise
+        page.wait_for_load_state("domcontentloaded", timeout=10_000)
+        try: page.wait_for_load_state("networkidle", timeout=4_000)
+        except Exception: pass
+        return page.eval_on_selector_all("a[href]", LINKS_JS)
+
+
 # Idle containers stay up 15 min (Modal allows 2 s to 20 min), so a rehearsal and the recorded take share warm containers.
 @app.function(image=image, max_containers=100, timeout=120, cpu=1.0, memory=2048, scaledown_window=900)
 def capture(target: dict) -> dict:
@@ -108,14 +121,14 @@ def capture(target: dict) -> dict:
         try:
             browser, page = _page(p)
             st, out["loads"] = _goto(page, url), 1
-            pairs = page.eval_on_selector_all("a[href]", LINKS_JS)
+            pairs = _links(page)
             if not target.get("reg_links") and host(url) == host(target.get("site") or ""):  # on the homepage: follow its registration link once
                 links = _reg_links(page.url, pairs)
                 own = [l for l in links if not NATIONAL.search(l)]
                 out["reg_links"], out["national_form_only"] = links, bool(links) and not own
                 if own:
                     out["reg_url"] = own[0]; st, out["loads"] = _goto(page, own[0]), 2
-                    pairs += page.eval_on_selector_all("a[href]", LINKS_JS)
+                    pairs += _links(page)
             txt = page.inner_text("body")
             out.update(http_status=st, final_url=page.url, title=page.title(), text=norm(txt)[:40_000], _png=page.screenshot(type="png"))
             out["challenge"] = bool(st in (401, 403, 429, 503) or (CHALLENGE.search(out["title"] + " " + txt[:3000]) and len(txt) < 3000))

@@ -44,12 +44,13 @@ def peak_overlap(spans: list[tuple[float, float]]) -> int:
     return max((sum(a <= s < b for a, b in spans) for s, _ in spans), default=0)
 
 
-def _warm(n: int):
-    """Boots capture containers while practices are found and resolved. Each Modal Function has its own container pool,
-    so it is capture itself that gets called: a target with no URL returns no_site at once and loads no page."""
+def _warm():
+    """Boots one Modal browser container. It does not warm capture's own pool (each Modal Function has its own);
+    capture's scaledown_window=900 keeps its containers up between a rehearsal and the take.
+    ponytail: a spawn_map of no-op capture calls was tried at 14:08 and that run's tail ran one capture at a time (161 s)."""
     try:  # a failed warm-up must never stop a run
         import modal
-        modal.Function.from_name("opendoor", "capture").spawn_map([{"code": f"warm-{i}"} for i in range(min(n, 100))])
+        modal.Function.from_name("opendoor", "warm").spawn()
     except Exception:
         pass
 
@@ -194,7 +195,7 @@ def run(postcode_prefixes, limit, run_id=None, on_event=None, fake=False, region
     emit("run_started", postcode_prefixes=postcode_prefixes, limit=limit, run_id=run_id, fake=fake, near=near, lacking=list(lacking or []))
     emit("warming")  # capture containers start booting while practices are found and resolved
     if not fake:
-        threading.Thread(target=_warm, args=(limit,), daemon=True).start()
+        threading.Thread(target=_warm, daemon=True).start()
     try:
         if near:
             orgs, centre = find_nearest(near, limit)

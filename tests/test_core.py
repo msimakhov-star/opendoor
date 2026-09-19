@@ -32,6 +32,8 @@ def test_prefix_matching_and_dedupe():
         assert [o["code"] for o in orgs.find_practices(["E1", "E", "e1"], 10)] == ["A", "B", "C"]
         assert [o["code"] for o in orgs.find_practices(["E1", "E"], 2)] == ["A", "B"]
         assert [o["code"] for o in orgs.find_practices(["E1", "E"], 10, region="London")] == ["A", "C"]
+        fake["N"] = [{"code": c, "postcode": pc} for c, pc in (("N1a", "N1 1AA"), ("N1b", "N1 2BB"), ("N2a", "N2 1AA"))]
+        assert [o["code"] for o in orgs.find_practices(["N"], 2)] == ["N1a", "N2a"]  # a limit spreads over districts
     finally:
         orgs._prefix_orgs = real
 

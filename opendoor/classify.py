@@ -20,7 +20,7 @@ logfire.configure(send_to_logfire="if-token-present", console=False)
 logfire.instrument_pydantic_ai()
 
 CACHE = ROOT / "data" / "cache"
-CACHE_V = "v2"  # part of the cache key: bump whenever the prompt, the excerpt or the post-processing changes a verdict
+CACHE_V = "v3"  # part of the cache key: bump whenever the prompt, the excerpt or the post-processing changes a verdict
 QUOTED = ("demands_documents", "asks_softly", "says_not_needed")
 # Requirement words: a sentence with one of these goes to the model even when no document phrase sits near it.
 REQ_RE = re.compile(r"requir|\bneed|\bmust\b|do not have to|don.t have to|not necessary|without|\bdocument", re.I)
@@ -34,6 +34,7 @@ Read ALL of the text before deciding. Find:
 (A) every sentence that asks new patients to provide, bring, send or show a document to register, and
 (B) every sentence that says those documents are not required, not needed, or that people without them can still register.
 Sentences about the NHS number, temporary registration, seeing a named GP, or "your immigration status does not affect your right to register" are not (B).
+Sentences only about registering a baby or a child (a birth certificate, a red book, proof that you are the parent or guardian) are neither (A) nor (B): nhs.uk itself says a surgery may ask for documents to prove you are the parent or guardian of a child you are registering.
 
 Categories, each with two example wordings:
 - demands_documents: there is a firm (A) (must, need to, are required to, should, will be asked to, please bring) and NO (B) anywhere on the page.

@@ -1,0 +1,651 @@
+{"type": "run_started", "t": 0.0, "postcode_prefixes": ["E", "N", "SE", "SW", "W", "NW"], "limit": 200, "run_id": "london", "fake": false, "near": null, "lacking": []}
+{"type": "warming", "t": 0.0}
+{"type": "practices_found", "t": 0.08, "count": 200}
+{"type": "resolved", "t": 5.99, "code": "F84009", "name": "STRATFORD VILLAGE SURGERY", "lat": 51.542097, "lon": 0.006388, "reg_url": "https://register-with-gp.ht1.uk/?gpCode=F84009&gpName=Stratford%20Village%20Surgery"}
+{"type": "resolved", "t": 6.08, "code": "E83034", "name": "COLNEY HATCH LANE SURGERY", "lat": 51.600571, "lon": -0.147478, "reg_url": null}
+{"type": "classified", "t": 6.08, "code": "E83034", "category": "not_checked", "colour": "grey", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "resolved", "t": 6.08, "code": "F86004", "name": "HANDSWORTH MEDICAL PRACTICE", "lat": 51.6079, "lon": 0.000853, "reg_url": "http://handsworthmedicalpractice.com/"}
+{"type": "resolved", "t": 6.08, "code": "F84004", "name": "MARKET STREET HEALTH GROUP", "lat": 51.530995, "lon": 0.057516, "reg_url": "https://www.marketstreethealthgroup.nhs.uk/"}
+{"type": "resolved", "t": 6.08, "code": "F84003", "name": "LOWER CLAPTON GENERAL PRACTICE", "lat": 51.553375, "lon": -0.052388, "reg_url": "https://www.lowerclapton.nhs.uk/"}
+{"type": "resolved", "t": 6.2, "code": "E83008", "name": "HEATHFIELDE MEDICAL CENTRE", "lat": 51.58524, "lon": -0.179772, "reg_url": "https://www.heathfieldemedicalcentre.nhs.uk/"}
+{"type": "resolved", "t": 6.3, "code": "E83010", "name": "THE SPEEDWELL PRACTICE", "lat": 51.617033, "lon": -0.175438, "reg_url": "http://www.thespeedwellpractice.nhs.uk/"}
+{"type": "resolved", "t": 6.3, "code": "E83005", "name": "LICHFIELD GROVE SURGERY", "lat": 51.599567, "lon": -0.193219, "reg_url": "http://www.lichfieldgrovesurgery.nhs.uk/"}
+{"type": "resolved", "t": 6.3, "code": "F86023", "name": "THE EVERGREEN SURGERY", "lat": 51.578106, "lon": 0.025581, "reg_url": "https://www.evergreensurgery.co.uk/contact-us/register-with-the-surgery/"}
+{"type": "resolved", "t": 6.39, "code": "F84079", "name": "THE WAPPING GROUP PRACTICE", "lat": 51.506137, "lon": -0.058928, "reg_url": "https://www.wappinggrouppractice.nhs.uk/contact-us/register-with-the-surgery/"}
+{"type": "resolved", "t": 6.39, "code": "F84015", "name": "KINGSMEAD HEALTHCARE", "lat": 51.551804, "lon": -0.034756, "reg_url": "https://www.kingsmeadhealthcare.co.uk/join-the-practice"}
+{"type": "resolved", "t": 6.52, "code": "F86001", "name": "THE FIRS", "lat": 51.580299, "lon": -0.035101, "reg_url": "https://www.thefirs.org.uk/"}
+{"type": "resolved", "t": 6.61, "code": "F84074", "name": "WORDSWORTH HEALTH CENTRE", "lat": 51.541576, "lon": 0.049009, "reg_url": "https://www.wordsworthhealthcentre.nhs.uk/patient-info/register-with-the-surgery/"}
+{"type": "resolved", "t": 6.7, "code": "F84017", "name": "STAR LANE MEDICAL CENTRE", "lat": 51.519874, "lon": 0.010702, "reg_url": "https://www.starlanemedicalcentre.nhs.uk/join-the-surgery"}
+{"type": "resolved", "t": 6.79, "code": "E87047", "name": "EARLS COURT MEDICAL CENTRE", "lat": 51.491764, "lon": -0.192675, "reg_url": "http://www.earlscourtmedicalcentre.co.uk/"}
+{"type": "resolved", "t": 6.79, "code": "F84006", "name": "SHREWSBURY ROAD SURGERY", "lat": 51.540929, "lon": 0.043312, "reg_url": "https://www.shrewsburyroadsurgery.co.uk/new-patient-registration"}
+{"type": "resolved", "t": 6.79, "code": "F84012", "name": "ALBION HEALTH CENTRE", "lat": 51.520018, "lon": -0.057631, "reg_url": "https://www.albionhealth.nhs.uk/new-patient-registration"}
+{"type": "resolved", "t": 6.79, "code": "E83003", "name": "OAKLEIGH ROAD HEALTH CENTRE", "lat": 51.625218, "lon": -0.158841, "reg_url": "https://www.oakleighroadclinic.nhs.uk/new-patient-registration"}
+{"type": "resolved", "t": 6.79, "code": "G83015", "name": "ELTHAM PALACE SURGERY", "lat": 51.449946, "lon": 0.05374, "reg_url": null}
+{"type": "classified", "t": 6.79, "code": "G83015", "category": "not_checked", "colour": "grey", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "resolved", "t": 6.9, "code": "E87738", "name": "KNIGHTSBRIDGE MEDICAL CENTRE", "lat": 51.498071, "lon": -0.159893, "reg_url": "http://www.knightsbridgemedicalcentre.org.uk/"}
+{"type": "resolved", "t": 6.99, "code": "F84016", "name": "THE MISSION PRACTICE", "lat": 51.531374, "lon": -0.056456, "reg_url": "https://themissionpractice.nhs.uk/new-patient-registration"}
+{"type": "resolved", "t": 6.99, "code": "Y04273", "name": "LIBERTY BRIDGE ROAD PRACTICE", "lat": 51.547818, "lon": -0.006369, "reg_url": "https://www.libertybridgeroadgp.co.uk/new-patient-registration"}
+{"type": "resolved", "t": 7.25, "code": "E87063", "name": "KINGS ROAD MEDICAL CENTRE", "lat": 51.480356, "lon": -0.184744, "reg_url": "https://www.kingsroadgp.co.uk/"}
+{"type": "resolved", "t": 7.25, "code": "G85002", "name": "STREATHAM HIGH PRACTICE", "lat": 51.432463, "lon": -0.126577, "reg_url": "https://www.streathamgp.co.uk/"}
+{"type": "resolved", "t": 7.25, "code": "F86020", "name": "GLEBELANDS PRACTICE", "lat": 51.592801, "lon": 0.023968, "reg_url": "https://www.glebelandspractice.nhs.uk/join-the-practice"}
+{"type": "resolved", "t": 7.25, "code": "G85024", "name": "SYDENHAM GREEN GROUP PRACTICE", "lat": 51.42918, "lon": -0.039189, "reg_url": "https://www.sydenhamgreenpractice.co.uk/"}
+{"type": "resolved", "t": 7.25, "code": "G85025", "name": "BRIXTON HILL GROUP PRACTICE", "lat": 51.452316, "lon": -0.120195, "reg_url": "http://www.brixtonhillgp.nhs.uk/"}
+{"type": "resolved", "t": 7.25, "code": "G85105", "name": "VESTA ROAD SURGERY", "lat": 51.468737, "lon": -0.040618, "reg_url": "https://www.vestaroadsurgery.co.uk/"}
+{"type": "resolved", "t": 7.25, "code": "G85028", "name": "STOCKWELL GROUP PRACTICE", "lat": 51.468037, "lon": -0.117533, "reg_url": "https://www.stockwellgrouppractice.co.uk/contact-us/register-with-the-surgery/"}
+{"type": "resolved", "t": 7.25, "code": "E85008", "name": "NORTH FULHAM SURGERY", "lat": 51.486399, "lon": -0.199326, "reg_url": "https://northfulhamsurgery.co.uk/"}
+{"type": "resolved", "t": 7.25, "code": "E87013", "name": "STANHOPE MEWS SURGERY", "lat": 51.494475, "lon": -0.181907, "reg_url": "http://www.stanhopemewswest.co.uk/"}
+{"type": "resolved", "t": 7.25, "code": "E87004", "name": "HEALTH PARTNERS AT VIOLET MELCHETT", "lat": 51.486806, "lon": -0.166987, "reg_url": "https://www.healthpartnersatvioletmelchett.co.uk/"}
+{"type": "resolved", "t": 7.25, "code": "G85032", "name": "TORRIDON ROAD MEDICAL PRACTICE", "lat": 51.44011, "lon": -0.002086, "reg_url": "http://www.torridonroadsurgery.co.uk/"}
+{"type": "resolved", "t": 7.4, "code": "F83053", "name": "MILDMAY MEDICAL PRACTICE", "lat": 51.552476, "lon": -0.085704, "reg_url": "http://www.mildmaymedicalpractice.co.uk/"}
+{"type": "resolved", "t": 7.41, "code": "F83004", "name": "ARCHWAY MEDICAL CENTRE", "lat": 51.562544, "lon": -0.126098, "reg_url": null}
+{"type": "classified", "t": 7.41, "code": "F83004", "category": "not_checked", "colour": "grey", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "resolved", "t": 7.5, "code": "F85014", "name": "HIGHGATE GROUP PRACTICE", "lat": 51.576923, "lon": -0.1516, "reg_url": "http://www.highgategrouppractice.com/"}
+{"type": "resolved", "t": 7.5, "code": "F83686", "name": "STROUD GREEN MEDICAL CENTRE", "lat": 51.570062, "lon": -0.114303, "reg_url": "http://www.stroudgreenmedicalclinic.co.uk/"}
+{"type": "resolved", "t": 7.5, "code": "F85020", "name": "THE WOODBERRY PRACTICE", "lat": 51.627253, "lon": -0.10036, "reg_url": "http://www.thewoodberrypractice.com/"}
+{"type": "resolved", "t": 7.5, "code": "H85001", "name": "WANDSWORTH MEDICAL CENTRE", "lat": 51.453708, "lon": -0.192163, "reg_url": "https://www.wandsworthmedicalcentre.co.uk/"}
+{"type": "resolved", "t": 7.5, "code": "G83044", "name": "FAIRFIELD PMS", "lat": 51.483909, "lon": 0.038975, "reg_url": "https://www.thefairfieldpractice.co.uk/"}
+{"type": "resolved", "t": 7.5, "code": "G85004", "name": "MODALITY LEWISHAM (ML)", "lat": 51.442383, "lon": -0.040854, "reg_url": "https://www.modalitypartnership.nhs.uk/"}
+{"type": "resolved", "t": 7.5, "code": "F85007", "name": "LAWRENCE HOUSE SURGERY", "lat": 51.589105, "lon": -0.078681, "reg_url": "http://www.lawrencehousegroup.co.uk/lawrence-house-surgery"}
+{"type": "resolved", "t": 7.5, "code": "G84025", "name": "THE PARK PRACTICE", "lat": 51.41277, "lon": -0.06418, "reg_url": "http://www.parkpracticeanerley.co.uk/"}
+{"type": "resolved", "t": 7.5, "code": "G83021", "name": "VANBRUGH GROUP PRACTICE", "lat": 51.48607, "lon": 0.008579, "reg_url": "http://vanbrughgps.co.uk/"}
+{"type": "resolved", "t": 7.5, "code": "H85009", "name": "BEDFORD HILL FAMILY PRACTICE", "lat": 51.440805, "lon": -0.149014, "reg_url": "http://www.bedfordhillfamilypractice.co.uk/"}
+{"type": "resolved", "t": 7.5, "code": "H85066", "name": "BALHAM PARK SURGERY", "lat": 51.440487, "lon": -0.155661, "reg_url": "http://www.balhamparksurgery.co.uk/"}
+{"type": "resolved", "t": 7.59, "code": "H85020", "name": "NELSON MEDICAL PRACTICE", "lat": 51.40983, "lon": -0.2102, "reg_url": "https://www.nelsonmedicalpractice.co.uk/contact-us/register-with-the-surgery/"}
+{"type": "resolved", "t": 7.59, "code": "G85086", "name": "THE SOUTH LAMBETH RD PRACTICE", "lat": 51.476571, "lon": -0.123648, "reg_url": "https://www.southlambethroadpractice.co.uk/join-the-practice"}
+{"type": "resolved", "t": 7.68, "code": "G85029", "name": "FALMOUTH ROAD GROUP PRACTICE", "lat": 51.496719, "lon": -0.093272, "reg_url": "https://www.falmouthroadsurgery.co.uk/"}
+{"type": "resolved", "t": 7.68, "code": "F84025", "name": "GOUGH WALK PRACTICE", "lat": 51.510478, "lon": -0.012598, "reg_url": "https://goughwalksurgery.nhs.uk/tower-hamlets-patient-registration/"}
+{"type": "resolved", "t": 7.68, "code": "G83001", "name": "MANOR BROOK PMS", "lat": 51.469221, "lon": 0.025088, "reg_url": "http://www.manorbrookmedicalcentre.co.uk/"}
+{"type": "resolved", "t": 7.68, "code": "F85046", "name": "HORNSEY PARK SURGERY", "lat": 51.589277, "lon": -0.109206, "reg_url": "https://www.hornseywoodgreengp.co.uk/registration"}
+{"type": "resolved", "t": 7.68, "code": "E85003", "name": "NORTH END MEDICAL CENTRE", "lat": 51.487802, "lon": -0.204053, "reg_url": "https://www.northendmedicalcentre.nhs.uk/"}
+{"type": "resolved", "t": 7.68, "code": "E87007", "name": "WESTBOURNE GROVE MEDICAL CENTRE", "lat": 51.514227, "lon": -0.200246, "reg_url": null}
+{"type": "classified", "t": 7.68, "code": "E87007", "category": "not_checked", "colour": "grey", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "resolved", "t": 7.77, "code": "G85022", "name": "NORTH WOOD GROUP PRACTICE", "lat": 51.422729, "lon": -0.098467, "reg_url": "https://www.northwoodgrouppractice.co.uk/new-patient-registration"}
+{"type": "resolved", "t": 7.85, "code": "G85087", "name": "SILVERLOCK MEDICAL CENTRE", "lat": 51.485968, "lon": -0.063343, "reg_url": "https://silverlockmedicalcentre.co.uk/"}
+{"type": "resolved", "t": 7.85, "code": "F85650", "name": "MORECAMBE SURGERY", "lat": 51.617723, "lon": -0.085518, "reg_url": "https://www.morecambesurgery.nhs.uk/clinics-and-services/online-services/register-for-online-services/"}
+{"type": "resolved", "t": 8.01, "code": "E85016", "name": "RICHFORD GATE MEDICAL CENTRE", "lat": 51.500438, "lon": -0.226551, "reg_url": "http://www.richfordgate.org.uk/"}
+{"type": "resolved", "t": 8.01, "code": "G85013", "name": "CAMBERWELL GREEN SURGERY", "lat": 51.474618, "lon": -0.093445, "reg_url": "https://www.camberwellgreensurgery.nhs.uk/new-patient-registration"}
+{"type": "resolved", "t": 8.01, "code": "E85030", "name": "CHISWICK HEALTH PRACTICE", "lat": 51.493563, "lon": -0.259879, "reg_url": "https://www.chiswickhealthpractice.co.uk/"}
+{"type": "resolved", "t": 8.01, "code": "G85001", "name": "FOREST HILL GROUP PRACTICE", "lat": 51.453617, "lon": -0.061517, "reg_url": "https://www.fhrgp.co.uk/new-patient-registration"}
+{"type": "resolved", "t": 8.01, "code": "G85053", "name": "HURLEY AND RIVERSIDE PRACTICES", "lat": 51.490669, "lon": -0.10672, "reg_url": "https://www.hurleyandriversidepractices.co.uk/new-patient-registration"}
+{"type": "resolved", "t": 8.01, "code": "E85014", "name": "NORTHFIELDS SURGERY", "lat": 51.505053, "lon": -0.318967, "reg_url": "http://www.northfieldssurgery.nhs.uk/"}
+{"type": "resolved", "t": 8.01, "code": "H85002", "name": "FALCON ROAD MEDICAL CENTRE", "lat": 51.46889, "lon": -0.170815, "reg_url": "https://www.falconroaddoctors.co.uk/new-patients/"}
+{"type": "resolved", "t": 8.13, "code": "H85006", "name": "MAYFIELD SURGERY", "lat": 51.448265, "lon": -0.23751, "reg_url": "http://www.mayfieldsurgery.co.uk/"}
+{"type": "resolved", "t": 8.28, "code": "H83001", "name": "PORTLAND MEDICAL CENTRE", "lat": 51.392417, "lon": -0.066736, "reg_url": "https://www.portlandmedicalcentre.co.uk/new-patient-registration"}
+{"type": "resolved", "t": 8.62, "code": "F83002", "name": "RIVER PLACE HEALTH CENTRE", "lat": 51.540513, "lon": -0.096561, "reg_url": "https://www.riverplacegrouppractice.co.uk/new-patient-registration"}
+{"type": "resolved", "t": 8.62, "code": "E83020", "name": "ST. GEORGES MEDICAL CENTRE", "lat": 51.592732, "lon": -0.226161, "reg_url": "http://www.stgeorgesmc.co.uk/"}
+{"type": "resolved", "t": 8.62, "code": "E85005", "name": "THE WESTWAY SURGERY", "lat": 51.514207, "lon": -0.247606, "reg_url": "http://www.thewestwaysurgery.org.uk/"}
+{"type": "resolved", "t": 8.62, "code": "G85016", "name": "HERNE HILL GROUP PRACTICE", "lat": 51.45582, "lon": -0.09882, "reg_url": "http://www.hernehillgp.nhs.uk/"}
+{"type": "resolved", "t": 8.62, "code": "E87739", "name": "MILLBANK MEDICAL CENTRE", "lat": 51.494031, "lon": -0.130207, "reg_url": "https://millbankmedicalcentre.co.uk/register/"}
+{"type": "resolved", "t": 8.62, "code": "E84006", "name": "THE LAW MEDICAL GROUP PRACTICE", "lat": 51.533872, "lon": -0.234291, "reg_url": "http://www.lawmedicalgrouppractice.co.uk/"}
+{"type": "resolved", "t": 8.62, "code": "E85013", "name": "WESTSEVEN GP", "lat": 51.510264, "lon": -0.334353, "reg_url": "http://www.westsevengp.nhs.uk/"}
+{"type": "resolved", "t": 8.62, "code": "F85008", "name": "STAUNTON GROUP PRACTICE", "lat": 51.599344, "lon": -0.112802, "reg_url": "https://www.morumhouse.nhs.uk/new-patient-registration"}
+{"type": "resolved", "t": 8.62, "code": "E87003", "name": "NORTH KENSINGTON MEDICAL CENTRE", "lat": 51.5192, "lon": -0.220301, "reg_url": "https://www.northkensingtonmedicalcentre.nhs.uk/new-patients"}
+{"type": "resolved", "t": 8.62, "code": "E85019", "name": "CROWN STREET SURGERY", "lat": 51.507392, "lon": -0.273777, "reg_url": "https://www.crownstreetsurgery.nhs.uk/new-patients/"}
+{"type": "resolved", "t": 8.62, "code": "G85006", "name": "THE ACORN & GAUMONT HOUSE SURGERY", "lat": 51.474157, "lon": -0.06645, "reg_url": "http://acorn-gaumont.nhs.uk/"}
+{"type": "resolved", "t": 8.63, "code": "H85026", "name": "FRANCIS GROVE SURGERY", "lat": 51.419821, "lon": -0.209033, "reg_url": "https://francisgrovesurgery.co.uk/services/new-patients/"}
+{"type": "resolved", "t": 8.63, "code": "E84025", "name": "THE LONSDALE MEDICAL CENTRE", "lat": 51.536899, "lon": -0.204456, "reg_url": "http://www.lonsdalemedicalcentre.nhs.uk/"}
+{"type": "resolved", "t": 8.63, "code": "F83008", "name": "THE GOODINGE GROUP PRACTICE", "lat": 51.548253, "lon": -0.125416, "reg_url": "https://goodingegrouppractice.com/services/new-patients/"}
+{"type": "resolved", "t": 8.63, "code": "F84030", "name": "RUSTON STREET CLINIC", "lat": 51.536265, "lon": -0.027278, "reg_url": "https://rustonstreet.nhs.uk/new-patient-registration/"}
+{"type": "resolved", "t": 8.63, "code": "E83045", "name": "FRIERN BARNET MEDICAL CENTRE", "lat": 51.613266, "lon": -0.155902, "reg_url": "https://www.friernbarnetmedicalcentre.nhs.uk/new-patient-registration"}
+{"type": "resolved", "t": 8.75, "code": "E87069", "name": "SOHO CENTRE FOR HEALTH AND CARE", "lat": 51.514525, "lon": -0.131889, "reg_url": "http://sohosquaresurgery.co.uk/"}
+{"type": "resolved", "t": 8.75, "code": "F86032", "name": "WANSTEAD PLACE SURGERY", "lat": 51.578102, "lon": 0.023214, "reg_url": null}
+{"type": "classified", "t": 8.75, "code": "F86032", "category": "not_checked", "colour": "grey", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "resolved", "t": 8.75, "code": "F84018", "name": "THE NIGHTINGALE PRACTICE", "lat": 51.558262, "lon": -0.062408, "reg_url": null}
+{"type": "classified", "t": 8.75, "code": "F84018", "category": "not_checked", "colour": "grey", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "resolved", "t": 8.83, "code": "F85017", "name": "CHARLTON HOUSE MEDICAL CENTRE", "lat": 51.595442, "lon": -0.069202, "reg_url": "https://www.charltonhousemedicalcentre.co.uk/new-patient-registration"}
+{"type": "resolved", "t": 8.83, "code": "F83007", "name": "ROMAN WAY MEDICAL CENTRE", "lat": 51.5445, "lon": -0.105653, "reg_url": null}
+{"type": "classified", "t": 8.83, "code": "F83007", "category": "not_checked", "colour": "grey", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "resolved", "t": 8.83, "code": "F84121", "name": "E12 HEALTH", "lat": 51.547786, "lon": 0.05386, "reg_url": "https://register-with-gp.ht1.uk/?gpCode=F84121&gpName=Church%20Road%20Health"}
+{"type": "resolved", "t": 8.83, "code": "F83045", "name": "THE MILLER PRACTICE", "lat": 51.551421, "lon": -0.092139, "reg_url": "https://www.millerpractice.nhs.uk/new-patient-registration"}
+{"type": "resolved", "t": 8.97, "code": "E83016", "name": "MILLWAY MEDICAL PRACTICE", "lat": 51.614988, "lon": -0.243567, "reg_url": "http://www.millwaymedical.com/"}
+{"type": "resolved", "t": 8.97, "code": "E87002", "name": "VICTORIA MEDICAL CENTRE", "lat": 51.492911, "lon": -0.138954, "reg_url": "https://victoriamedicalcentre.com/patient-registration/"}
+{"type": "resolved", "t": 8.97, "code": "E85057", "name": "QUEENS WALK PRACTICE", "lat": 51.524804, "lon": -0.312963, "reg_url": "https://queenswalkpractice.nhs.uk/new-patients/"}
+{"type": "resolved", "t": 9.06, "code": "H84006", "name": "RICHMOND MEDICAL GROUP", "lat": 51.465767, "lon": -0.267847, "reg_url": "https://richmondmedicalgroup.co.uk/register-with-our-practice/"}
+{"type": "resolved", "t": 9.06, "code": "F84010", "name": "ASPIRE MEDICAL CENTRE", "lat": 51.532553, "lon": 0.05019, "reg_url": "https://www.aspiremedicalcentre.nhs.uk/"}
+{"type": "resolved", "t": 9.06, "code": "F84053", "name": "GREENGATE MEDICAL CENTRE", "lat": 51.525211, "lon": 0.027688, "reg_url": "https://www.greengatemedicalcentre.nhs.uk/"}
+{"type": "resolved", "t": 9.06, "code": "F84069", "name": "WELL STREET SURGERY", "lat": 51.539363, "lon": -0.052842, "reg_url": "https://www.wellstreetsurgery.co.uk/new-patient-registration"}
+{"type": "resolved", "t": 9.15, "code": "G83018", "name": "LAKESIDE MEDICAL", "lat": 51.496519, "lon": 0.122482, "reg_url": "https://www.lakesidegpsthamesmead.co.uk/new-patient-registration"}
+{"type": "resolved", "t": 9.15, "code": "F86006", "name": "SEYMOUR MEDICAL CENTRE", "lat": 51.569178, "lon": -0.027802, "reg_url": "https://seymourmedicalcentre.nhs.uk/new-patient-registration/"}
+{"type": "resolved", "t": 9.15, "code": "E83009", "name": "PHGH DOCTORS", "lat": 51.581104, "lon": -0.197821, "reg_url": "https://www.phghdoctors.nhs.uk/"}
+{"type": "resolved", "t": 9.15, "code": "G83016", "name": "ROYAL ARSENAL MEDICAL CENTRE", "lat": 51.493492, "lon": 0.073503, "reg_url": "https://royalarsenalmedicalcentre.co.uk/services/new-patients/"}
+{"type": "resolved", "t": 9.15, "code": "E87066", "name": "FITZROVIA MEDICAL CENTRE", "lat": 51.52236, "lon": -0.139929, "reg_url": "https://fitzroviamedicalcentre.co.uk/services/registering-with-the-surgery/"}
+{"type": "resolved", "t": 9.15, "code": "F84047", "name": "CUSTOM HOUSE SURGERY", "lat": 51.512808, "lon": 0.025206, "reg_url": "https://customhousesurgery.co.uk/new-patient-registration"}
+{"type": "resolved", "t": 9.15, "code": "F85002", "name": "MEDICUS HEALTH PARTNERS", "lat": 51.632548, "lon": -0.054144, "reg_url": "https://www.forestroadgrouppractice.co.uk/"}
+{"type": "resolved", "t": 9.24, "code": "E83006", "name": "GREENFIELD MEDICAL CENTRE", "lat": 51.561018, "lon": -0.205699, "reg_url": "https://www.greenfieldmc.co.uk/"}
+{"type": "resolved", "t": 9.24, "code": "E87648", "name": "MAYFAIR MEDICAL CENTRE", "lat": 51.513538, "lon": -0.150147, "reg_url": "https://mayfairmedicalcentre.co.uk/services/cregistering-with-the-surgery/"}
+{"type": "resolved", "t": 9.24, "code": "F83060", "name": "THE NORTHERN MEDICAL CENTRE", "lat": 51.551098, "lon": -0.115519, "reg_url": "http://www.northernmedicalcentre.co.uk/"}
+{"type": "resolved", "t": 9.24, "code": "F84051", "name": "STROUTS PLACE MEDICAL CENTRE", "lat": 51.529481, "lon": -0.074126, "reg_url": "https://www.stroutsplace.nhs.uk/new-patients-2"}
+{"type": "resolved", "t": 9.37, "code": "E83011", "name": "THE EVERGLADE MEDICAL PRACTICE", "lat": 51.601581, "lon": -0.244185, "reg_url": "http://www.everglademedicalpractice.nhs.uk/"}
+{"type": "resolved", "t": 9.37, "code": "F86064", "name": "THE ELMHURST PRACTICE", "lat": 51.597443, "lon": 0.021763, "reg_url": "https://www.elmhurstpractice.co.uk/join-the-practice"}
+{"type": "resolved", "t": 9.37, "code": "F86078", "name": "THE RIDGEWAY SURGERY", "lat": 51.628703, "lon": -0.011005, "reg_url": "https://www.ridgewaysurgerychingford.nhs.uk/"}
+{"type": "resolved", "t": 9.37, "code": "F83660", "name": "HIGHBURY GRANGE MEDICAL PRACTICE", "lat": 51.555097, "lon": -0.095317, "reg_url": "http://www.highburygrangemedicalpractice.co.uk/"}
+{"type": "resolved", "t": 9.37, "code": "E87005", "name": "BELGRAVIA SURGERY", "lat": 51.495005, "lon": -0.148535, "reg_url": "https://belgravia-surgery-sw1.nhs.uk/services/registering-with-the-surgery-2/"}
+{"type": "resolved", "t": 9.37, "code": "F85072", "name": "GROVELANDS MEDICAL CENTRE", "lat": 51.620688, "lon": -0.112003, "reg_url": "https://gpdoctor.co.uk/services/new-patients/"}
+{"type": "resolved", "t": 9.37, "code": "F83015", "name": "ST JOHNS WAY MEDICAL CENTRE", "lat": 51.568121, "lon": -0.130731, "reg_url": "http://www.stjohnsway.nhs.uk/"}
+{"type": "resolved", "t": 9.37, "code": "F83018", "name": "PRINCE OF WALES GROUP SURGERY", "lat": 51.546915, "lon": -0.147091, "reg_url": "https://www.princeofwalesgrouppractice.nhs.uk/clinics-and-services/registering-with-the-practice/"}
+{"type": "resolved", "t": 9.5, "code": "F85013", "name": "TYNEMOUTH MEDICAL PRACTICE", "lat": 51.586254, "lon": -0.068306, "reg_url": "https://www.tynemouthmedicalpractice.co.uk/"}
+{"type": "resolved", "t": 9.5, "code": "E87011", "name": "LISSON GROVE HEALTH CENTRE", "lat": 51.524737, "lon": -0.169298, "reg_url": "https://lissongrovehealthcentre.co.uk/services/registering-with-the-surgery/"}
+{"type": "resolved", "t": 9.5, "code": "G85039", "name": "PAXTON GREEN GROUP PRACTICE", "lat": 51.430297, "lon": -0.086069, "reg_url": "https://www.paxtongreen.nhs.uk/new-patient-registration"}
+{"type": "resolved", "t": 9.5, "code": "E83024", "name": "ST ANDREWS MEDICAL PRACTICE.", "lat": 51.630141, "lon": -0.172354, "reg_url": "https://www.standrewsmedicalpractice.nhs.uk/"}
+{"type": "resolved", "t": 9.5, "code": "F85031", "name": "WESTBURY MEDICAL CENTRE", "lat": 51.597178, "lon": -0.094006, "reg_url": "http://www.westbury.nhs.uk/"}
+{"type": "resolved", "t": 9.59, "code": "E83013", "name": "CORNWALL HOUSE SURGERY", "lat": 51.617033, "lon": -0.175438, "reg_url": "https://www.cornwallhousesurgery.nhs.uk/"}
+{"type": "resolved", "t": 9.59, "code": "F84052", "name": "ESSEX LODGE", "lat": 51.527917, "lon": 0.026713, "reg_url": "https://essexlodge.com/register-with-our-practice/"}
+{"type": "resolved", "t": 9.59, "code": "G85084", "name": "PENROSE SURGERY", "lat": 51.487448, "lon": -0.097764, "reg_url": "https://www.penrosesurgery.nhs.uk/register"}
+{"type": "resolved", "t": 9.59, "code": "G85727", "name": "NIGHTINGALE SURGERY", "lat": 51.452782, "lon": 0.009938, "reg_url": "https://www.nightingalesurgery.nhs.uk/register"}
+{"type": "resolved", "t": 9.59, "code": "E87016", "name": "HOLLAND PARK SURGERY", "lat": 51.501413, "lon": -0.194411, "reg_url": "https://www.hollandparksurgery.org.uk/new-patient-registration"}
+{"type": "resolved", "t": 9.59, "code": "F85032", "name": "SOUTHGATE", "lat": 51.640285, "lon": -0.142622, "reg_url": "https://thesouthgatesurgerynorthlondon.nhs.uk/services/new-patients/"}
+{"type": "resolved", "t": 9.59, "code": "G83027", "name": "EVEREST HEALTH PARTNERSHIP", "lat": 51.454715, "lon": 0.049463, "reg_url": "http://www.everesthealth.co.uk/"}
+{"type": "resolved", "t": 9.68, "code": "F85033", "name": "WINCHMORE HILL PRACTICE", "lat": 51.633155, "lon": -0.09387, "reg_url": "http://www.winchmorehillpractice.nhs.uk/"}
+{"type": "resolved", "t": 9.68, "code": "E83050", "name": "EAST FINCHLEY MEDICAL CENTRE", "lat": 51.588124, "lon": -0.162853, "reg_url": "https://www.eastfinchleymedicalpractice.nhs.uk/join-the-surgery"}
+{"type": "resolved", "t": 9.68, "code": "F86011", "name": "THE MANOR PRACTICE", "lat": 51.571311, "lon": -0.022024, "reg_url": "https://www.themanorpracticeleyton.co.uk/new-patient-registration"}
+{"type": "resolved", "t": 9.68, "code": "G85019", "name": "TRAFALGAR SURGERY", "lat": 51.485673, "lon": -0.074389, "reg_url": null}
+{"type": "classified", "t": 9.68, "code": "G85019", "category": "not_checked", "colour": "grey", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "resolved", "t": 9.68, "code": "G85020", "name": "KINGFISHER MEDICAL CENTRE", "lat": 51.481877, "lon": -0.030477, "reg_url": "https://www.kingfishermedicalcentre.nhs.uk/register"}
+{"type": "resolved", "t": 9.77, "code": "F85019", "name": "MORRIS HOUSE GROUP PRACTICE", "lat": 51.597784, "lon": -0.082097, "reg_url": "https://www.mhgp.co.uk/registration"}
+{"type": "resolved", "t": 9.85, "code": "F84021", "name": "LONDON FIELDS MEDICAL CENTRE", "lat": 51.536585, "lon": -0.061583, "reg_url": "https://londonfieldsmedical.nhs.uk/new-patients/"}
+{"type": "resolved", "t": 9.85, "code": "E87070", "name": "CRAWFORD STREET SURGERY", "lat": 51.519323, "lon": -0.161199, "reg_url": "https://crawfordstreetsurgery.co.uk/services/registering-with-the-surgery/"}
+{"type": "resolved", "t": 9.85, "code": "F83003", "name": "PARK END SURGERY", "lat": 51.555978, "lon": -0.165865, "reg_url": "https://www.parkendsurgery.co.uk/new-patients-2"}
+{"type": "resolved", "t": 9.86, "code": "G83019", "name": "PLUMSTEAD H/C PMS", "lat": 51.485951, "lon": 0.09203, "reg_url": "http://www.plumsteadhealthcentre.org.uk/"}
+{"type": "resolved", "t": 9.86, "code": "F85061", "name": "CHRISTCHURCH HALL SURGERY", "lat": 51.577924, "lon": -0.125697, "reg_url": null}
+{"type": "classified", "t": 9.86, "code": "F85061", "category": "not_checked", "colour": "grey", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "resolved", "t": 9.86, "code": "E87737", "name": "MARYLEBONE HEALTH CENTRE", "lat": 51.52284, "lon": -0.151514, "reg_url": "https://marylebonehealthcentre.co.uk/services/registering-with-the-surgery/"}
+{"type": "resolved", "t": 9.86, "code": "G84029", "name": "ROBIN HOOD SURGERY", "lat": 51.40983, "lon": -0.05769, "reg_url": null}
+{"type": "classified", "t": 9.86, "code": "G84029", "category": "not_checked", "colour": "grey", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "resolved", "t": 9.98, "code": "G83058", "name": "PRIMECARE PMS (SOUTH STREET)", "lat": 51.476194, "lon": -0.012448, "reg_url": "https://www.southstreetmedicalcentre.co.uk/"}
+{"type": "resolved", "t": 9.98, "code": "H83005", "name": "UPPER NORWOOD GROUP PRACTICE", "lat": 51.413307, "lon": -0.084794, "reg_url": "http://www.uppernorwoodgrouppractice.co.uk/"}
+{"type": "resolved", "t": 9.99, "code": "F85642", "name": "THE NORTH LONDON HEALTH CENTRE", "lat": 51.617574, "lon": -0.112407, "reg_url": "https://www.thenorthlondonhealthcentre.co.uk/"}
+{"type": "resolved", "t": 10.11, "code": "G83013", "name": "BLACKHEATH STANDARD PMS", "lat": 51.478134, "lon": 0.019823, "reg_url": "http://www.blackheathstandardsurgery.com/"}
+{"type": "resolved", "t": 10.11, "code": "G83031", "name": "ABBEY WOOD SURGERY", "lat": 51.497105, "lon": 0.116905, "reg_url": "https://www.abbeywoodsurgery.nhs.uk/patient-info/register/"}
+{"type": "resolved", "t": 10.11, "code": "E87043", "name": "EMPEROR'S GATE SURGERY", "lat": 51.496306, "lon": -0.1863, "reg_url": "https://www.emperorsgate.org/"}
+{"type": "resolved", "t": 10.11, "code": "E87762", "name": "THE GOOD PRACTICE", "lat": 51.482653, "lon": -0.178042, "reg_url": "http://www.thegoodpractice.london/"}
+{"type": "resolved", "t": 10.2, "code": "G85061", "name": "WOOLSTONE MEDICAL CENTRE", "lat": 51.43842, "lon": -0.03675, "reg_url": "http://www.woolstonemedicalcentre.co.uk/"}
+{"type": "resolved", "t": 10.2, "code": "F85687", "name": "OAKWOOD MEDICAL CENTRE", "lat": 51.646537, "lon": -0.134243, "reg_url": "http://www.oakwoodmedicalcentren14.nhs.uk/"}
+{"type": "resolved", "t": 10.2, "code": "G85632", "name": "THE VILLA STREET MEDICAL CENTRE", "lat": 51.486566, "lon": -0.08828, "reg_url": "http://www.villastreetmedicalcentre.nhs.uk/"}
+{"type": "resolved", "t": 10.2, "code": "F85063", "name": "THE MUSWELL HILL PRACTICE", "lat": 51.591019, "lon": -0.141096, "reg_url": "https://www.themuswellhillpractice.co.uk/new-patients-2"}
+{"type": "resolved", "t": 10.29, "code": "G85047", "name": "KNIGHTS HILL SURGERY SUITE 1", "lat": 51.431799, "lon": -0.104895, "reg_url": "https://www.knightshillsurgery.nhs.uk/register"}
+{"type": "resolved", "t": 10.3, "code": "G85051", "name": "ELM LODGE SURGERY", "lat": 51.451506, "lon": -0.096207, "reg_url": "https://www.elmlodgesurgery.co.uk/new-patients.aspx"}
+{"type": "resolved", "t": 10.3, "code": "F84035", "name": "RICHMOND ROAD MEDICAL CENTRE", "lat": 51.543053, "lon": -0.065505, "reg_url": "https://www.richmondroadmedicalcentre.nhs.uk/new-patient-registration"}
+{"type": "resolved", "t": 10.3, "code": "H84023", "name": "ESSEX HOUSE SURGERY", "lat": 51.472542, "lon": -0.247446, "reg_url": "https://essexhousesurgery.nhs.uk/register-with-our-practice/"}
+{"type": "resolved", "t": 10.3, "code": "F86005", "name": "THE PENRHYN SURGERY", "lat": 51.597129, "lon": -0.023661, "reg_url": "https://www.penrhynsurgery.co.uk/join-the-practice"}
+{"type": "resolved", "t": 10.3, "code": "G85041", "name": "PALACE ROAD SURGERY", "lat": 51.443797, "lon": -0.120602, "reg_url": "http://www.palaceroadsurgery.co.uk/"}
+{"type": "resolved", "t": 10.41, "code": "F85666", "name": "DR ME SILVER'S PRACTICE", "lat": 51.616016, "lon": -0.063706, "reg_url": "https://www.edmontonmedicalcentre.nhs.uk/patient-info/how-to-register/"}
+{"type": "resolved", "t": 10.41, "code": "E87665", "name": "THE CHELSEA PRACTICE", "lat": 51.486806, "lon": -0.166987, "reg_url": "http://www.thechelseapractice.org.uk/"}
+{"type": "resolved", "t": 10.41, "code": "F84054", "name": "THE LIMEHOUSE PRACTICE", "lat": 51.511254, "lon": -0.02872, "reg_url": "https://www.limehousepractice.co.uk/join-the-practice"}
+{"type": "resolved", "t": 10.59, "code": "F85010", "name": "KEATS SURGERY", "lat": 51.628867, "lon": -0.076885, "reg_url": "https://www.keatssurgery.nhs.uk/contact-us/register-with-the-surgery/"}
+{"type": "resolved", "t": 10.59, "code": "G85102", "name": "GRAY'S INN MEDICAL GROUP VAUXHALL", "lat": 51.489802, "lon": -0.118207, "reg_url": "https://www.graysinnmedical.co.uk/"}
+{"type": "resolved", "t": 10.59, "code": "E87753", "name": "BELGRAVE MEDICAL CENTRE", "lat": 51.490652, "lon": -0.151333, "reg_url": "https://belgravemedical.co.uk/services/registering-with-the-surgery/"}
+{"type": "resolved", "t": 10.69, "code": "G85130", "name": "MAWBEY GROUP PRACTICE", "lat": 51.479284, "lon": -0.125207, "reg_url": "https://www.mawbeygp.co.uk/"}
+{"type": "resolved", "t": 10.69, "code": "G85125", "name": "PARK MEDICAL CENTRE", "lat": 51.492146, "lon": -0.049813, "reg_url": "https://www.parkmedicalcentresouthwark.co.uk/"}
+{"type": "resolved", "t": 10.69, "code": "G85026", "name": "CLIFTON RISE FAMILY PRACTICE", "lat": 51.476335, "lon": -0.031407, "reg_url": "http://cliftonrisefamilypractice.co.uk/"}
+{"type": "resolved", "t": 10.69, "code": "G85023", "name": "LEWISHAM MEDICAL CENTRE", "lat": 51.458515, "lon": 0.004418, "reg_url": "https://www.lewishammedicalcentre.nhs.uk/register"}
+{"type": "resolved", "t": 10.69, "code": "E83621", "name": "BRUNSWICK PARK MEDICAL PRACTICE", "lat": 51.629302, "lon": -0.149212, "reg_url": "https://www.brunswickparkmedicalpractice.nhs.uk/new-patient-registration"}
+{"type": "resolved", "t": 10.69, "code": "E87740", "name": "THE DR HICKEY SURGERY FOR THE HOMELESS", "lat": 51.495751, "lon": -0.131476, "reg_url": null}
+{"type": "classified", "t": 10.69, "code": "E87740", "category": "not_checked", "colour": "grey", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "resolved", "t": 10.69, "code": "G85129", "name": "THE DEERBROOK SURGERY", "lat": 51.437861, "lon": -0.106026, "reg_url": "https://www.thedeerbrooksurgery.nhs.uk/join-the-practice/"}
+{"type": "resolved", "t": 10.79, "code": "H83010", "name": "SOUTH NORWOOD HILL MEDICAL CENTRE", "lat": 51.403169, "lon": -0.080746, "reg_url": "https://www.southnorwoodhillgp.org.uk/"}
+{"type": "resolved", "t": 10.79, "code": "F84031", "name": "THE JUBILEE STREET PRACTICE LTD", "lat": 51.513597, "lon": -0.050526, "reg_url": "https://jubileestreetpractice.nhs.uk/register-with-jsp/"}
+{"type": "resolved", "t": 10.79, "code": "G85045", "name": "HETHERINGTON GROUP PRACTICE", "lat": 51.461034, "lon": -0.128301, "reg_url": "https://www.hetheringtongp.co.uk/new-patient-registration"}
+{"type": "resolved", "t": 10.9, "code": "E85025", "name": "CASSIDY ROAD MEDICAL CENTRE", "lat": 51.479155, "lon": -0.198992, "reg_url": "https://www.cassidymedicalcentre.co.uk/"}
+{"type": "resolved", "t": 10.9, "code": "G85030", "name": "PARKSIDE MEDICAL CENTRE", "lat": 51.475827, "lon": -0.092617, "reg_url": "https://www.parksidemedical.co.uk/patient-info/register/"}
+{"type": "resolved", "t": 10.9, "code": "F84008", "name": "BARTON HOUSE GROUP PRACTICE", "lat": 51.560459, "lon": -0.083898, "reg_url": "https://www.bartonhousegrouppractice.co.uk/register-as-new-patient"}
+{"type": "resolved", "t": 10.9, "code": "G85054", "name": "LAMBETH WALK GROUP PRACTICE", "lat": 51.475716, "lon": -0.105178, "reg_url": "https://www.lambethwalkgp.co.uk/new-patient-registration"}
+{"type": "resolved", "t": 10.91, "code": "E87746", "name": "BROMPTON MEDICAL CENTRE", "lat": 51.489436, "lon": -0.189843, "reg_url": "https://www.bromptonmedicalcentre.nhs.uk/join-the-practice"}
+{"type": "resolved", "t": 10.99, "code": "G85014", "name": "STREATHAM COMMON PRACTICE", "lat": 51.418615, "lon": -0.12664, "reg_url": "http://www.streathamcommonpractice.co.uk/"}
+{"type": "resolved", "t": 10.99, "code": "G85038", "name": "THE LEWISHAM CARE PARTNERSHIP", "lat": 51.467393, "lon": -0.022175, "reg_url": "https://www.thelewishamcarepartnership.co.uk/new-patient-registration"}
+{"type": "resolved", "t": 11.08, "code": "G85114", "name": "WELLS PARK PRACTICE", "lat": 51.430522, "lon": -0.063099, "reg_url": "http://www.wellsparkpractice.co.uk/"}
+{"type": "resolved", "t": 11.33, "code": "G85034", "name": "NEXUS HEALTH GROUP", "lat": 51.495618, "lon": -0.101933, "reg_url": "https://nexushealthgroup.nhs.uk/new-patient-registration"}
+{"type": "resolved", "t": 11.42, "code": "G85121", "name": "PARKVIEW SURGERY", "lat": 51.444864, "lon": -0.007707, "reg_url": "http://www.parkview-surgery.co.uk/"}
+{"type": "resolved", "t": 11.42, "code": "Y02974", "name": "THAMESMEAD HEALTH CENTRE", "lat": 51.498473, "lon": 0.090299, "reg_url": "https://thamesmeadhealthcentre.co.uk/register-with-our-practice/"}
+{"type": "resolved", "t": 11.7, "code": "F84731", "name": "ST. KATHERINE'S DOCK PRACTICE", "lat": 51.506984, "lon": -0.068259, "reg_url": "https://www.stkatharinedocks.nhs.uk/new-patient-registration/"}
+{"type": "resolved", "t": 11.82, "code": "H84055", "name": "SHEEN LANE SURGERY", "lat": 51.465767, "lon": -0.267847, "reg_url": "https://sheensurgery.nhs.uk/register-with-our-practice/"}
+{"type": "resolved", "t": 11.82, "code": "F84036", "name": "THE CEDAR PRACTICE", "lat": 51.568533, "lon": -0.093732, "reg_url": "https://www.cedarpractice.co.uk/appointments/"}
+{"type": "resolved", "t": 11.92, "code": "E87034", "name": "PIMLICO HEALTH AT THE MARVEN SURGERY", "lat": 51.48845, "lon": -0.137752, "reg_url": "https://pimlicohealth.co.uk/services/cregistering-with-the-surgery/"}
+{"type": "resolved", "t": 12.04, "code": "G85076", "name": "NEW CROSS CENTRE (HURLEY GROUP)", "lat": 51.476403, "lon": -0.031707, "reg_url": "https://www.newcrosshc.co.uk/new-patient-registration"}
+{"type": "resolved", "t": 12.28, "code": "F84034", "name": "ST. STEPHENS HEALTH CENTRE", "lat": 51.532455, "lon": -0.031163, "reg_url": "https://ststephenstowerhamlets.nhs.uk/new-patient-registration/"}
+{"type": "resolved", "t": 12.4, "code": "G85706", "name": "THE OLD DAIRY HEALTH CENTRE", "lat": 51.436586, "lon": -0.091201, "reg_url": "https://theodhc.co.uk/services/new-patients/"}
+{"type": "resolved", "t": 13.21, "code": "F84014", "name": "UPTON LANE MEDICAL CENTRE", "lat": 51.543298, "lon": 0.026487, "reg_url": "https://uptonlanesurgery.nhs.uk/register-with-our-practice/"}
+{"type": "resolved", "t": 13.75, "code": "G85091", "name": "THE THREE ZERO SIX MEDICAL CENTRE", "lat": 51.450741, "lon": -0.076377, "reg_url": "https://306medicalcentre.nhs.uk/register-with-our-practice/"}
+{"type": "resolved", "t": 19.06, "code": "G85011", "name": "CLAPHAM FAMILY PRACTICE", "lat": 51.463106, "lon": -0.133644, "reg_url": "http://www.theclaphamfamilypractice.co.uk/"}
+{"type": "resolved", "t": 19.19, "code": "G85015", "name": "THE QRP SURGERY", "lat": 51.474264, "lon": -0.047409, "reg_url": "http://www.queensroadpartnership.co.uk/"}
+{"type": "resolved", "t": 19.28, "code": "E87006", "name": "LITTLE VENICE MEDICAL CENTRE", "lat": 51.523765, "lon": -0.176733, "reg_url": "https://littlevenicemedicalcentre.co.uk/join-us-for-lunch-and-share-your-feedback/"}
+{"type": "resolved", "t": 19.57, "code": "G83012", "name": "GALLIONS REACH HEALTH CENTRE", "lat": 51.505665, "lon": 0.109491, "reg_url": "http://www.thamesmeadmedical.org/"}
+{"type": "resolved", "t": 20.51, "code": "F84022", "name": "STRATFORD HEALTH CENTRE", "lat": 51.544965, "lon": 0.004856, "reg_url": "https://www.stratfordhealthcentre.co.uk/"}
+{"type": "resolved", "t": 20.6, "code": "E87010", "name": "MAIDA VALE MEDICAL CENTRE", "lat": 51.528421, "lon": -0.188772, "reg_url": "http://www.mvmc.co.uk/"}
+{"type": "resolved", "t": 21.13, "code": "E83007", "name": "SQUIRES LANE MEDICAL PRACTICE", "lat": 51.602494, "lon": -0.174952, "reg_url": "https://www.squireslanemedicalpractice.co.uk/"}
+{"type": "captured", "t": 21.46, "code": "F84009", "status": "ok", "challenge": false, "secs": 0.0, "http_status": null}
+{"type": "classified", "t": 21.46, "code": "F84009", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 21.96, "code": "F84121", "status": "ok", "challenge": false, "secs": 0.0, "http_status": null}
+{"type": "classified", "t": 21.96, "code": "F84121", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 23.7, "code": "E84025", "status": "blocked", "challenge": true, "secs": 1.9, "http_status": 401}
+{"type": "classified", "t": 23.7, "code": "E84025", "category": "not_checked", "colour": "grey", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 23.82, "code": "E83020", "status": "blocked", "challenge": true, "secs": 1.8, "http_status": 403}
+{"type": "classified", "t": 23.82, "code": "E83020", "category": "not_checked", "colour": "grey", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 23.91, "code": "E87063", "status": "blocked", "challenge": true, "secs": 2.2, "http_status": 401}
+{"type": "classified", "t": 23.91, "code": "E87063", "category": "not_checked", "colour": "grey", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 24.0, "code": "E84006", "status": "blocked", "challenge": true, "secs": 2.2, "http_status": 403}
+{"type": "classified", "t": 24.0, "code": "E84006", "category": "not_checked", "colour": "grey", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 24.54, "code": "G85087", "status": "blocked", "challenge": true, "secs": 2.7, "http_status": 401}
+{"type": "classified", "t": 24.54, "code": "G85087", "category": "not_checked", "colour": "grey", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 24.74, "code": "G85002", "status": "blocked", "challenge": true, "secs": 3.1, "http_status": 401}
+{"type": "classified", "t": 24.74, "code": "G85002", "category": "not_checked", "colour": "grey", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 24.84, "code": "G83016", "status": "ok", "challenge": false, "secs": 2.8, "http_status": 200}
+{"type": "classified", "t": 24.84, "code": "G83016", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 24.93, "code": "G85029", "status": "blocked", "challenge": true, "secs": 3.1, "http_status": 401}
+{"type": "classified", "t": 24.93, "code": "G85029", "category": "not_checked", "colour": "grey", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 24.93, "code": "F84025", "status": "ok", "challenge": false, "secs": 3.1, "http_status": 200}
+{"type": "classified", "t": 24.93, "code": "F84025", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 25.5, "code": "F84012", "status": "ok", "challenge": false, "secs": 3.8, "http_status": 200}
+{"type": "classified", "t": 25.5, "code": "F84012", "category": "asks_softly", "colour": "amber", "quote": "We might ask for ID or proof of address.", "retries": 0, "doc_types": ["photo_id", "proof_of_address"], "distance_km": null}
+{"type": "captured", "t": 25.75, "code": "G85086", "status": "ok", "challenge": false, "secs": 3.6, "http_status": 200}
+{"type": "classified", "t": 25.76, "code": "G85086", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 25.84, "code": "F86004", "status": "ok", "challenge": false, "secs": 4.1, "http_status": 202}
+{"type": "classified", "t": 25.84, "code": "F86004", "category": "not_checked", "colour": "grey", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 25.94, "code": "E87066", "status": "ok", "challenge": false, "secs": 2.1, "http_status": 200}
+{"type": "classified", "t": 25.94, "code": "E87066", "category": "demands_documents", "colour": "red", "quote": "You are also required to fill out the two separate registration forms and provide a recent proof of address.", "retries": 0, "doc_types": ["proof_of_address"], "distance_km": null}
+{"type": "captured", "t": 26.04, "code": "H85002", "status": "ok", "challenge": false, "secs": 4.1, "http_status": 200}
+{"type": "classified", "t": 26.04, "code": "H85002", "category": "demands_documents", "colour": "red", "quote": "Once completed please hand in the form to reception together with the following information Proof of identity (e.g. passport, driving licence) Proof of address (e.g. recent utility bill, bank statement, rental agreement) NHS number if possible Details of any medication you are taking Children under 5 - immunisation record (in your child's red book)", "retries": 0, "doc_types": ["passport", "photo_id", "proof_of_address"], "distance_km": null}
+{"type": "captured", "t": 26.14, "code": "E87739", "status": "ok", "challenge": false, "secs": 4.2, "http_status": 200}
+{"type": "classified", "t": 26.14, "code": "E87739", "category": "demands_documents", "colour": "red", "quote": "You need a proof of address, like a utility bill, council tax form, or tenancy agreement.", "retries": 0, "doc_types": ["proof_of_address"], "distance_km": null}
+{"type": "captured", "t": 26.14, "code": "E83003", "status": "ok", "challenge": false, "secs": 4.5, "http_status": 200}
+{"type": "classified", "t": 26.14, "code": "E83003", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 26.37, "code": "F84016", "status": "ok", "challenge": false, "secs": 4.7, "http_status": 200}
+{"type": "classified", "t": 26.37, "code": "F84016", "category": "asks_softly", "colour": "amber", "quote": "Where possible please do provide proof of ID and address.", "retries": 0, "doc_types": ["photo_id", "proof_of_address"], "distance_km": null}
+{"type": "captured", "t": 26.47, "code": "E83006", "status": "blocked", "challenge": true, "secs": 2.3, "http_status": 403}
+{"type": "classified", "t": 26.47, "code": "E83006", "category": "not_checked", "colour": "grey", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 26.59, "code": "F84017", "status": "ok", "challenge": false, "secs": 4.9, "http_status": 200}
+{"type": "classified", "t": 26.59, "code": "F84017", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 26.59, "code": "F83002", "status": "ok", "challenge": false, "secs": 4.6, "http_status": 200}
+{"type": "classified", "t": 26.59, "code": "F83002", "category": "asks_softly", "colour": "amber", "quote": "We might ask for ID or proof of address.", "retries": 0, "doc_types": ["photo_id", "proof_of_address"], "distance_km": null}
+{"type": "captured", "t": 26.59, "code": "F83045", "status": "ok", "challenge": false, "secs": 4.7, "http_status": 200}
+{"type": "classified", "t": 26.59, "code": "F83045", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 26.69, "code": "F85008", "status": "ok", "challenge": false, "secs": 4.7, "http_status": 200}
+{"type": "classified", "t": 26.69, "code": "F85008", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 26.8, "code": "F84006", "status": "ok", "challenge": false, "secs": 5.0, "http_status": 200}
+{"type": "classified", "t": 26.81, "code": "F84006", "category": "says_not_needed", "colour": "green", "quote": "If you don\u2019t have proof of ID or address, you can still register.", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 26.81, "code": "H83001", "status": "ok", "challenge": false, "secs": 4.9, "http_status": 200}
+{"type": "classified", "t": 26.81, "code": "H83001", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 26.91, "code": "F83686", "status": "ok", "challenge": false, "secs": 5.1, "http_status": 200}
+{"type": "classified", "t": 26.91, "code": "F83686", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 26.91, "code": "G85013", "status": "ok", "challenge": false, "secs": 5.0, "http_status": 200}
+{"type": "classified", "t": 26.91, "code": "G85013", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 27.01, "code": "G85053", "status": "ok", "challenge": false, "secs": 4.9, "http_status": 200}
+{"type": "classified", "t": 27.02, "code": "G85053", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 27.12, "code": "G83018", "status": "ok", "challenge": false, "secs": 5.2, "http_status": 200}
+{"type": "classified", "t": 27.12, "code": "G83018", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 27.22, "code": "G85022", "status": "ok", "challenge": false, "secs": 5.3, "http_status": 200}
+{"type": "classified", "t": 27.22, "code": "G85022", "category": "says_not_needed", "colour": "green", "quote": "If you don\u2019t have proof of ID or address, you can still register.", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 27.22, "code": "H85006", "status": "ok", "challenge": false, "secs": 5.2, "http_status": 200}
+{"type": "classified", "t": 27.22, "code": "H85006", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 27.22, "code": "G83044", "status": "ok", "challenge": false, "secs": 5.4, "http_status": 200}
+{"type": "classified", "t": 27.22, "code": "G83044", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 27.43, "code": "E83011", "status": "blocked", "challenge": true, "secs": 2.4, "http_status": 403}
+{"type": "classified", "t": 27.43, "code": "E83011", "category": "not_checked", "colour": "grey", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 27.44, "code": "Y04273", "status": "ok", "challenge": false, "secs": 5.7, "http_status": 200}
+{"type": "classified", "t": 27.44, "code": "Y04273", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 27.44, "code": "E87002", "status": "ok", "challenge": false, "secs": 5.5, "http_status": 200}
+{"type": "classified", "t": 27.44, "code": "E87002", "category": "demands_documents", "colour": "red", "quote": "Proof of address and photographic ID is required.", "retries": 0, "doc_types": ["photo_id", "proof_of_address"], "distance_km": null}
+{"type": "captured", "t": 27.44, "code": "G83021", "status": "ok", "challenge": false, "secs": 5.7, "http_status": 200}
+{"type": "captured", "t": 27.71, "code": "F85017", "status": "ok", "challenge": false, "secs": 5.4, "http_status": 200}
+{"type": "classified", "t": 27.71, "code": "F85017", "category": "says_not_needed", "colour": "green", "quote": "If you don\u2019t have proof of ID or address, you can still register.", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 27.71, "code": "F83008", "status": "ok", "challenge": false, "secs": 5.6, "http_status": 200}
+{"type": "classified", "t": 27.71, "code": "F83008", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 27.71, "code": "F86001", "status": "ok", "challenge": false, "secs": 5.8, "http_status": 200}
+{"type": "classified", "t": 27.71, "code": "F86001", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 27.74, "code": "F84015", "status": "ok", "challenge": false, "secs": 5.9, "http_status": 200}
+{"type": "classified", "t": 27.74, "code": "F84015", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 27.74, "code": "H85026", "status": "ok", "challenge": false, "secs": 5.8, "http_status": 200}
+{"type": "classified", "t": 27.74, "code": "H85026", "category": "says_not_needed", "colour": "green", "quote": "If you don\u2019t have proof of ID or address, you can still register.", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 27.89, "code": "E83045", "status": "ok", "challenge": false, "secs": 6.0, "http_status": 200}
+{"type": "classified", "t": 27.89, "code": "E83045", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 27.98, "code": "G85001", "status": "ok", "challenge": false, "secs": 6.2, "http_status": 200}
+{"type": "classified", "t": 27.98, "code": "G85001", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 28.12, "code": "F84003", "status": "ok", "challenge": false, "secs": 6.1, "http_status": 200}
+{"type": "classified", "t": 28.12, "code": "F84003", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 28.25, "code": "E85005", "status": "ok", "challenge": false, "secs": 6.3, "http_status": 200}
+{"type": "classified", "t": 28.25, "code": "E85005", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 28.39, "code": "F84047", "status": "ok", "challenge": false, "secs": 4.4, "http_status": 200}
+{"type": "classified", "t": 28.39, "code": "F84047", "category": "demands_documents", "colour": "red", "quote": "To register, please bring with you your proof of address, photographic ID, details of your previous GP and your NHS number if you have this.", "retries": 0, "doc_types": ["photo_id", "proof_of_address"], "distance_km": null}
+{"type": "captured", "t": 28.39, "code": "F86006", "status": "ok", "challenge": false, "secs": 6.2, "http_status": 200}
+{"type": "classified", "t": 28.39, "code": "F86006", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 28.51, "code": "F85002", "status": "ok", "challenge": false, "secs": 4.5, "http_status": 200}
+{"type": "classified", "t": 28.51, "code": "F85002", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 28.62, "code": "G85006", "status": "ok", "challenge": false, "secs": 6.7, "http_status": 200}
+{"type": "classified", "t": 28.62, "code": "G85006", "category": "asks_softly", "colour": "amber", "quote": "You should ideally upload a proof of address (Utility Bill etc) and your NHS (National Health Service) number to the form.", "retries": 0, "doc_types": ["proof_of_address"], "distance_km": null}
+{"type": "captured", "t": 28.62, "code": "F83053", "status": "ok", "challenge": false, "secs": 6.9, "http_status": 200}
+{"type": "classified", "t": 28.62, "code": "F83053", "category": "asks_softly", "colour": "amber", "quote": "To help us process your registration, it\u2019s useful if you can provide: Your NHS number Photo ID (such as a passport or driving licence) Proof of address", "retries": 0, "doc_types": ["passport", "photo_id", "proof_of_address"], "distance_km": null}
+{"type": "captured", "t": 28.74, "code": "F84069", "status": "ok", "challenge": false, "secs": 6.6, "http_status": 200}
+{"type": "classified", "t": 28.74, "code": "F84069", "category": "says_not_needed", "colour": "green", "quote": "You will not be asked for proof of address, immigration status or identity.", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 28.74, "code": "G85032", "status": "blocked", "challenge": true, "secs": 7.0, "http_status": 403}
+{"type": "classified", "t": 28.74, "code": "G85032", "category": "not_checked", "colour": "grey", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "boxed", "t": 28.8, "code": "E87739", "shot": "shots/E87739.png"}
+{"type": "boxed", "t": 28.82, "code": "E87066", "shot": "shots/E87066.png"}
+{"type": "boxed", "t": 28.9, "code": "F84012", "shot": "shots/F84012.png"}
+{"type": "boxed", "t": 28.9, "code": "H85002", "shot": "shots/H85002.png"}
+{"type": "captured", "t": 29.43, "code": "F85650", "status": "ok", "challenge": false, "secs": 7.4, "http_status": 200}
+{"type": "classified", "t": 29.43, "code": "F85650", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 29.53, "code": "F85014", "status": "blocked", "challenge": true, "secs": 7.6, "http_status": 403}
+{"type": "classified", "t": 29.53, "code": "F85014", "category": "not_checked", "colour": "grey", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 29.53, "code": "F84051", "status": "ok", "challenge": false, "secs": 4.4, "http_status": 200}
+{"type": "classified", "t": 29.53, "code": "F84051", "category": "asks_softly", "colour": "amber", "quote": "We might ask for ID or proof of address.", "retries": 0, "doc_types": ["photo_id", "proof_of_address"], "distance_km": null}
+{"type": "captured", "t": 29.54, "code": "F85020", "status": "blocked", "challenge": true, "secs": 7.8, "http_status": 403}
+{"type": "classified", "t": 29.54, "code": "F85020", "category": "not_checked", "colour": "grey", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 29.54, "code": "F84030", "status": "ok", "challenge": false, "secs": 7.6, "http_status": 200}
+{"type": "classified", "t": 29.54, "code": "F84030", "category": "asks_softly", "colour": "amber", "quote": "We will ask you for it and you will be able to attach it to your form but it is not compulsory.", "retries": 0, "doc_types": ["photo_id", "proof_of_address"], "distance_km": null}
+{"type": "captured", "t": 29.54, "code": "G85024", "status": "blocked", "challenge": true, "secs": 7.8, "http_status": 403}
+{"type": "classified", "t": 29.54, "code": "G85024", "category": "not_checked", "colour": "grey", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 29.66, "code": "E87011", "status": "ok", "challenge": false, "secs": 3.3, "http_status": 200}
+{"type": "classified", "t": 29.66, "code": "E87011", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "classified", "t": 29.67, "code": "G83021", "category": "says_not_needed", "colour": "green", "quote": "We do not need proof of ID or written proof of address for you to register with the surgery as a patient.", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 29.76, "code": "H85020", "status": "ok", "challenge": false, "secs": 8.0, "http_status": 200}
+{"type": "classified", "t": 29.76, "code": "H85020", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 29.77, "code": "F84079", "status": "ok", "challenge": false, "secs": 8.1, "http_status": 200}
+{"type": "classified", "t": 29.77, "code": "F84079", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 29.86, "code": "F85046", "status": "ok", "challenge": false, "secs": 8.1, "http_status": 200}
+{"type": "classified", "t": 29.86, "code": "F85046", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 30.25, "code": "F86020", "status": "ok", "challenge": false, "secs": 8.5, "http_status": 200}
+{"type": "classified", "t": 30.25, "code": "F86020", "category": "asks_softly", "colour": "amber", "quote": "When you arrive for your new patient check, you will be asked by reception to provide hard copy originals of both your of photo ID (either a passport or driving license) and proof of address confirming that you are living within catchment (council tax/utility bill/bank statement dated within the last 3 months)", "retries": 0, "doc_types": ["passport", "photo_id", "proof_of_address"], "distance_km": null}
+{"type": "captured", "t": 30.38, "code": "E87737", "status": "ok", "challenge": false, "secs": 2.9, "http_status": 200}
+{"type": "classified", "t": 30.38, "code": "E87737", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 30.47, "code": "E87047", "status": "ok", "challenge": false, "secs": 8.8, "http_status": 200}
+{"type": "classified", "t": 30.48, "code": "E87047", "category": "says_not_needed", "colour": "green", "quote": "You do not need proof of address or immigration status, ID or an NHS number.", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 30.48, "code": "F85032", "status": "ok", "challenge": false, "secs": 3.5, "http_status": 200}
+{"type": "classified", "t": 30.48, "code": "F85032", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 30.63, "code": "G83031", "status": "ok", "challenge": false, "secs": 2.7, "http_status": 200}
+{"type": "captured", "t": 30.72, "code": "G85105", "status": "blocked", "challenge": true, "secs": 9.0, "http_status": 403}
+{"type": "classified", "t": 30.72, "code": "G85105", "category": "not_checked", "colour": "grey", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 30.72, "code": "F86023", "status": "ok", "challenge": false, "secs": 9.1, "http_status": 200}
+{"type": "classified", "t": 30.72, "code": "F86023", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "boxed", "t": 30.76, "code": "F83002", "shot": "shots/F83002.png"}
+{"type": "captured", "t": 30.89, "code": "F84004", "status": "ok", "challenge": false, "secs": 9.2, "http_status": 200}
+{"type": "classified", "t": 30.89, "code": "F84004", "category": "demands_documents", "colour": "red", "quote": "You will need to produce proof of address and identification, complete some forms and attend for a New Patient Check appointment which the Receptionist will book for you.", "retries": 0, "doc_types": ["photo_id", "proof_of_address"], "distance_km": null}
+{"type": "captured", "t": 31.0, "code": "F85007", "status": "blocked", "challenge": true, "secs": 9.1, "http_status": 403}
+{"type": "classified", "t": 31.0, "code": "F85007", "category": "not_checked", "colour": "grey", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "boxed", "t": 31.07, "code": "F84006", "shot": "shots/F84006.png"}
+{"type": "boxed", "t": 31.08, "code": "F84016", "shot": "shots/F84016.png"}
+{"type": "captured", "t": 31.11, "code": "E87016", "status": "ok", "challenge": false, "secs": 4.1, "http_status": 200}
+{"type": "classified", "t": 31.11, "code": "E87016", "category": "asks_softly", "colour": "amber", "quote": "We might ask for ID or proof of address.", "retries": 0, "doc_types": ["photo_id", "proof_of_address"], "distance_km": null}
+{"type": "captured", "t": 31.11, "code": "G85004", "status": "ok", "challenge": false, "secs": 9.2, "http_status": 200}
+{"type": "classified", "t": 31.11, "code": "G85004", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 31.21, "code": "E87070", "status": "ok", "challenge": false, "secs": 3.7, "http_status": 200}
+{"type": "boxed", "t": 31.36, "code": "G85022", "shot": "shots/G85022.png"}
+{"type": "captured", "t": 31.54, "code": "E85019", "status": "ok", "challenge": false, "secs": 9.6, "http_status": 200}
+{"type": "classified", "t": 31.54, "code": "E85019", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 31.7, "code": "E87003", "status": "ok", "challenge": false, "secs": 9.6, "http_status": 200}
+{"type": "classified", "t": 31.7, "code": "E87003", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 31.7, "code": "F86011", "status": "ok", "challenge": false, "secs": 4.2, "http_status": 200}
+{"type": "classified", "t": 31.7, "code": "F86011", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 31.7, "code": "E83024", "status": "ok", "challenge": false, "secs": 4.9, "http_status": 200}
+{"type": "classified", "t": 31.7, "code": "E83024", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 31.7, "code": "G85039", "status": "ok", "challenge": false, "secs": 5.2, "http_status": 200}
+{"type": "classified", "t": 31.71, "code": "G85039", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 31.71, "code": "E87005", "status": "ok", "challenge": false, "secs": 5.8, "http_status": 200}
+{"type": "classified", "t": 31.71, "code": "E87005", "category": "demands_documents", "colour": "red", "quote": "Once completed the forms, please send please send us 1 form of photo ID and proof of address to nhsnwl.belgraviasurgery@nhs.net", "retries": 0, "doc_types": ["passport", "photo_id", "proof_of_address"], "distance_km": null}
+{"type": "captured", "t": 31.71, "code": "F83003", "status": "ok", "challenge": false, "secs": 4.1, "http_status": 200}
+{"type": "classified", "t": 31.71, "code": "F83003", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 31.71, "code": "H85001", "status": "ok", "challenge": false, "secs": 9.9, "http_status": 200}
+{"type": "classified", "t": 31.71, "code": "H85001", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 31.84, "code": "F84074", "status": "ok", "challenge": false, "secs": 10.1, "http_status": 200}
+{"type": "classified", "t": 31.84, "code": "F84074", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 31.97, "code": "E83050", "status": "ok", "challenge": false, "secs": 4.7, "http_status": 200}
+{"type": "classified", "t": 31.97, "code": "E83050", "category": "says_not_needed", "colour": "green", "quote": "Please note, proof of address and immigration status are not required to register with a GP", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 32.17, "code": "E85057", "status": "ok", "challenge": false, "secs": 9.9, "http_status": 200}
+{"type": "classified", "t": 32.17, "code": "E85057", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 32.17, "code": "G85028", "status": "ok", "challenge": false, "secs": 10.3, "http_status": 200}
+{"type": "classified", "t": 32.17, "code": "G85028", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 32.17, "code": "E85013", "status": "ok", "challenge": false, "secs": 10.1, "http_status": 200}
+{"type": "classified", "t": 32.17, "code": "E85013", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 32.26, "code": "E83016", "status": "ok", "challenge": false, "secs": 10.2, "http_status": 200}
+{"type": "classified", "t": 32.26, "code": "E83016", "category": "demands_documents", "colour": "red", "quote": "Acceptance on to the list is as at the discretion of the Doctor and we will ask you for proof of identity.", "retries": 0, "doc_types": ["photo_id", "proof_of_address", "immigration"], "distance_km": null}
+{"type": "captured", "t": 32.42, "code": "E87753", "status": "ok", "challenge": false, "secs": 2.6, "http_status": 200}
+{"type": "classified", "t": 32.42, "code": "E87753", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "quote_rejected", "t": 32.45, "code": "G83031", "attempt": 1, "reason": "The quote names no document (ID, proof of address, passport ...). Quote the sentence that names the document, or change category."}
+{"type": "boxed", "t": 32.48, "code": "E87002", "shot": "shots/E87002.png"}
+{"type": "captured", "t": 32.73, "code": "F85666", "status": "ok", "challenge": false, "secs": 3.1, "http_status": 200}
+{"type": "classified", "t": 32.73, "code": "F85666", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 32.83, "code": "E87013", "status": "ok", "challenge": false, "secs": 11.1, "http_status": 200}
+{"type": "classified", "t": 32.83, "code": "E87013", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 32.94, "code": "E85016", "status": "ok", "challenge": false, "secs": 11.0, "http_status": 200}
+{"type": "classified", "t": 32.94, "code": "E85016", "category": "asks_softly", "colour": "amber", "quote": "Please bring a photo ID and proof of address when you next visit the practice.", "retries": 0, "doc_types": ["photo_id", "proof_of_address"], "distance_km": null}
+{"type": "captured", "t": 32.94, "code": "E87648", "status": "ok", "challenge": false, "secs": 8.3, "http_status": 200}
+{"type": "classified", "t": 32.94, "code": "E87648", "category": "demands_documents", "colour": "red", "quote": "*To register, you need to come personally to the surgery with a proof of address and one form of identification.", "retries": 0, "doc_types": ["photo_id", "proof_of_address"], "distance_km": null}
+{"type": "captured", "t": 32.94, "code": "F84035", "status": "ok", "challenge": false, "secs": 4.1, "http_status": 200}
+{"type": "classified", "t": 32.94, "code": "F84035", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 33.12, "code": "E85025", "status": "blocked", "challenge": true, "secs": 2.0, "http_status": 401}
+{"type": "classified", "t": 33.12, "code": "E85025", "category": "not_checked", "colour": "grey", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 33.22, "code": "H84006", "status": "ok", "challenge": false, "secs": 11.1, "http_status": 200}
+{"type": "classified", "t": 33.22, "code": "H84006", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "boxed", "t": 33.22, "code": "F85017", "shot": "shots/F85017.png"}
+{"type": "captured", "t": 33.22, "code": "E87069", "status": "blocked", "challenge": true, "secs": 11.2, "http_status": 403}
+{"type": "classified", "t": 33.22, "code": "E87069", "category": "not_checked", "colour": "grey", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 33.22, "code": "H85066", "status": "ok", "challenge": false, "secs": 11.3, "http_status": 200}
+{"type": "classified", "t": 33.22, "code": "H85066", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 33.23, "code": "E83010", "status": "ok", "challenge": false, "secs": 11.2, "http_status": 202}
+{"type": "classified", "t": 33.23, "code": "E83010", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "boxed", "t": 33.24, "code": "H85026", "shot": "shots/H85026.png"}
+{"type": "captured", "t": 33.33, "code": "F86064", "status": "ok", "challenge": false, "secs": 8.1, "http_status": 200}
+{"type": "classified", "t": 33.33, "code": "F86064", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 33.43, "code": "G85632", "status": "ok", "challenge": false, "secs": 4.8, "http_status": 200}
+{"type": "classified", "t": 33.43, "code": "G85632", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 33.53, "code": "F85019", "status": "ok", "challenge": false, "secs": 6.0, "http_status": 200}
+{"type": "classified", "t": 33.54, "code": "F85019", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "classified", "t": 33.64, "code": "E87070", "category": "asks_softly", "colour": "amber", "quote": "Please email us the completed New Patient Registration Applications to nhsnwl.css@nhs.net along with a proof of ID and a proof of address.", "retries": 0, "doc_types": ["photo_id", "proof_of_address"], "distance_km": null}
+{"type": "captured", "t": 33.64, "code": "G84025", "status": "ok", "challenge": false, "secs": 11.8, "http_status": 200}
+{"type": "classified", "t": 33.64, "code": "G84025", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 33.64, "code": "H84023", "status": "ok", "challenge": false, "secs": 4.1, "http_status": 200}
+{"type": "classified", "t": 33.64, "code": "H84023", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 33.73, "code": "E85030", "status": "ok", "challenge": false, "secs": 11.8, "http_status": 200}
+{"type": "classified", "t": 33.73, "code": "E85030", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 33.73, "code": "G85025", "status": "ok", "challenge": false, "secs": 12.0, "http_status": 200}
+{"type": "classified", "t": 33.73, "code": "G85025", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 33.83, "code": "F85063", "status": "ok", "challenge": false, "secs": 5.2, "http_status": 200}
+{"type": "classified", "t": 33.83, "code": "F85063", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "boxed", "t": 33.88, "code": "F84047", "shot": "shots/F84047.png"}
+{"type": "captured", "t": 33.94, "code": "E83621", "status": "ok", "challenge": false, "secs": 3.3, "http_status": 200}
+{"type": "classified", "t": 33.94, "code": "E83621", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 34.05, "code": "E87738", "status": "ok", "challenge": false, "secs": 12.3, "http_status": 200}
+{"type": "classified", "t": 34.05, "code": "E87738", "category": "says_not_needed", "colour": "green", "quote": "You do not need proof of address or immigration status, ID or an NHS number.", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 34.05, "code": "F84034", "status": "blocked", "challenge": false, "secs": 1.9, "http_status": 404}
+{"type": "classified", "t": 34.05, "code": "F84034", "category": "not_checked", "colour": "grey", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 34.05, "code": "F83660", "status": "ok", "challenge": false, "secs": 8.4, "http_status": 200}
+{"type": "captured", "t": 34.08, "code": "G83001", "status": "ok", "challenge": false, "secs": 12.3, "http_status": 200}
+{"type": "classified", "t": 34.08, "code": "G83001", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 34.15, "code": "G85045", "status": "ok", "challenge": false, "secs": 3.2, "http_status": 200}
+{"type": "classified", "t": 34.15, "code": "G85045", "category": "says_not_needed", "colour": "green", "quote": "We do not require any ID to register with us, however we will require ID if you wish to register for online services.", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 34.15, "code": "G85030", "status": "ok", "challenge": false, "secs": 3.1, "http_status": 200}
+{"type": "classified", "t": 34.15, "code": "G85030", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "boxed", "t": 34.16, "code": "G85006", "shot": "shots/G85006.png"}
+{"type": "captured", "t": 34.27, "code": "E85003", "status": "ok", "challenge": false, "secs": 12.4, "http_status": 200}
+{"type": "classified", "t": 34.27, "code": "E85003", "category": "asks_softly", "colour": "amber", "quote": "When you come to the practice the first time, it is helpful if you can bring some ID, but this isn\u2019t a requirement.", "retries": 0, "doc_types": ["photo_id"], "distance_km": null}
+{"type": "captured", "t": 34.27, "code": "F86005", "status": "ok", "challenge": false, "secs": 4.6, "http_status": 200}
+{"type": "classified", "t": 34.27, "code": "F86005", "category": "says_not_needed", "colour": "green", "quote": "Whether you\u2019re new to the area, visiting, or don\u2019t have documents \u2013 you still have the right to register with a GP and get care.", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 34.27, "code": "F84010", "status": "ok", "challenge": false, "secs": 12.3, "http_status": 200}
+{"type": "classified", "t": 34.27, "code": "F84010", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 34.37, "code": "H85009", "status": "ok", "challenge": false, "secs": 12.6, "http_status": 200}
+{"type": "classified", "t": 34.37, "code": "H85009", "category": "says_not_needed", "colour": "green", "quote": "You do not need proof of address or immigration status, ID or an NHS number to register online with a GP.", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 34.5, "code": "E83005", "status": "ok", "challenge": false, "secs": 12.9, "http_status": 200}
+{"type": "classified", "t": 34.5, "code": "E83005", "category": "says_not_needed", "colour": "green", "quote": "Registration is free, and you do not need to provide proof of address, immigration status, ID, or an NHS number.", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 34.68, "code": "F85072", "status": "ok", "challenge": false, "secs": 8.8, "http_status": 200}
+{"type": "classified", "t": 34.68, "code": "F85072", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 35.07, "code": "F85013", "status": "blocked", "challenge": true, "secs": 8.9, "http_status": 403}
+{"type": "classified", "t": 35.07, "code": "F85013", "category": "not_checked", "colour": "grey", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 35.21, "code": "G85016", "status": "ok", "challenge": false, "secs": 13.3, "http_status": 200}
+{"type": "classified", "t": 35.21, "code": "G85016", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 35.21, "code": "E87034", "status": "ok", "challenge": false, "secs": 3.1, "http_status": 200}
+{"type": "classified", "t": 35.21, "code": "E87034", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 35.21, "code": "G85102", "status": "ok", "challenge": false, "secs": 5.3, "http_status": 200}
+{"type": "classified", "t": 35.21, "code": "G85102", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 35.31, "code": "F83060", "status": "ok", "challenge": false, "secs": 10.5, "http_status": 200}
+{"type": "captured", "t": 35.34, "code": "F85642", "status": "blocked", "challenge": true, "secs": 7.5, "http_status": 403}
+{"type": "classified", "t": 35.34, "code": "F85642", "category": "not_checked", "colour": "grey", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 35.34, "code": "G85129", "status": "ok", "challenge": false, "secs": 4.6, "http_status": 200}
+{"type": "classified", "t": 35.34, "code": "G85129", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 35.41, "code": "F85031", "status": "ok", "challenge": false, "secs": 8.8, "http_status": 200}
+{"type": "classified", "t": 35.41, "code": "F85031", "category": "asks_softly", "colour": "amber", "quote": "You do not need proof of address or proof of ID to register, though bringing them can help us sort out any queries more quickly.", "retries": 0, "doc_types": ["photo_id", "proof_of_address"], "distance_km": null}
+{"type": "captured", "t": 35.42, "code": "E87746", "status": "ok", "challenge": false, "secs": 3.9, "http_status": 200}
+{"type": "classified", "t": 35.42, "code": "E87746", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "boxed", "t": 35.52, "code": "F83053", "shot": "shots/F83053.png"}
+{"type": "captured", "t": 35.52, "code": "F83018", "status": "ok", "challenge": false, "secs": 9.2, "http_status": 200}
+{"type": "classified", "t": 35.52, "code": "F83018", "category": "says_not_needed", "colour": "green", "quote": "You do not need proof of address or immigration status, ID or an NHS number.", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "boxed", "t": 35.57, "code": "F84069", "shot": "shots/F84069.png"}
+{"type": "captured", "t": 35.61, "code": "G85034", "status": "ok", "challenge": false, "secs": 4.0, "http_status": 200}
+{"type": "classified", "t": 35.61, "code": "G85034", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 35.72, "code": "F84031", "status": "ok", "challenge": false, "secs": 4.9, "http_status": 200}
+{"type": "classified", "t": 35.72, "code": "F84031", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 35.81, "code": "G85054", "status": "ok", "challenge": false, "secs": 4.6, "http_status": 200}
+{"type": "classified", "t": 35.81, "code": "G85054", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 35.81, "code": "G85061", "status": "blocked", "challenge": true, "secs": 7.4, "http_status": 403}
+{"type": "classified", "t": 35.81, "code": "G85061", "category": "not_checked", "colour": "grey", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "boxed", "t": 35.87, "code": "F84030", "shot": "shots/F84030.png"}
+{"type": "boxed", "t": 35.9, "code": "F84051", "shot": "shots/F84051.png"}
+{"type": "captured", "t": 35.93, "code": "E87006", "status": "ok", "challenge": false, "secs": 3.0, "http_status": 200}
+{"type": "classified", "t": 35.93, "code": "E87006", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 36.1, "code": "G85706", "status": "ok", "challenge": false, "secs": 3.8, "http_status": 200}
+{"type": "classified", "t": 36.1, "code": "G85706", "category": "says_not_needed", "colour": "green", "quote": "You do not need proof of address or immigration status, ID or an NHS number.", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 36.25, "code": "F84731", "status": "ok", "challenge": false, "secs": 4.3, "http_status": 200}
+{"type": "classified", "t": 36.25, "code": "F84731", "category": "says_not_needed", "colour": "green", "quote": "Lack of identification, proof of address or an NHS number should not prevent someone from registering with a GP.", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 36.26, "code": "G85038", "status": "ok", "challenge": false, "secs": 4.6, "http_status": 200}
+{"type": "classified", "t": 36.26, "code": "G85038", "category": "asks_softly", "colour": "amber", "quote": "Alternatively you can bring proof of address (Utility Bill etc) and your NHS (National Health Service) number with you to the surgery.", "retries": 0, "doc_types": ["proof_of_address"], "distance_km": null}
+{"type": "captured", "t": 36.26, "code": "F84054", "status": "ok", "challenge": false, "secs": 6.5, "http_status": 200}
+{"type": "classified", "t": 36.26, "code": "F84054", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 36.4, "code": "G85026", "status": "ok", "challenge": false, "secs": 5.8, "http_status": 200}
+{"type": "classified", "t": 36.4, "code": "G85026", "category": "says_not_needed", "colour": "green", "quote": "We do not require patients to present identification to complete registration with the practice but we reserve the right to request identification at any time.", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 36.5, "code": "G85076", "status": "ok", "challenge": false, "secs": 4.3, "http_status": 200}
+{"type": "classified", "t": 36.5, "code": "G85076", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 36.5, "code": "F86078", "status": "ok", "challenge": false, "secs": 11.0, "http_status": 200}
+{"type": "classified", "t": 36.5, "code": "F86078", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 36.59, "code": "E83009", "status": "ok", "challenge": false, "secs": 14.6, "http_status": 200}
+{"type": "classified", "t": 36.59, "code": "E83009", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 37.03, "code": "G83013", "status": "ok", "challenge": false, "secs": 9.2, "http_status": 200}
+{"type": "classified", "t": 37.03, "code": "G83013", "category": "says_not_needed", "colour": "green", "quote": "We do not need proof of ID and proof of address to register with the surgery as a patient.", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "classified", "t": 37.09, "code": "F83060", "category": "says_not_needed", "colour": "green", "quote": "You do not need proof of address, proof of immigration status, identification, or an NHS number to register with a GP practice.", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 37.34, "code": "E85014", "status": "ok", "challenge": false, "secs": 15.4, "http_status": 200}
+{"type": "classified", "t": 37.34, "code": "E85014", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 37.5, "code": "G85121", "status": "ok", "challenge": false, "secs": 5.9, "http_status": 200}
+{"type": "classified", "t": 37.5, "code": "G85121", "category": "demands_documents", "colour": "red", "quote": "When you visit the surgery for the first time you will need proof of address, Photo ID and the print out of the form online to confirm that the details are correct.", "retries": 0, "doc_types": ["photo_id", "proof_of_address"], "distance_km": null}
+{"type": "boxed", "t": 37.57, "code": "G83021", "shot": "shots/G83021.png"}
+{"type": "boxed", "t": 37.67, "code": "F84004", "shot": "shots/F84004.png"}
+{"type": "boxed", "t": 37.7, "code": "F86020", "shot": "shots/F86020.png"}
+{"type": "captured", "t": 37.82, "code": "G85727", "status": "ok", "challenge": false, "secs": 10.9, "http_status": 200}
+{"type": "classified", "t": 37.82, "code": "G85727", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "classified", "t": 37.85, "code": "G83031", "category": "demands_documents", "colour": "red", "quote": "Proof of identity is also required.", "retries": 1, "doc_types": ["photo_id", "proof_of_address"], "distance_km": null}
+{"type": "boxed", "t": 37.94, "code": "E87047", "shot": "shots/E87047.png"}
+{"type": "captured", "t": 37.96, "code": "F84052", "status": "ok", "challenge": false, "secs": 11.3, "http_status": 200}
+{"type": "classified", "t": 37.96, "code": "F84052", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 38.34, "code": "F85010", "status": "ok", "challenge": false, "secs": 8.6, "http_status": 200}
+{"type": "classified", "t": 38.34, "code": "F85010", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 38.47, "code": "E87762", "status": "ok", "challenge": false, "secs": 10.1, "http_status": 200}
+{"type": "captured", "t": 38.57, "code": "G85114", "status": "ok", "challenge": false, "secs": 6.9, "http_status": 200}
+{"type": "classified", "t": 38.57, "code": "G85114", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 38.57, "code": "E87004", "status": "ok", "challenge": false, "secs": 16.8, "http_status": 200}
+{"type": "classified", "t": 38.57, "code": "E87004", "category": "demands_documents", "colour": "red", "quote": "Please provide to the surgery Proof of Address & Identification", "retries": 0, "doc_types": ["passport", "photo_id", "proof_of_address"], "distance_km": null}
+{"type": "captured", "t": 38.67, "code": "G83019", "status": "ok", "challenge": false, "secs": 11.0, "http_status": 200}
+{"type": "classified", "t": 38.67, "code": "G83019", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 39.1, "code": "G85125", "status": "blocked", "challenge": true, "secs": 8.8, "http_status": 403}
+{"type": "classified", "t": 39.1, "code": "G85125", "category": "not_checked", "colour": "grey", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 39.2, "code": "F85033", "status": "ok", "challenge": false, "secs": 11.9, "http_status": 200}
+{"type": "captured", "t": 39.25, "code": "F84008", "status": "ok", "challenge": false, "secs": 8.1, "http_status": 200}
+{"type": "classified", "t": 39.25, "code": "F84008", "category": "says_not_needed", "colour": "green", "quote": "No ID or proof of address required", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 39.39, "code": "G85084", "status": "ok", "challenge": false, "secs": 12.6, "http_status": 200}
+{"type": "classified", "t": 39.39, "code": "G85084", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "boxed", "t": 39.41, "code": "E87005", "shot": "shots/E87005.png"}
+{"type": "captured", "t": 39.54, "code": "G85130", "status": "ok", "challenge": false, "secs": 9.7, "http_status": 200}
+{"type": "captured", "t": 39.64, "code": "E83008", "status": "ok", "challenge": false, "secs": 17.9, "http_status": 200}
+{"type": "classified", "t": 39.64, "code": "E83008", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 39.79, "code": "H83005", "status": "ok", "challenge": false, "secs": 12.2, "http_status": 200}
+{"type": "classified", "t": 39.79, "code": "H83005", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "boxed", "t": 39.81, "code": "E83050", "shot": "shots/E83050.png"}
+{"type": "boxed", "t": 39.93, "code": "E87016", "shot": "shots/E87016.png"}
+{"type": "captured", "t": 39.93, "code": "G85051", "status": "ok", "challenge": false, "secs": 11.0, "http_status": 200}
+{"type": "classified", "t": 39.93, "code": "G85051", "category": "says_not_needed", "colour": "green", "quote": "You do not need proof of address or immigration status, ID or an NHS number.", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "boxed", "t": 40.08, "code": "E83016", "shot": "shots/E83016.png"}
+{"type": "captured", "t": 40.26, "code": "F83015", "status": "ok", "challenge": false, "secs": 14.2, "http_status": 200}
+{"type": "classified", "t": 40.26, "code": "F83015", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 40.81, "code": "G85047", "status": "ok", "challenge": false, "secs": 12.1, "http_status": 200}
+{"type": "classified", "t": 40.82, "code": "G85047", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 41.01, "code": "G83058", "status": "ok", "challenge": false, "secs": 13.4, "http_status": 200}
+{"type": "classified", "t": 41.01, "code": "G83058", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 41.11, "code": "Y02974", "status": "ok", "challenge": false, "secs": 9.4, "http_status": 200}
+{"type": "classified", "t": 41.11, "code": "Y02974", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "boxed", "t": 41.17, "code": "E85016", "shot": "shots/E85016.png"}
+{"type": "captured", "t": 41.2, "code": "G85091", "status": "ok", "challenge": false, "secs": 8.4, "http_status": 200}
+{"type": "classified", "t": 41.2, "code": "G85091", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 41.21, "code": "F84014", "status": "ok", "challenge": false, "secs": 8.8, "http_status": 200}
+{"type": "classified", "t": 41.21, "code": "F84014", "category": "demands_documents", "colour": "red", "quote": "Prospective patients should provide photo identification and proof of address (i.e. passport, full UK driver\u2019s licence, bank statement, utility bill).", "retries": 0, "doc_types": ["passport", "photo_id", "proof_of_address"], "distance_km": null}
+{"type": "classified", "t": 41.31, "code": "E87762", "category": "says_not_needed", "colour": "green", "quote": "You do not need proof of address or immigration status, ID or an NHS number.", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 41.33, "code": "F84053", "status": "ok", "challenge": false, "secs": 19.3, "http_status": 200}
+{"type": "classified", "t": 41.34, "code": "F84053", "category": "demands_documents", "colour": "red", "quote": "Patients wishing to register with the practice must produce Proof of address Photo ID NHS Number", "retries": 0, "doc_types": ["photo_id", "proof_of_address"], "distance_km": null}
+{"type": "captured", "t": 41.34, "code": "E87665", "status": "ok", "challenge": false, "secs": 11.7, "http_status": 200}
+{"type": "classified", "t": 41.34, "code": "E87665", "category": "demands_documents", "colour": "red", "quote": "Until you have submitted both forms and had your ID checked you will not be registered at the practice.", "retries": 0, "doc_types": ["passport", "photo_id", "proof_of_address"], "distance_km": null}
+{"type": "captured", "t": 41.51, "code": "G85020", "status": "ok", "challenge": false, "secs": 14.1, "http_status": 200}
+{"type": "classified", "t": 41.51, "code": "G85020", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 41.51, "code": "F84021", "status": "ok", "challenge": false, "secs": 14.0, "http_status": 200}
+{"type": "classified", "t": 41.51, "code": "F84021", "category": "asks_softly", "colour": "amber", "quote": "While we may ask for proof of identification and/or address to help ensure your details are recorded accurately, please note that we will register you even if you are unable to provide these documents.", "retries": 0, "doc_types": ["photo_id", "proof_of_address"], "distance_km": null}
+{"type": "captured", "t": 41.63, "code": "E85008", "status": "ok", "challenge": false, "secs": 19.8, "http_status": 200}
+{"type": "captured", "t": 41.8, "code": "F84036", "status": "ok", "challenge": false, "secs": 9.8, "http_status": 200}
+{"type": "classified", "t": 41.8, "code": "F84036", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "boxed", "t": 41.9, "code": "E87648", "shot": "shots/E87648.png"}
+{"type": "boxed", "t": 41.9, "code": "E87070", "shot": "shots/E87070.png"}
+{"type": "captured", "t": 41.95, "code": "E83013", "status": "ok", "challenge": false, "secs": 15.2, "http_status": 200}
+{"type": "classified", "t": 41.95, "code": "E83013", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 42.11, "code": "H84055", "status": "ok", "challenge": false, "secs": 10.3, "http_status": 200}
+{"type": "classified", "t": 42.12, "code": "H84055", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "boxed", "t": 42.25, "code": "E87738", "shot": "shots/E87738.png"}
+{"type": "classified", "t": 42.36, "code": "F85033", "category": "asks_softly", "colour": "amber", "quote": "Bring proof of address and photographic identification, such as a passport or drivers licence (if available)", "retries": 0, "doc_types": ["passport", "photo_id", "proof_of_address"], "distance_km": null}
+{"type": "captured", "t": 42.4, "code": "H83010", "status": "ok", "challenge": false, "secs": 11.7, "http_status": 200}
+{"type": "classified", "t": 42.4, "code": "H83010", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "classified", "t": 43.06, "code": "G85130", "category": "asks_softly", "colour": "amber", "quote": "On occasions we may need to see proof of your address.", "retries": 0, "doc_types": ["proof_of_address"], "distance_km": null}
+{"type": "boxed", "t": 43.19, "code": "G85045", "shot": "shots/G85045.png"}
+{"type": "captured", "t": 43.78, "code": "E87043", "status": "ok", "challenge": false, "secs": 15.7, "http_status": 200}
+{"type": "classified", "t": 43.78, "code": "E87043", "category": "says_not_needed", "colour": "green", "quote": "You do NOT need proof of Address, immigration status, Photo ID or an NHS Number", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "boxed", "t": 43.89, "code": "F86005", "shot": "shots/F86005.png"}
+{"type": "boxed", "t": 43.97, "code": "E85003", "shot": "shots/E85003.png"}
+{"type": "boxed", "t": 44.31, "code": "H85009", "shot": "shots/H85009.png"}
+{"type": "classified", "t": 44.87, "code": "E85008", "category": "says_not_needed", "colour": "green", "quote": "You do not need proof of address or immigration status, ID or an NHS number.", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "boxed", "t": 44.91, "code": "E83005", "shot": "shots/E83005.png"}
+{"type": "captured", "t": 44.95, "code": "F85687", "status": "ok", "challenge": false, "secs": 16.3, "http_status": 200}
+{"type": "classified", "t": 44.95, "code": "F85687", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 45.34, "code": "G83027", "status": "ok", "challenge": false, "secs": 18.4, "http_status": 200}
+{"type": "classified", "t": 45.34, "code": "G83027", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "boxed", "t": 46.0, "code": "F85031", "shot": "shots/F85031.png"}
+{"type": "boxed", "t": 46.09, "code": "F83018", "shot": "shots/F83018.png"}
+{"type": "boxed", "t": 46.47, "code": "G85706", "shot": "shots/G85706.png"}
+{"type": "captured", "t": 46.58, "code": "G85041", "status": "ok", "challenge": false, "secs": 17.0, "http_status": 200}
+{"type": "classified", "t": 46.58, "code": "G85041", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "boxed", "t": 46.58, "code": "F84731", "shot": "shots/F84731.png"}
+{"type": "captured", "t": 48.39, "code": "G85023", "status": "ok", "challenge": false, "secs": 17.9, "http_status": 200}
+{"type": "classified", "t": 48.39, "code": "G85023", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "boxed", "t": 48.42, "code": "F83060", "shot": "shots/F83060.png"}
+{"type": "boxed", "t": 48.42, "code": "G85026", "shot": "shots/G85026.png"}
+{"type": "boxed", "t": 48.47, "code": "G85038", "shot": "shots/G85038.png"}
+{"type": "boxed", "t": 48.58, "code": "G83013", "shot": "shots/G83013.png"}
+{"type": "boxed", "t": 50.09, "code": "G85121", "shot": "shots/G85121.png"}
+{"type": "boxed", "t": 50.46, "code": "E87004", "shot": "shots/E87004.png"}
+{"type": "captured", "t": 50.53, "code": "G85014", "status": "ok", "challenge": false, "secs": 19.0, "http_status": 200}
+{"type": "classified", "t": 50.53, "code": "G85014", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "boxed", "t": 50.76, "code": "F84008", "shot": "shots/F84008.png"}
+{"type": "boxed", "t": 50.96, "code": "G83031", "shot": "shots/G83031.png"}
+{"type": "boxed", "t": 51.79, "code": "G85051", "shot": "shots/G85051.png"}
+{"type": "boxed", "t": 52.52, "code": "F84014", "shot": "shots/F84014.png"}
+{"type": "boxed", "t": 52.89, "code": "E87762", "shot": "shots/E87762.png"}
+{"type": "boxed", "t": 53.09, "code": "F84053", "shot": "shots/F84053.png"}
+{"type": "boxed", "t": 53.57, "code": "E87665", "shot": "shots/E87665.png"}
+{"type": "classified", "t": 54.64, "code": "F83660", "category": "asks_softly", "colour": "amber", "quote": "To help us process your registration, it\u2019s useful if you can provide: Your NHS number (if you know it) Photo ID (such as a passport or driving licence) Proof of address", "retries": 0, "doc_types": ["passport", "photo_id", "proof_of_address"], "distance_km": null}
+{"type": "boxed", "t": 54.72, "code": "F84021", "shot": "shots/F84021.png"}
+{"type": "boxed", "t": 55.01, "code": "F85033", "shot": "shots/F85033.png"}
+{"type": "boxed", "t": 55.21, "code": "G85130", "shot": "shots/G85130.png"}
+{"type": "boxed", "t": 55.23, "code": "E87043", "shot": "shots/E87043.png"}
+{"type": "boxed", "t": 56.88, "code": "E85008", "shot": "shots/E85008.png"}
+{"type": "boxed", "t": 57.14, "code": "F83660", "shot": "shots/F83660.png"}
+{"type": "captured", "t": 58.59, "code": "G83012", "status": "error", "challenge": false, "secs": 25.7, "http_status": null}
+{"type": "classified", "t": 58.59, "code": "G83012", "category": "not_checked", "colour": "grey", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 58.7, "code": "G85015", "status": "error", "challenge": false, "secs": 25.9, "http_status": null}
+{"type": "classified", "t": 58.7, "code": "G85015", "category": "not_checked", "colour": "grey", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 58.89, "code": "G85011", "status": "error", "challenge": false, "secs": 26.0, "http_status": null}
+{"type": "classified", "t": 58.89, "code": "G85011", "category": "not_checked", "colour": "grey", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 59.17, "code": "E87010", "status": "error", "challenge": false, "secs": 26.1, "http_status": null}
+{"type": "classified", "t": 59.17, "code": "E87010", "category": "not_checked", "colour": "grey", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 59.31, "code": "E83007", "status": "error", "challenge": false, "secs": 26.1, "http_status": null}
+{"type": "classified", "t": 59.31, "code": "E83007", "category": "not_checked", "colour": "grey", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "captured", "t": 59.45, "code": "F84022", "status": "error", "challenge": false, "secs": 26.2, "http_status": null}
+{"type": "classified", "t": 59.45, "code": "F84022", "category": "not_checked", "colour": "grey", "quote": "", "retries": 0, "doc_types": [], "distance_km": null}
+{"type": "run_finished", "t": 59.46, "counts": {"demands_documents": 15, "asks_softly": 18, "says_not_needed": 24, "no_mention": 103, "unclear": 0, "not_checked": 40}, "wall_secs": 59.5, "total": 200, "quotes_rejected": 1, "gemini_calls": 10, "error": null, "containers_peak": 96}

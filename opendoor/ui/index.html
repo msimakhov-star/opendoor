@@ -404,7 +404,7 @@ function apply(e) {
     case "run_started": S.fake = !!e.fake; S.prefixes = e.postcode_prefixes || []; S.near = e.near || null; setMode(); break;
     case "practices_found": S.found = e.count || 0; break;
     case "resolved": Object.assign(p, {name: nice(e.name) || p.name, lat: e.lat, lon: e.lon, reg_url: e.reg_url}); setMarker(p); break;
-    case "captured": S.pages++; S.finished.add(e.code); Object.assign(p, {status: e.status, challenge: e.challenge, secs: e.secs});
+    case "captured": if (e.status === "ok" || e.status < 400) S.pages++; /* the built in sample uses HTTP codes */ S.finished.add(e.code); Object.assign(p, {status: e.status, challenge: e.challenge, secs: e.secs});
       if (typeof e.t === "number" && typeof e.secs === "number") S.spans.push([e.t - e.secs, e.t]); break;
     case "quote_rejected": S.rejected++; p.rejections++;
       $("st-code").classList.remove("rej"); void $("st-code").offsetWidth; $("st-code").classList.add("rej"); break;
@@ -451,7 +451,7 @@ function counters() {
   const peak = peakOverlap(S.spans);
   $("x-modal").textContent = S.mode === "ready" ? "" : S.peak != null ? "peak " + S.peak + " containers" : S.done ? "peak " + peak + " at once" : inflight + " in flight";
   $("x-gem").textContent = S.calls != null ? plural(S.calls, "model call", "model calls") : S.mode === "ready" || S.done ? "" : queued + " waiting";
-  $("x-code").textContent = S.rejected + " misquotes rejected";
+  $("x-code").textContent = plural(S.rejected, "misquote", "misquotes") + " rejected";
   $("x-code").classList.toggle("hot", S.rejected > 0);
   const lit = {nhs: S.found > 0, modal: S.pages > 0 || all.some(p => typeof p.lat === "number"), gem: all.some(p => p.category),
     code: verified > 0 || S.rejected > 0, ev: boxed > 0, map: all.some(p => p.category)};
@@ -473,7 +473,7 @@ function describe(e) {
   switch (e.type) {
     case "run_started": return "postcodes " + (e.postcode_prefixes || []).join(", ") + ", limit " + e.limit +
       (Array.isArray(e.lacking) && e.lacking.length ? ", person has no " + e.lacking.map(k => DOC_NAME[k] || k).join(", ") : "");
-    case "warming": return "starting Modal browser containers while the practices are looked up";
+    case "warming": return "booting a Modal browser container while the practices are looked up";
     case "practices_found": return e.count + " GP practices from the NHS directory" + (Array.isArray(e.outcodes) && e.outcodes.length ? ", districts " + e.outcodes.join(", ") : "");
     case "resolved": return n + "  " + (host(e.reg_url) || "no registration page found");
     case "captured": return n + "  status " + e.status + (e.challenge ? ", bot challenge" : "") + (e.secs != null ? "  " + e.secs + "s" : "");
