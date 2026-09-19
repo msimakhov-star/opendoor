@@ -27,9 +27,11 @@ def plain(text: str) -> str:
     return re.sub(r'^\s*note for a patient:?\s*\n+', '', text, flags=re.I).strip()
 
 
-def problems(text: str, category: str, metrics: dict) -> list[str]:
+def problems(text: str, category: str, metrics: dict, kind: str = 'note') -> list[str]:
     """Code, not a model, decides whether a text may be shown. Empty list = OK."""
     found = []
+    if kind == 'letter' and not metrics.get('contains_quote'):
+        found.append('letter does not quote the practice sentence word for word')  # a misquote would undo the product
     if metrics['banned_total']:
         found.append('banned word')
     if metrics['placeholders'] or re.search(r'\[\d+\]', text):
@@ -56,7 +58,7 @@ def main(results_path: str, run_name: str) -> None:
     for e in done.values():  # stored texts from before plain() existed
         e['note'], e['letter'] = plain(e['note']), plain(e['letter'])
     done = {c: e for c, e in done.items()
-            if not any(problems(e[k], cat.get(c, ''), e['metrics'][k]) for k in ('note', 'letter'))}
+            if not any(problems(e[k], cat.get(c, ''), e['metrics'][k], k) for k in ('note', 'letter'))}
     print(f'{len(rows)} letter-worthy practices, {len(done)} already written and passing')
     for n, r in enumerate(rows, 1):
         if r['code'] in done:
@@ -70,7 +72,7 @@ def main(results_path: str, run_name: str) -> None:
                         res = advocate.run(kind, v)
                         text = plain(res.output)
                         m = score_summary(text, v)
-                        bad = problems(text, r['category'], m)
+                        bad = problems(text, r['category'], m, kind)
                         if not bad:
                             break
                         print(f'  {r["code"]} {kind} attempt {attempt} rejected by code: {", ".join(bad)}')
@@ -85,6 +87,7 @@ def main(results_path: str, run_name: str) -> None:
         done[r['code']] = entry
         out.write_text(json.dumps(done, indent=2, ensure_ascii=False))  # after every practice, so nothing is lost
         print(f'[{n}/{len(rows)}] {r["code"]} ok')
+    out.write_text(json.dumps(done, indent=2, ensure_ascii=False))  # also drops entries that now fail the gate
     print(f'wrote {out} ({len(done)} practices)')
 
 
