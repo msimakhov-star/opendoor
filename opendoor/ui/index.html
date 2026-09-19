@@ -24,8 +24,8 @@ header{display:flex;flex-wrap:wrap;align-items:center;gap:10px 20px;padding:10px
 .controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .controls label,.persona>span{font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--mute);font-weight:700;white-space:nowrap}
 input,select{background:#0a0f16;border:1px solid #2c3a4d;border-radius:8px;padding:8px 12px;height:42px}
-#postcode{width:160px;font-size:21px;font-weight:700;text-transform:uppercase}
-#limit{width:72px}
+#postcode{width:160px;text-overflow:ellipsis;font-size:21px;font-weight:700;text-transform:uppercase}
+#limit{width:72px;padding-left:6px;padding-right:6px} /* 4 digits fit */
 #replay{max-width:160px}
 .vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap} /* read by screen readers, not shown */
 .btn{background:#1a2432;border:1px solid #2c3a4d;border-radius:8px;padding:0 18px;height:42px;cursor:pointer;font-weight:600;text-decoration:none;color:var(--text);display:inline-flex;align-items:center}
@@ -75,7 +75,7 @@ input,select{background:#0a0f16;border:1px solid #2c3a4d;border-radius:8px;paddi
 .tally{display:flex;gap:18px}
 .tally span{display:flex;flex-direction:column;align-items:center;line-height:1}
 .tally b{font-size:28px;font-weight:800;font-variant-numeric:tabular-nums}
-.s-map{flex-grow:1.35}
+.s-map{flex-grow:1.35}.s-gem{flex-grow:1.2}.s-nhs{flex-grow:1.1} /* room for "248 calls, 215 cached" and a 4-digit count */
 .tally small{white-space:nowrap;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--mute);margin-top:3px}
 .tally .red b{color:var(--red)}.tally .amber b{color:var(--amber)}.tally .green b{color:var(--green)}
 .tally .outline b{color:transparent;-webkit-text-stroke:1.5px var(--green)}
@@ -272,7 +272,9 @@ dialog textarea{width:100%;height:46vh;background:#0a0f16;border:1px solid #2c3a
 @media (max-height:800px){ /* short laptop screens: the area card keeps the headline, the bar and the key number, the map stays visible */
   #area{bottom:12px;padding:8px 12px;gap:12px}#area .skey,#area .note{display:none}#area .foot{margin-top:0}
   .sumh{font-size:17px}.sumh b{font-size:21px}.sbar{height:10px;margin:6px 0 0}.contra{font-size:14px;padding:6px 10px}.contra b{font-size:18px}}
-@media (max-width:1500px){.tally small{font-size:10px;letter-spacing:.02em}.step{padding:5px 9px 6px}.step .u{font-size:14px}.step .x{color:#c4cedb}.tally{gap:9px}.arr{flex-basis:16px}.clock{min-width:80px;padding-left:10px}}
+@media (max-width:1500px){ /* 7 tiles with 4-digit counts (london1200) must fit 1440 without cutting labels or running into the clock */
+  #chain{padding-left:14px;padding-right:14px}.step{padding:5px 7px 6px}.step .row{gap:6px}.step .row>b,.clock b{font-size:22px}.step .u{font-size:12px}.step .x{color:#c4cedb}
+  .step .nm{font-size:11px;letter-spacing:.05em}.arr{flex-basis:10px;margin:0 2px}.tally{gap:7px}.tally b{font-size:20px}.tally small{font-size:9px;letter-spacing:0}.clock{min-width:64px;padding-left:8px}}
 @media (max-width:900px){body{overflow:auto;display:block}main{grid-template-columns:1fr}#mapwrap{height:50vh}#area{position:static;grid-template-columns:1fr}#panel{border-left:0}
   .persona{margin-left:0}#chain{flex-wrap:wrap;gap:6px}.arr{display:none}.step{flex-basis:30%}}
 @media (prefers-reduced-motion:reduce){.pin::before,.pin::after,.tick,.step.rej,.arr.flow,#area,#toast,.sbar{animation:none!important}}
@@ -622,7 +624,9 @@ async function loadAudit(runId, g) { // optional: red and amber verdicts re-read
   try {
     const r = await fetch("/api/runs/" + encodeURIComponent(runId) + "/audit");
     if (!r.ok) return;
-    const j = await r.json();
+    let j = await r.json();
+    const t = j && j.three_reader_audit; // london1200 audits reds only, with totals and no per-row votes
+    if (t && typeof t.audited === "number") j = {method: t.method || j.method, audited: t.audited, confirmed: t.confirmed, changed: j.changed || [], rows: [], readers: 3, scope: "Red verdicts"};
     if (g !== gen || !j || !Array.isArray(j.rows)) return;
     S.audit = j; S.auditBy = Object.fromEntries(j.rows.map(x => [x.code, x]));
     renderArea(); renderPanel();
@@ -726,9 +730,10 @@ function renderArea() {
   foot.append(el("p", "note", plural(all.filter(p => p.quote).length, "quote", "quotes") + " checked word for word by code, " +
     plural(S.rejected, "misquote", "misquotes") + " rejected, " + plural(all.filter(p => p.boxed).length, "sentence", "sentences") + " boxed on screenshots."), x);
   if (S.audit && typeof S.audit.audited === "number") { // wording: AI readers, never "reviewed by humans"
-    const readers = Math.max(0, ...S.audit.rows.map(x => (x.votes || []).length)), ch = (S.audit.changed || []).length;
-    const a = el("p", "note", "Red and amber verdicts re-read by " + readers + " independent AI readers: " + S.audit.confirmed + " of " + S.audit.audited + " confirmed" +
-      (ch ? ", " + ch + " changed" : "") + ".");
+    const readers = S.audit.readers || Math.max(0, ...S.audit.rows.map(x => (x.votes || []).length)), ch = (S.audit.changed || []).length;
+    const toAmber = ch && S.audit.changed.every(x => x.to === "asks_softly");
+    const a = el("p", "note", (S.audit.scope || "Red and amber verdicts") + " re-read by " + readers + " independent AI readers: " + S.audit.confirmed + " of " + S.audit.audited + " confirmed" +
+      (ch ? ", " + ch + " changed" + (toAmber ? " to amber" : "") : "") + ".");
     if (S.audit.method) a.title = S.audit.method;
     right.append(a);
   }
