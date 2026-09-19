@@ -1,0 +1,93 @@
+{"type": "run_started", "t": 0.0, "postcode_prefixes": ["E13", "E6", "E7"], "limit": 40, "run_id": "20260919-133923-E13-E6-E7", "fake": false}
+{"type": "practices_found", "t": 0.03, "count": 26}
+{"type": "resolved", "t": 3.45, "code": "F84681", "name": "BALAAM STREET PRACTICE", "lat": 51.526725, "lon": 0.023834, "reg_url": "http://balaamstreetsurgery.nhs.uk/"}
+{"type": "resolved", "t": 3.57, "code": "F84677", "name": "EAST END MEDICAL CENTRE", "lat": 51.537312, "lon": 0.025255, "reg_url": "https://www.eastendmedicalcentre.nhs.uk/"}
+{"type": "resolved", "t": 3.57, "code": "F84053", "name": "GREENGATE MEDICAL CENTRE", "lat": 51.525211, "lon": 0.027688, "reg_url": "https://www.greengatemedicalcentre.nhs.uk/"}
+{"type": "resolved", "t": 3.66, "code": "F84660", "name": "DR CM PATEL'S SURGERY", "lat": 51.540967, "lon": 0.035411, "reg_url": "http://www.drpatelsurgery.co.uk/"}
+{"type": "resolved", "t": 3.75, "code": "F84642", "name": "LUCAS AVENUE PRACTICE", "lat": 51.536291, "lon": 0.030733, "reg_url": "https://www.lucasavenuepractice.co.uk/"}
+{"type": "resolved", "t": 3.75, "code": "F84050", "name": "BOLEYN MEDICAL CENTRE", "lat": 51.531234, "lon": 0.044868, "reg_url": "http://www.boleynmedicalcentre.co.uk/"}
+{"type": "resolved", "t": 3.87, "code": "F84010", "name": "ASPIRE MEDICAL CENTRE", "lat": 51.532553, "lon": 0.05019, "reg_url": "https://www.aspiremedicalcentre.nhs.uk/"}
+{"type": "resolved", "t": 3.88, "code": "F84735", "name": "THE AZAD PRACTICE", "lat": 51.531234, "lon": 0.044868, "reg_url": "http://www.theazadpractice.nhs.uk/"}
+{"type": "resolved", "t": 3.88, "code": "F84004", "name": "MARKET STREET HEALTH GROUP", "lat": 51.530995, "lon": 0.057516, "reg_url": "https://www.marketstreethealthgroup.nhs.uk/"}
+{"type": "resolved", "t": 3.88, "code": "F84641", "name": "BIRCHDALE ROAD MEDICAL CENTRE", "lat": 51.54676, "lon": 0.038453, "reg_url": "http://www.birchdalemedicalcentre.nhs.uk/"}
+{"type": "resolved", "t": 3.88, "code": "F84093", "name": "TOLLGATE MEDICAL CENTRE", "lat": 51.515574, "lon": 0.056389, "reg_url": "http://www.tollgatemedicalcentre.nhs.uk/"}
+{"type": "resolved", "t": 3.88, "code": "F84669", "name": "CENTRAL PARK SURGERY", "lat": 51.532553, "lon": 0.05019, "reg_url": "https://www.centralparksurgerynewham.nhs.uk/"}
+{"type": "resolved", "t": 4.09, "code": "F84092", "name": "GLEN ROAD MEDICAL CENTRE", "lat": 51.522222, "lon": 0.032557, "reg_url": "http://www.glenroadmedicalcentre.nhs.uk/"}
+{"type": "resolved", "t": 4.19, "code": "F84672", "name": "FIRST 4 HEALTH GROUP - E7 HEALTH", "lat": 51.55052, "lon": 0.02489, "reg_url": "https://register-with-gp.ht1.uk/?gpCode=F84672&gpName=E7%20Health"}
+{"type": "resolved", "t": 4.36, "code": "F84086", "name": "THE FOREST PRACTICE", "lat": 51.55052, "lon": 0.02489, "reg_url": "http://www.theforestpractice.org.uk/"}
+{"type": "resolved", "t": 5.4, "code": "F84717", "name": "ROYAL DOCKS MEDICAL PRACTICE", "lat": 51.509461, "lon": 0.062959, "reg_url": "https://www.royaldocksmedicalpractice.co.uk/register-now"}
+{"type": "resolved", "t": 5.5, "code": "F84741", "name": "PLASHET HARMONY PRACTICE", "lat": 51.539589, "lon": 0.045386, "reg_url": "http://www.plashetharmonypractice.co.uk/"}
+{"type": "resolved", "t": 5.58, "code": "F84070", "name": "LATHOM ROAD MEDICAL CENTRE", "lat": 51.538067, "lon": 0.052701, "reg_url": "https://www.lathomroadmedicalcentre.co.uk/services"}
+{"type": "resolved", "t": 5.92, "code": "F84124", "name": "THE PROJECT SURGERY", "lat": 51.532275, "lon": 0.020663, "reg_url": "https://theprojectsurgery.com/registration.html"}
+{"type": "resolved", "t": 6.19, "code": "F84006", "name": "SHREWSBURY ROAD SURGERY", "lat": 51.540929, "lon": 0.043312, "reg_url": "https://www.shrewsburyroadsurgery.co.uk/new-patient-registration"}
+{"type": "resolved", "t": 6.33, "code": "F84724", "name": "WOODGRANGE MEDICAL PRACTICE", "lat": 51.548598, "lon": 0.02528, "reg_url": "https://www.woodgrangemedicalpractice.co.uk/new-patient-registration"}
+{"type": "resolved", "t": 7.31, "code": "F84052", "name": "ESSEX LODGE", "lat": 51.527917, "lon": 0.026713, "reg_url": "https://essexlodge.com/register-with-our-practice/"}
+{"type": "resolved", "t": 8.17, "code": "F84097", "name": "CLAREMONT CLINIC", "lat": 51.5475, "lon": 0.033611, "reg_url": "https://claremontclinic.co.uk/register-with-our-practice/"}
+{"type": "resolved", "t": 8.29, "code": "F84014", "name": "UPTON LANE MEDICAL CENTRE", "lat": 51.543298, "lon": 0.026487, "reg_url": "https://uptonlanesurgery.nhs.uk/register-with-our-practice/"}
+{"type": "resolved", "t": 15.43, "code": "F84088", "name": "PLASHET ROAD MEDICAL CENTRE", "lat": 51.537492, "lon": 0.03305, "reg_url": "https://plashetmedicalcentre.co.uk/"}
+{"type": "resolved", "t": 16.25, "code": "F84670", "name": "WESTBURY ROAD MEDICAL PRACTICE", "lat": 51.545788, "lon": 0.030218, "reg_url": "http://www.westburyroadmedicalpractice.co.uk/"}
+{"type": "captured", "t": 19.93, "code": "F84677", "status": "ok", "challenge": false, "secs": 2.9, "http_status": 200}
+{"type": "classified", "t": 19.93, "code": "F84677", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0}
+{"type": "captured", "t": 20.17, "code": "F84642", "status": "blocked", "challenge": true, "secs": 3.4, "http_status": 401}
+{"type": "classified", "t": 20.17, "code": "F84642", "category": "not_checked", "colour": "grey", "quote": "", "retries": 0}
+{"type": "captured", "t": 22.2, "code": "F84672", "status": "ok", "challenge": false, "secs": 0.0, "http_status": null}
+{"type": "classified", "t": 22.2, "code": "F84672", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0}
+{"type": "captured", "t": 24.67, "code": "F84086", "status": "blocked", "challenge": true, "secs": 2.3, "http_status": 401}
+{"type": "classified", "t": 24.67, "code": "F84086", "category": "not_checked", "colour": "grey", "quote": "", "retries": 0}
+{"type": "captured", "t": 27.78, "code": "F84717", "status": "ok", "challenge": false, "secs": 5.4, "http_status": 200}
+{"type": "classified", "t": 27.78, "code": "F84717", "category": "demands_documents", "colour": "red", "quote": "Please ensure you complete all sections of the PRF1 form, as well as providing proof of address and photo ID by presenting in person at the surgery reception desk.", "retries": 0}
+{"type": "captured", "t": 28.76, "code": "F84053", "status": "ok", "challenge": false, "secs": 11.9, "http_status": 200}
+{"type": "classified", "t": 28.76, "code": "F84053", "category": "demands_documents", "colour": "red", "quote": "Patients wishing to register with the practice must produce Proof of address Photo ID NHS Number", "retries": 0}
+{"type": "captured", "t": 29.43, "code": "F84681", "status": "ok", "challenge": false, "secs": 12.8, "http_status": 200}
+{"type": "classified", "t": 29.43, "code": "F84681", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0}
+{"type": "captured", "t": 29.54, "code": "F84006", "status": "ok", "challenge": false, "secs": 5.3, "http_status": 200}
+{"type": "captured", "t": 31.03, "code": "F84735", "status": "ok", "challenge": false, "secs": 11.2, "http_status": 200}
+{"type": "classified", "t": 31.03, "code": "F84735", "category": "asks_softly", "colour": "amber", "quote": "If you can provide photo ID and proof of address to speed up the process and correctly match your details please email these with any account details crossed out.", "retries": 0}
+{"type": "captured", "t": 31.21, "code": "F84070", "status": "ok", "challenge": false, "secs": 7.4, "http_status": 200}
+{"type": "classified", "t": 31.21, "code": "F84070", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0}
+{"type": "captured", "t": 31.96, "code": "F84050", "status": "ok", "challenge": false, "secs": 12.7, "http_status": 200}
+{"type": "classified", "t": 31.96, "code": "F84050", "category": "says_not_needed", "colour": "green", "quote": "It is free to register with us, you do not have to provide photo ID or proof of address, and you do not need to prove your immigration status.", "retries": 0}
+{"type": "boxed", "t": 32.23, "code": "F84717", "shot": "shots/F84717.png"}
+{"type": "captured", "t": 32.78, "code": "F84124", "status": "ok", "challenge": false, "secs": 9.0, "http_status": 200}
+{"type": "classified", "t": 32.78, "code": "F84124", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0}
+{"type": "classified", "t": 33.19, "code": "F84006", "category": "says_not_needed", "colour": "green", "quote": "If you don\u2019t have proof of ID or address, you can still register.", "retries": 0}
+{"type": "captured", "t": 33.36, "code": "F84741", "status": "ok", "challenge": false, "secs": 10.5, "http_status": 200}
+{"type": "captured", "t": 33.59, "code": "F84641", "status": "ok", "challenge": false, "secs": 12.9, "http_status": 200}
+{"type": "classified", "t": 33.59, "code": "F84641", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0}
+{"type": "boxed", "t": 33.98, "code": "F84735", "shot": "shots/F84735.png"}
+{"type": "boxed", "t": 34.13, "code": "F84053", "shot": "shots/F84053.png"}
+{"type": "captured", "t": 34.21, "code": "F84097", "status": "ok", "challenge": false, "secs": 9.4, "http_status": 200}
+{"type": "classified", "t": 34.21, "code": "F84097", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0}
+{"type": "captured", "t": 34.39, "code": "F84092", "status": "ok", "challenge": false, "secs": 10.7, "http_status": 200}
+{"type": "classified", "t": 34.39, "code": "F84092", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0}
+{"type": "captured", "t": 34.59, "code": "F84052", "status": "ok", "challenge": false, "secs": 9.8, "http_status": 200}
+{"type": "classified", "t": 34.59, "code": "F84052", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0}
+{"type": "captured", "t": 34.8, "code": "F84093", "status": "ok", "challenge": false, "secs": 13.7, "http_status": 200}
+{"type": "classified", "t": 34.8, "code": "F84093", "category": "asks_softly", "colour": "amber", "quote": "It is not a requirement for adults to provide documentation but it is helpful for the registration process and beyond, so if you have it please do send it via email.", "retries": 0}
+{"type": "captured", "t": 35.67, "code": "F84724", "status": "ok", "challenge": false, "secs": 10.8, "http_status": 200}
+{"type": "classified", "t": 35.67, "code": "F84724", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0}
+{"type": "captured", "t": 35.82, "code": "F84660", "status": "ok", "challenge": false, "secs": 19.1, "http_status": 200}
+{"type": "boxed", "t": 35.9, "code": "F84050", "shot": "shots/F84050.png"}
+{"type": "captured", "t": 35.93, "code": "F84669", "status": "ok", "challenge": false, "secs": 14.8, "http_status": 200}
+{"type": "classified", "t": 35.93, "code": "F84669", "category": "says_not_needed", "colour": "green", "quote": "You do not need proof of address or immigration status, ID or an NHS number.", "retries": 0}
+{"type": "captured", "t": 36.13, "code": "F84014", "status": "ok", "challenge": false, "secs": 10.1, "http_status": 200}
+{"type": "captured", "t": 36.32, "code": "F84010", "status": "ok", "challenge": false, "secs": 16.5, "http_status": 200}
+{"type": "classified", "t": 36.32, "code": "F84010", "category": "no_mention", "colour": "green-outline", "quote": "", "retries": 0}
+{"type": "boxed", "t": 36.35, "code": "F84006", "shot": "shots/F84006.png"}
+{"type": "captured", "t": 36.77, "code": "F84004", "status": "ok", "challenge": false, "secs": 16.4, "http_status": 200}
+{"type": "classified", "t": 36.77, "code": "F84004", "category": "demands_documents", "colour": "red", "quote": "You will need to produce proof of address and identification, complete some forms and attend for a New Patient Check appointment which the Receptionist will book for you.", "retries": 0}
+{"type": "classified", "t": 36.86, "code": "F84741", "category": "demands_documents", "colour": "red", "quote": "Any patients registering who have come from outside of the UK must provide proof of entry, proof of a visa or home office letter.", "retries": 0}
+{"type": "classified", "t": 37.74, "code": "F84014", "category": "demands_documents", "colour": "red", "quote": "Prospective patients should provide photo identification and proof of address (i.e. passport, full UK driver\u2019s licence, bank statement, utility bill).", "retries": 0}
+{"type": "boxed", "t": 37.87, "code": "F84093", "shot": "shots/F84093.png"}
+{"type": "boxed", "t": 38.6, "code": "F84669", "shot": "shots/F84669.png"}
+{"type": "captured", "t": 38.7, "code": "F84088", "status": "ok", "challenge": false, "secs": 12.6, "http_status": 200}
+{"type": "boxed", "t": 38.99, "code": "F84004", "shot": "shots/F84004.png"}
+{"type": "classified", "t": 39.23, "code": "F84660", "category": "asks_softly", "colour": "amber", "quote": "If you do not have any of these items this does not prevent you from registering with the practice \u2013 please speak to a member of reception staff for further information.", "retries": 0}
+{"type": "boxed", "t": 39.8, "code": "F84741", "shot": "shots/F84741.png"}
+{"type": "boxed", "t": 40.2, "code": "F84014", "shot": "shots/F84014.png"}
+{"type": "classified", "t": 40.54, "code": "F84088", "category": "demands_documents", "colour": "red", "quote": "You are eligible to register with the practice if you live within our catchment area and can provide a valid proof of address and ID.", "retries": 0}
+{"type": "boxed", "t": 41.45, "code": "F84660", "shot": "shots/F84660.png"}
+{"type": "boxed", "t": 42.58, "code": "F84088", "shot": "shots/F84088.png"}
+{"type": "captured", "t": 52.52, "code": "F84670", "status": "error", "challenge": false, "secs": 26.0, "http_status": null}
+{"type": "classified", "t": 52.52, "code": "F84670", "category": "not_checked", "colour": "grey", "quote": "", "retries": 0}
+{"type": "run_finished", "t": 52.53, "counts": {"demands_documents": 6, "asks_softly": 3, "says_not_needed": 3, "no_mention": 11, "unclear": 0, "not_checked": 3}, "wall_secs": 52.5, "total": 26, "quotes_rejected": 0, "gemini_calls": 5, "error": null}

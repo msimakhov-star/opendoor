@@ -1,0 +1,27 @@
+{
+ "kind": "gp",
+ "code": "F84053",
+ "name": "GREENGATE MEDICAL CENTRE",
+ "site": "https://www.greengatemedicalcentre.nhs.uk/",
+ "reg_links": [
+  "https://www.greengatemedicalcentre.nhs.uk/practice-information/join-the-practice/"
+ ],
+ "url": "https://www.greengatemedicalcentre.nhs.uk/practice-information/join-the-practice/",
+ "is_reg": true,
+ "reg_url": "https://www.greengatemedicalcentre.nhs.uk/practice-information/join-the-practice/",
+ "status": "ok",
+ "final_url": "https://www.greengatemedicalcentre.nhs.uk/practice-information/join-the-practice/",
+ "title": "Join the Practice - Greengate Medical Centre",
+ "challenge": false,
+ "text": "Skip to content Greengate Medical Centre 497 Barking Road, Plaistow, London, E13 8PS | 020 8471 7160 Search this website Search Online Services Home Appointments Prescriptions Our Practice Health Information News Contact English\u25bc HomeAbout Our SurgeryJoin the Practice Join the Practice We welcome new patients who live within our practice area to register with us. Please view the practice boundary below. Catchment Area Patients wishing to register with the practice must produce Proof of address Photo ID NHS Number Find your NHS number here New patients who register with the practice will have a general health check done either by the Nurse or HCA. An appointment has to be made for a health check. Register at our GP practice About Our Surgery NHS North East London Integrated Care Board (ICB) Patient Participation Group Activities Join the Practice Accessing someone else\u2019s information Friends & Family Test Meet the Team Help us improve our website content. How helpful did you find this page? Greengate Medical Centre 497 Barking Road, Plaistow, London, E13 8PS Get Directions 02084717160 greengatemedicalcentre@nhs.net Mo,Tu,We,Th,Fr 8:00 am to 6:30 pm; Sa 9:00 am to 5:30 pm Greengate Medical Centre CQC overall rating Good 9 November 2017 See the report English\u25bc Accessibility Practice365 Privacy Policy Staff Login GP Website Design by iatro. \u00a9 Copyright, Greengate Medical Centre 2026",
+ "links_national_form": true,
+ "doc_hits": [
+  "photo id",
+  "proof of address"
+ ],
+ "national_form_only": false,
+ "http_status": 202,
+ "loads": 1,
+ "secs": 9.3,
+ "error": null
+}

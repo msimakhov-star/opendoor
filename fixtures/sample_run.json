@@ -1,0 +1,525 @@
+{
+ "note": "Sample data for UI testing. Every surgery, quote and number here is invented. Shapes follow CONTRACT.md and opendoor/models.py.",
+ "run_id": "sample-e13",
+ "events": [
+  {
+   "type": "run_started",
+   "t": 0.0,
+   "postcode_prefixes": [
+    "E13"
+   ],
+   "limit": 40
+  },
+  {
+   "type": "practices_found",
+   "t": 1.4,
+   "count": 8
+  },
+  {
+   "type": "resolved",
+   "t": 6.0,
+   "code": "S00001",
+   "name": "Harbour Lane Sample Surgery",
+   "lat": 51.5312,
+   "lon": 0.0205,
+   "reg_url": "https://harbour-lane-sample-surgery.example/new-patients"
+  },
+  {
+   "type": "resolved",
+   "t": 6.5,
+   "code": "S00002",
+   "name": "Greenway Sample Medical Centre",
+   "lat": 51.5248,
+   "lon": 0.0331,
+   "reg_url": "https://greenway-sample-medical-centre.example/new-patients"
+  },
+  {
+   "type": "resolved",
+   "t": 6.9,
+   "code": "S00003",
+   "name": "Station Road Sample Practice",
+   "lat": 51.5289,
+   "lon": 0.0402,
+   "reg_url": "https://station-road-sample-practice.example/new-patients"
+  },
+  {
+   "type": "resolved",
+   "t": 7.3,
+   "code": "S00004",
+   "name": "Canal Side Sample Surgery",
+   "lat": 51.5221,
+   "lon": 0.0188,
+   "reg_url": "https://canal-side-sample-surgery.example/new-patients"
+  },
+  {
+   "type": "resolved",
+   "t": 7.8,
+   "code": "S00005",
+   "name": "Orchard Sample Health Centre",
+   "lat": 51.5345,
+   "lon": 0.0312,
+   "reg_url": "https://orchard-sample-health-centre.example/new-patients"
+  },
+  {
+   "type": "resolved",
+   "t": 8.2,
+   "code": "S00006",
+   "name": "Millfield Sample Practice",
+   "lat": 51.5266,
+   "lon": 0.0124,
+   "reg_url": "https://millfield-sample-practice.example/new-patients"
+  },
+  {
+   "type": "resolved",
+   "t": 8.7,
+   "code": "S00007",
+   "name": "Parkview Sample Surgery",
+   "lat": 51.5198,
+   "lon": 0.029,
+   "reg_url": "https://parkview-sample-surgery.example/new-patients"
+  },
+  {
+   "type": "resolved",
+   "t": 9.2,
+   "code": "S00008",
+   "name": "Riverside Sample Medical Practice",
+   "lat": 51.533,
+   "lon": 0.0451,
+   "reg_url": "https://riverside-sample-medical-practice.example/new-patients"
+  },
+  {
+   "type": "captured",
+   "t": 10.2,
+   "code": "S00001",
+   "status": 200,
+   "challenge": false,
+   "secs": 4.2
+  },
+  {
+   "type": "captured",
+   "t": 11.4,
+   "code": "S00002",
+   "status": 200,
+   "challenge": false,
+   "secs": 4.9
+  },
+  {
+   "type": "captured",
+   "t": 12.5,
+   "code": "S00003",
+   "status": 200,
+   "challenge": false,
+   "secs": 5.6
+  },
+  {
+   "type": "quote_rejected",
+   "t": 13.3,
+   "code": "S00001",
+   "attempt": 1,
+   "reason": "quote not found on the page: the model wrote 'You must bring a photo ID and proof of address' and the page has no such sentence"
+  },
+  {
+   "type": "captured",
+   "t": 13.6,
+   "code": "S00004",
+   "status": 200,
+   "challenge": false,
+   "secs": 6.3
+  },
+  {
+   "type": "classified",
+   "t": 14.5,
+   "code": "S00002",
+   "category": "demands_documents",
+   "colour": "red",
+   "quote": "All new patients are required to provide a passport and a recent utility bill.",
+   "retries": 0
+  },
+  {
+   "type": "captured",
+   "t": 14.8,
+   "code": "S00005",
+   "status": 200,
+   "challenge": false,
+   "secs": 7.0
+  },
+  {
+   "type": "quote_rejected",
+   "t": 15.6,
+   "code": "S00003",
+   "attempt": 1,
+   "reason": "quote not found on the page: the model joined two separate sentences into one"
+  },
+  {
+   "type": "classified",
+   "t": 15.9,
+   "code": "S00001",
+   "category": "demands_documents",
+   "colour": "red",
+   "quote": "You must bring photo ID and proof of address dated within the last three months to register.",
+   "retries": 1
+  },
+  {
+   "type": "captured",
+   "t": 15.9,
+   "code": "S00006",
+   "status": 200,
+   "challenge": false,
+   "secs": 7.7
+  },
+  {
+   "type": "classified",
+   "t": 16.1,
+   "code": "S00006",
+   "category": "no_mention",
+   "colour": "green-outline",
+   "quote": "",
+   "retries": 0
+  },
+  {
+   "type": "classified",
+   "t": 16.8,
+   "code": "S00004",
+   "category": "says_not_needed",
+   "colour": "green",
+   "quote": "You do not need proof of address, immigration status, ID or an NHS number to register with us.",
+   "retries": 0
+  },
+  {
+   "type": "captured",
+   "t": 17.1,
+   "code": "S00007",
+   "status": 200,
+   "challenge": false,
+   "secs": 8.4
+  },
+  {
+   "type": "classified",
+   "t": 17.9,
+   "code": "S00005",
+   "category": "says_not_needed",
+   "colour": "green",
+   "quote": "We will never ask for proof of identity or address when you register.",
+   "retries": 0
+  },
+  {
+   "type": "classified",
+   "t": 18.2,
+   "code": "S00003",
+   "category": "asks_softly",
+   "colour": "amber",
+   "quote": "Please bring proof of address if you have it, but we will still register you without it.",
+   "retries": 1
+  },
+  {
+   "type": "captured",
+   "t": 18.2,
+   "code": "S00008",
+   "status": 403,
+   "challenge": true,
+   "secs": 9.1
+  },
+  {
+   "type": "classified",
+   "t": 18.4,
+   "code": "S00008",
+   "category": "not_checked",
+   "colour": "grey",
+   "quote": "",
+   "retries": 0
+  },
+  {
+   "type": "boxed",
+   "t": 19.8,
+   "code": "S00002",
+   "shot": "shots/S00002.png"
+  },
+  {
+   "type": "classified",
+   "t": 20.2,
+   "code": "S00007",
+   "category": "unclear",
+   "colour": "grey",
+   "quote": "",
+   "retries": 0
+  },
+  {
+   "type": "boxed",
+   "t": 21.2,
+   "code": "S00001",
+   "shot": "shots/S00001.png"
+  },
+  {
+   "type": "boxed",
+   "t": 22.1,
+   "code": "S00004",
+   "shot": "shots/S00004.png"
+  },
+  {
+   "type": "boxed",
+   "t": 23.2,
+   "code": "S00005",
+   "shot": "shots/S00005.png"
+  },
+  {
+   "type": "boxed",
+   "t": 23.5,
+   "code": "S00003",
+   "shot": "shots/S00003.png"
+  },
+  {
+   "type": "run_finished",
+   "t": 24.1,
+   "counts": {
+    "demands_documents": 2,
+    "asks_softly": 1,
+    "says_not_needed": 2,
+    "no_mention": 1,
+    "unclear": 1,
+    "not_checked": 1
+   },
+   "wall_secs": 24.1,
+   "containers_peak": 8
+  }
+ ],
+ "results": [
+  {
+   "code": "S00001",
+   "name": "Harbour Lane Sample Surgery",
+   "postcode": "E13 0ZZ",
+   "lat": 51.5312,
+   "lon": 0.0205,
+   "site": "https://harbour-lane-sample-surgery.example/",
+   "reg_url": "https://harbour-lane-sample-surgery.example/new-patients",
+   "status": "ok",
+   "links_national_form": false,
+   "doc_hits": [
+    "photo ID",
+    "proof of address"
+   ],
+   "category": "demands_documents",
+   "colour": "red",
+   "quote": "You must bring photo ID and proof of address dated within the last three months to register.",
+   "quote_verified": true,
+   "quote_box": {
+    "x": 212,
+    "y": 388,
+    "width": 640,
+    "height": 52
+   },
+   "documents": [
+    "photo ID",
+    "proof of address"
+   ],
+   "reason": "The page says new patients must bring photo ID and proof of address.",
+   "self_contradiction": false,
+   "shot": "shots/S00001.png",
+   "retries": 1,
+   "secs": 4.2,
+   "checked_at": "2026-09-19T13:30:00Z"
+  },
+  {
+   "code": "S00002",
+   "name": "Greenway Sample Medical Centre",
+   "postcode": "E13 0ZZ",
+   "lat": 51.5248,
+   "lon": 0.0331,
+   "site": "https://greenway-sample-medical-centre.example/",
+   "reg_url": "https://greenway-sample-medical-centre.example/new-patients",
+   "status": "ok",
+   "links_national_form": true,
+   "doc_hits": [
+    "passport",
+    "utility bill"
+   ],
+   "category": "demands_documents",
+   "colour": "red",
+   "quote": "All new patients are required to provide a passport and a recent utility bill.",
+   "quote_verified": true,
+   "quote_box": {
+    "x": 212,
+    "y": 388,
+    "width": 640,
+    "height": 52
+   },
+   "documents": [
+    "passport",
+    "utility bill"
+   ],
+   "reason": "The page says a passport and a utility bill are required.",
+   "self_contradiction": true,
+   "shot": "shots/S00002.png",
+   "retries": 0,
+   "secs": 4.9,
+   "checked_at": "2026-09-19T13:30:00Z"
+  },
+  {
+   "code": "S00003",
+   "name": "Station Road Sample Practice",
+   "postcode": "E13 0ZZ",
+   "lat": 51.5289,
+   "lon": 0.0402,
+   "site": "https://station-road-sample-practice.example/",
+   "reg_url": "https://station-road-sample-practice.example/new-patients",
+   "status": "ok",
+   "links_national_form": false,
+   "doc_hits": [
+    "proof of address"
+   ],
+   "category": "asks_softly",
+   "colour": "amber",
+   "quote": "Please bring proof of address if you have it, but we will still register you without it.",
+   "quote_verified": true,
+   "quote_box": {
+    "x": 212,
+    "y": 388,
+    "width": 640,
+    "height": 52
+   },
+   "documents": [
+    "proof of address"
+   ],
+   "reason": "The page asks for proof of address but says registration is still possible without it.",
+   "self_contradiction": false,
+   "shot": "shots/S00003.png",
+   "retries": 1,
+   "secs": 5.6,
+   "checked_at": "2026-09-19T13:30:00Z"
+  },
+  {
+   "code": "S00004",
+   "name": "Canal Side Sample Surgery",
+   "postcode": "E13 0ZZ",
+   "lat": 51.5221,
+   "lon": 0.0188,
+   "site": "https://canal-side-sample-surgery.example/",
+   "reg_url": "https://canal-side-sample-surgery.example/new-patients",
+   "status": "ok",
+   "links_national_form": true,
+   "doc_hits": [],
+   "category": "says_not_needed",
+   "colour": "green",
+   "quote": "You do not need proof of address, immigration status, ID or an NHS number to register with us.",
+   "quote_verified": true,
+   "quote_box": {
+    "x": 212,
+    "y": 388,
+    "width": 640,
+    "height": 52
+   },
+   "documents": [],
+   "reason": "The page says documents are not needed.",
+   "self_contradiction": false,
+   "shot": "shots/S00004.png",
+   "retries": 0,
+   "secs": 6.3,
+   "checked_at": "2026-09-19T13:30:00Z"
+  },
+  {
+   "code": "S00005",
+   "name": "Orchard Sample Health Centre",
+   "postcode": "E13 0ZZ",
+   "lat": 51.5345,
+   "lon": 0.0312,
+   "site": "https://orchard-sample-health-centre.example/",
+   "reg_url": "https://orchard-sample-health-centre.example/new-patients",
+   "status": "ok",
+   "links_national_form": false,
+   "doc_hits": [],
+   "category": "says_not_needed",
+   "colour": "green",
+   "quote": "We will never ask for proof of identity or address when you register.",
+   "quote_verified": true,
+   "quote_box": {
+    "x": 212,
+    "y": 388,
+    "width": 640,
+    "height": 52
+   },
+   "documents": [],
+   "reason": "The page says it never asks for proof of identity or address.",
+   "self_contradiction": false,
+   "shot": "shots/S00005.png",
+   "retries": 0,
+   "secs": 7.0,
+   "checked_at": "2026-09-19T13:30:00Z"
+  },
+  {
+   "code": "S00006",
+   "name": "Millfield Sample Practice",
+   "postcode": "E13 0ZZ",
+   "lat": 51.5266,
+   "lon": 0.0124,
+   "site": "https://millfield-sample-practice.example/",
+   "reg_url": "https://millfield-sample-practice.example/new-patients",
+   "status": "ok",
+   "links_national_form": true,
+   "doc_hits": [],
+   "category": "no_mention",
+   "colour": "green-outline",
+   "quote": "",
+   "quote_verified": false,
+   "quote_box": null,
+   "documents": [],
+   "reason": "No document wording on the registration page, so the model was not called.",
+   "self_contradiction": false,
+   "shot": "shots/S00006.png",
+   "retries": 0,
+   "secs": 7.7,
+   "checked_at": "2026-09-19T13:30:00Z"
+  },
+  {
+   "code": "S00007",
+   "name": "Parkview Sample Surgery",
+   "postcode": "E13 0ZZ",
+   "lat": 51.5198,
+   "lon": 0.029,
+   "site": "https://parkview-sample-surgery.example/",
+   "reg_url": "https://parkview-sample-surgery.example/new-patients",
+   "status": "ok",
+   "links_national_form": false,
+   "doc_hits": [
+    "ID"
+   ],
+   "category": "unclear",
+   "colour": "grey",
+   "quote": "",
+   "quote_verified": false,
+   "quote_box": null,
+   "documents": [
+    "ID"
+   ],
+   "reason": "The page mentions ID only in a section about collecting prescriptions.",
+   "self_contradiction": false,
+   "shot": "shots/S00007.png",
+   "retries": 0,
+   "secs": 8.4,
+   "checked_at": "2026-09-19T13:30:00Z"
+  },
+  {
+   "code": "S00008",
+   "name": "Riverside Sample Medical Practice",
+   "postcode": "E13 0ZZ",
+   "lat": 51.533,
+   "lon": 0.0451,
+   "site": "https://riverside-sample-medical-practice.example/",
+   "reg_url": "https://riverside-sample-medical-practice.example/new-patients",
+   "status": "blocked",
+   "links_national_form": false,
+   "doc_hits": [],
+   "category": "not_checked",
+   "colour": "grey",
+   "quote": "",
+   "quote_verified": false,
+   "quote_box": null,
+   "documents": [],
+   "reason": "The site showed a bot challenge, so the page was not read.",
+   "self_contradiction": false,
+   "shot": null,
+   "retries": 0,
+   "secs": 9.1,
+   "checked_at": "2026-09-19T13:30:00Z"
+  }
+ ],
+ "letter_sample": "Dear Practice Manager,\n\nI am writing about the new patient registration page on the {name} website. It currently says:\n\n\"{quote}\"\n\nThe NHS guidance on nhs.uk says: \"You do not need ID, proof of address or proof of immigration status.\"\nhttps://www.nhs.uk/nhs-services/gps/how-to-register-with-a-gp-surgery/\n\nThe wording on your website contradicts the NHS guidance on nhs.uk, and it may put off people who do not have these documents. Could you update the page so that it matches the guidance?\n\nI have only read the website. I am not commenting on how your reception team registers patients in person.\n\nThank you for your time.\n\nKind regards,\n[Your name]\n\n(Sample letter for offline review. In the live app the letter is drafted by the server.)"
+}

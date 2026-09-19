@@ -1,0 +1,24 @@
+{
+ "kind": "gp",
+ "code": "F84672",
+ "name": "FIRST 4 HEALTH GROUP - E7 HEALTH",
+ "site": "https://www.first4healthgroup.co.uk/gp-surgery/e7-health",
+ "reg_links": [
+  "https://register-with-gp.ht1.uk/?gpCode=F84672&gpName=E7%20Health"
+ ],
+ "url": "https://register-with-gp.ht1.uk/?gpCode=F84672&gpName=E7%20Health",
+ "is_reg": true,
+ "reg_url": "https://register-with-gp.ht1.uk/?gpCode=F84672&gpName=E7%20Health",
+ "status": "ok",
+ "final_url": "https://register-with-gp.ht1.uk/?gpCode=F84672&gpName=E7%20Health",
+ "title": "",
+ "challenge": false,
+ "text": "",
+ "links_national_form": true,
+ "doc_hits": [],
+ "national_form_only": true,
+ "http_status": null,
+ "loads": 0,
+ "secs": 0.0,
+ "error": null
+}

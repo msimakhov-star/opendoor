@@ -1,0 +1,594 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Open Door</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+<style>
+:root{--bg:#0a0e13;--bar:#0d131b;--panel:#111822;--line:#202c3b;--text:#eef3f8;--mute:#8b98a9;
+  --red:#ff4757;--amber:#ffb224;--green:#2fe08c;--grey:#6b7787;--orange:#ff8a1f;--blue:#4aa3ff}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--text);display:grid;grid-template-rows:auto 1fr auto auto;overflow:hidden;
+  font:18px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif}
+a{color:var(--blue)}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+
+header{display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;padding:12px 22px;background:var(--bar);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:12px;font-size:32px;font-weight:800;letter-spacing:-.02em;margin-right:6px}
+.door{width:20px;height:30px;border:3px solid var(--green);border-radius:3px;position:relative;transform:skewY(-8deg);box-shadow:0 0 16px -2px var(--green)}
+.door::after{content:"";position:absolute;right:3px;top:12px;width:4px;height:4px;border-radius:50%;background:var(--green)}
+.controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.controls label{font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--mute)}
+input,select{background:#0a0f16;border:1px solid #2c3a4d;border-radius:8px;padding:8px 12px;height:44px}
+#postcode{width:170px;font-size:22px;font-weight:700;text-transform:uppercase}
+#limit{width:76px}
+#replay{max-width:230px}
+.btn{background:#1a2432;border:1px solid #2c3a4d;border-radius:8px;padding:0 18px;height:44px;cursor:pointer;font-weight:600;text-decoration:none;color:var(--text);display:inline-flex;align-items:center}
+.btn:hover{background:#223044}
+.btn.go{background:var(--green);border-color:var(--green);color:#04130b;font-size:20px;font-weight:800;padding:0 26px}
+.btn.go:hover{filter:brightness(1.1)}
+.btn[disabled]{opacity:.5;cursor:default}
+.seg{display:inline-flex;border:1px solid #2c3a4d;border-radius:8px;overflow:hidden}
+.seg button{background:none;border:0;height:42px;padding:0 12px;cursor:pointer;color:var(--mute);font-weight:700}
+.seg button[aria-pressed=true]{background:#2c3a4d;color:var(--text)}
+#mode{font-size:13px;font-weight:800;letter-spacing:.1em;padding:5px 10px;border-radius:6px;border:1px solid #2c3a4d;color:var(--mute);white-space:nowrap}
+#mode.live{color:#fff;background:var(--red);border-color:var(--red)}
+#mode.replay,#mode.sample{color:#1a1200;background:var(--amber);border-color:var(--amber)}
+#mode.done{color:#04130b;background:var(--green);border-color:var(--green)}
+
+.counters{display:flex;gap:26px;margin-left:auto;align-items:flex-end;flex-wrap:wrap}
+.c b{display:block;font-size:42px;line-height:1;font-weight:800;font-variant-numeric:tabular-nums}
+.c span{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--mute);white-space:nowrap}
+.c.red b{color:var(--red)}.c.amber b{color:var(--amber)}.c.green b{color:var(--green)}.c.rej b{color:var(--orange)}
+.c.outline b{color:transparent;-webkit-text-stroke:2px var(--green)}
+.c.flash b{animation:flash .9s}
+@keyframes flash{0%{transform:scale(1.7);text-shadow:0 0 24px var(--orange)}100%{transform:none}}
+
+main{display:grid;grid-template-columns:minmax(0,1fr) minmax(520px,47vw);min-height:0}
+#map{min-height:0;background:var(--bg)}
+#nomap{display:none;place-items:center;color:var(--mute);padding:40px;text-align:center}
+.leaflet-container{background:#15191f;font:inherit}
+.leaflet-tile{width:256.5px!important;height:256.5px!important} /* hides hairline seams between tiles at fractional zoom */
+.leaflet-tile-pane{filter:invert(1) hue-rotate(180deg) brightness(.82) contrast(.95) saturate(.3)}
+.leaflet-control-attribution{background:rgba(10,14,19,.75)!important;color:var(--mute)!important;font-size:11px}
+.leaflet-control-attribution a{color:var(--mute)!important}
+.leaflet-bar a{background:#1a2432!important;color:var(--text)!important;border-color:#2c3a4d!important}
+.leaflet-tooltip{background:#0a0f16;color:var(--text);border:1px solid #2c3a4d;font-size:16px;font-weight:600;padding:6px 10px;box-shadow:none}
+.leaflet-tooltip-top::before{border-top-color:#2c3a4d}
+
+/* Leaflet positions the icon element with a transform, so the dot is drawn and animated on pseudo elements. */
+.pin{cursor:pointer}
+.pin::before{content:"";position:absolute;inset:3px;border-radius:50%;background:var(--c,var(--grey));border:2px solid rgba(255,255,255,.9);box-shadow:0 0 16px 3px var(--c,transparent)}
+.pin.c-red{--c:var(--red)}.pin.c-amber{--c:var(--amber)}.pin.c-green{--c:var(--green)}
+.pin.c-green-outline::before{background:var(--bg);border:4px solid var(--green);box-shadow:none}
+.pin.c-grey::before{background:var(--grey);border-color:#aab4c0;box-shadow:none}
+.pin.c-pending::before{background:#9aa6b5;box-shadow:none}
+.pin.c-pending::after{content:"";position:absolute;inset:3px;border-radius:50%;border:2px solid #d5dde7;animation:ping 1.2s ease-out infinite}
+.pin.pop::before{animation:pop .55s cubic-bezier(.2,1.6,.4,1)}
+.pin.sel::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:3px solid #fff}
+@keyframes ping{to{transform:scale(2.8);opacity:0}}
+@keyframes pop{from{transform:scale(2.6);opacity:.2}}
+
+#panel{overflow-y:auto;background:var(--panel);border-left:1px solid var(--line);padding:24px 30px 40px}
+.eyebrow{font-size:13px;text-transform:uppercase;letter-spacing:.12em;color:var(--mute);margin:0 0 8px}
+h2{font-size:34px;line-height:1.1;margin:0 0 10px;letter-spacing:-.01em}
+h3{font-size:24px;line-height:1.25;margin:12px 0 4px}
+h4{font-size:15px;text-transform:uppercase;letter-spacing:.1em;color:var(--mute);margin:30px 0 10px}
+.meta{color:var(--mute);font-size:16px;overflow-wrap:anywhere}
+.sub{color:#c4cedb;margin:0}
+.pill{display:inline-block;font-size:14px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:4px 12px;border-radius:999px;border:2px solid var(--c);color:var(--c);margin-bottom:12px}
+.t-red{--c:var(--red)}.t-amber{--c:var(--amber)}.t-green,.t-green-outline{--c:var(--green)}.t-grey,.t-pending{--c:#9aa6b5}
+blockquote{margin:14px 0;padding:16px 22px;border-left:6px solid var(--c,var(--mute));background:#0b1119;border-radius:0 10px 10px 0;font-size:28px;line-height:1.3;font-weight:600}
+blockquote.nhs{--c:var(--green);font-size:32px}
+blockquote.long{font-size:20px;font-weight:500}
+blockquote cite{display:block;font-size:15px;font-weight:400;font-style:normal;color:var(--mute);margin-top:10px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.chip{font-size:15px;padding:5px 12px;border-radius:8px;background:#1a2432;border:1px solid #2c3a4d}
+.chip.ok{border-color:var(--green);color:var(--green)}
+.chip.rej{border-color:var(--orange);color:var(--orange);font-weight:800}
+.chip.warn{border-color:var(--amber);color:var(--amber)}
+.back{float:right;background:none;border:0;color:var(--blue);cursor:pointer;padding:4px 0;font-size:16px}
+
+.split{margin-top:18px;cursor:zoom-in}
+.split h3{margin:0 0 12px;font-size:28px}
+.split .cols{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.split.single .cols{grid-template-columns:1fr}
+figure{margin:0;min-width:0}
+figcaption{font-size:14px;text-transform:uppercase;letter-spacing:.08em;color:var(--mute);margin-bottom:6px}
+.crop{overflow:hidden;border-radius:8px;border:2px solid var(--c,#2c3a4d);background:#fff}
+.crop img{width:100%;display:block}
+.crop.zoomed{position:relative}
+.crop.zoomed img{position:absolute;max-width:none}
+/* full screen shows the whole screenshot, not the zoomed crop */
+.split.big .crop{aspect-ratio:auto!important}
+.split.big .crop img{position:static!important;width:100%!important}
+.mock{border-radius:8px;border:2px solid #2c3a4d;background:#f4f6f8;color:#1b2430;padding:16px;font-size:15px;min-height:180px}
+.mock .bar{height:10px;border-radius:5px;background:#d5dbe3;margin:0 0 10px;width:70%}
+.mock .bar.s{width:45%}
+.mock .hit{display:inline-block;outline:3px solid var(--c);outline-offset:3px;border-radius:2px;margin:6px 0 12px;font-weight:600}
+.mock small{display:block;color:#5d6b7c;margin-top:8px}
+.split.big{position:fixed;inset:0;z-index:2000;margin:0;padding:28px 36px;background:rgba(6,9,13,.97);overflow:auto;cursor:zoom-out}
+.split.big h3{font-size:44px;text-align:center;margin-bottom:20px}
+.split.big .mock{font-size:22px;padding:28px}
+
+.greens{list-style:none;padding:0;margin:0}
+.greens button{width:100%;display:flex;align-items:center;gap:12px;text-align:left;background:#0b1119;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin-bottom:8px;cursor:pointer;font-size:19px}
+.greens button:hover{border-color:var(--green)}
+.greens .d{margin-left:auto;color:var(--mute);font-size:16px;white-space:nowrap}
+.k{flex:none;width:16px;height:16px;border-radius:50%;background:var(--c);border:2px solid rgba(255,255,255,.85)}
+.k.c-red{--c:var(--red)}.k.c-amber{--c:var(--amber)}.k.c-green{--c:var(--green)}.k.c-grey{--c:var(--grey)}.k.c-pending{--c:#9aa6b5}
+.k.c-green-outline{background:transparent;border:4px solid var(--green)}
+.legend{display:grid;gap:8px;margin:0;padding:0;list-style:none;font-size:17px}
+.legend li{display:flex;align-items:center;gap:12px}
+.actions{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:22px}
+.note{color:var(--mute);font-size:16px}
+
+#log{height:104px;overflow-y:auto;padding:8px 22px;background:#07090d;border-top:1px solid var(--line);color:#b8c3d0;
+  font:15px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.ln{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ln .t{display:inline-block;width:70px;color:var(--mute)}
+.ln .ty{display:inline-block;width:160px;font-weight:700;color:#dbe4ee}
+.ln.rej,.ln.rej .ty,.ln.rej .t{color:var(--orange);font-weight:800}
+.ln.fin .ty{color:var(--green)}
+footer{padding:10px 22px;background:var(--bar);border-top:1px solid var(--line);font-size:16px;color:#cbd5e1}
+
+dialog{background:var(--panel);color:var(--text);border:1px solid #2c3a4d;border-radius:14px;padding:26px 28px;width:min(820px,92vw)}
+dialog::backdrop{background:rgba(4,6,9,.8)}
+dialog h2{font-size:28px}
+dialog textarea{width:100%;height:46vh;background:#0a0f16;border:1px solid #2c3a4d;border-radius:8px;padding:14px;font-size:17px;line-height:1.5;resize:vertical}
+.never{font-size:20px;font-weight:800;color:var(--amber);margin:4px 0 14px}
+
+/* laptop screens: keep the split screen above the fold */
+@media (max-height:960px){h2{font-size:28px}h3{font-size:20px}blockquote{font-size:22px;padding:12px 18px}.split h3{font-size:24px}
+  #log{height:84px}.c b{font-size:36px}#panel{padding-top:16px}header{padding:8px 22px}}
+@media (max-width:900px){body{overflow:auto;display:block}main{grid-template-columns:1fr}#map{height:50vh}#panel{border-left:0}.counters{margin-left:0}}
+@media (prefers-reduced-motion:reduce){.pin::before,.pin::after,.c.flash b{animation:none!important}}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand"><span class="door" aria-hidden="true"></span>Open Door</div>
+  <form class="controls" id="runform">
+    <label for="postcode">Postcode</label>
+    <input id="postcode" value="E13, E6, E7" maxlength="40" autocomplete="off" spellcheck="false" aria-label="Postcode or postcode district">
+    <label for="limit">Max</label>
+    <input id="limit" type="number" min="1" max="1500" value="40" aria-label="Maximum number of practices">
+    <button class="btn go" id="run" type="submit">Run</button>
+    <select id="replay" aria-label="Replay a saved run"><option value="">Replay a saved run</option></select>
+    <span class="seg" role="group" aria-label="Replay speed">
+      <button type="button" data-speed="1" aria-pressed="false">x1</button><button type="button" data-speed="4" aria-pressed="true">x4</button>
+    </span>
+    <span id="mode">READY</span>
+  </form>
+  <div class="counters" aria-live="off">
+    <div class="c"><b id="c-found">0</b><span>practices found</span></div>
+    <div class="c"><b id="c-pages">0</b><span>pages read</span></div>
+    <div class="c"><b id="c-cont">0</b><span id="c-cont-l">containers running (est.)</span></div>
+    <div class="c rej" id="c-rej-box"><b id="c-rej">0</b><span>quotes rejected by code</span></div>
+    <div class="c red"><b id="c-red">0</b><span>red</span></div>
+    <div class="c amber"><b id="c-amber">0</b><span>amber</span></div>
+    <div class="c green"><b id="c-green">0</b><span>green</span></div>
+    <div class="c outline"><b id="c-none">0</b><span>no mention</span></div>
+    <div class="c"><b id="c-secs">0.0</b><span>seconds</span></div>
+  </div>
+</header>
+
+<main>
+  <div id="map"><div id="nomap">Map library did not load (no network). The run still works: see the panel and the event log.</div></div>
+  <aside id="panel" aria-live="polite"></aside>
+</main>
+
+<div id="log" role="log" aria-label="Live event log"></div>
+<footer>Reads what practice websites say, not what happens at the front desk. Source of the rule:
+  <a href="https://www.nhs.uk/nhs-services/gps/how-to-register-with-a-gp-surgery/" target="_blank" rel="noopener noreferrer">nhs.uk</a></footer>
+
+<dialog id="dlg" aria-labelledby="dlg-title">
+  <h2 id="dlg-title">Draft letter</h2>
+  <p class="never">Nothing is sent automatically.</p>
+  <p class="note">You read it, you edit it, you send it from your own email. The recipient is left empty on purpose.</p>
+  <textarea id="dlg-text" aria-label="Letter text, editable"></textarea>
+  <div class="actions">
+    <button class="btn" id="dlg-copy" type="button">Copy</button>
+    <a class="btn go" id="dlg-mail" href="mailto:">Approve and open in my email</a>
+    <button class="btn" id="dlg-close" type="button">Close</button>
+  </div>
+</dialog>
+
+<script id="sample" type="application/json">{"note":"Sample data for UI testing. Every surgery, quote and number here is invented. Shapes follow CONTRACT.md and opendoor/models.py.","run_id":"sample-e13","events":[{"type":"run_started","t":0.0,"postcode_prefixes":["E13"],"limit":40},{"type":"practices_found","t":1.4,"count":8},{"type":"resolved","t":6.0,"code":"S00001","name":"Harbour Lane Sample Surgery","lat":51.5312,"lon":0.0205,"reg_url":"https://harbour-lane-sample-surgery.example/new-patients"},{"type":"resolved","t":6.5,"code":"S00002","name":"Greenway Sample Medical Centre","lat":51.5248,"lon":0.0331,"reg_url":"https://greenway-sample-medical-centre.example/new-patients"},{"type":"resolved","t":6.9,"code":"S00003","name":"Station Road Sample Practice","lat":51.5289,"lon":0.0402,"reg_url":"https://station-road-sample-practice.example/new-patients"},{"type":"resolved","t":7.3,"code":"S00004","name":"Canal Side Sample Surgery","lat":51.5221,"lon":0.0188,"reg_url":"https://canal-side-sample-surgery.example/new-patients"},{"type":"resolved","t":7.8,"code":"S00005","name":"Orchard Sample Health Centre","lat":51.5345,"lon":0.0312,"reg_url":"https://orchard-sample-health-centre.example/new-patients"},{"type":"resolved","t":8.2,"code":"S00006","name":"Millfield Sample Practice","lat":51.5266,"lon":0.0124,"reg_url":"https://millfield-sample-practice.example/new-patients"},{"type":"resolved","t":8.7,"code":"S00007","name":"Parkview Sample Surgery","lat":51.5198,"lon":0.029,"reg_url":"https://parkview-sample-surgery.example/new-patients"},{"type":"resolved","t":9.2,"code":"S00008","name":"Riverside Sample Medical Practice","lat":51.533,"lon":0.0451,"reg_url":"https://riverside-sample-medical-practice.example/new-patients"},{"type":"captured","t":10.2,"code":"S00001","status":200,"challenge":false,"secs":4.2},{"type":"captured","t":11.4,"code":"S00002","status":200,"challenge":false,"secs":4.9},{"type":"captured","t":12.5,"code":"S00003","status":200,"challenge":false,"secs":5.6},{"type":"quote_rejected","t":13.3,"code":"S00001","attempt":1,"reason":"quote not found on the page: the model wrote 'You must bring a photo ID and proof of address' and the page has no such sentence"},{"type":"captured","t":13.6,"code":"S00004","status":200,"challenge":false,"secs":6.3},{"type":"classified","t":14.5,"code":"S00002","category":"demands_documents","colour":"red","quote":"All new patients are required to provide a passport and a recent utility bill.","retries":0},{"type":"captured","t":14.8,"code":"S00005","status":200,"challenge":false,"secs":7.0},{"type":"quote_rejected","t":15.6,"code":"S00003","attempt":1,"reason":"quote not found on the page: the model joined two separate sentences into one"},{"type":"classified","t":15.9,"code":"S00001","category":"demands_documents","colour":"red","quote":"You must bring photo ID and proof of address dated within the last three months to register.","retries":1},{"type":"captured","t":15.9,"code":"S00006","status":200,"challenge":false,"secs":7.7},{"type":"classified","t":16.1,"code":"S00006","category":"no_mention","colour":"green-outline","quote":"","retries":0},{"type":"classified","t":16.8,"code":"S00004","category":"says_not_needed","colour":"green","quote":"You do not need proof of address, immigration status, ID or an NHS number to register with us.","retries":0},{"type":"captured","t":17.1,"code":"S00007","status":200,"challenge":false,"secs":8.4},{"type":"classified","t":17.9,"code":"S00005","category":"says_not_needed","colour":"green","quote":"We will never ask for proof of identity or address when you register.","retries":0},{"type":"classified","t":18.2,"code":"S00003","category":"asks_softly","colour":"amber","quote":"Please bring proof of address if you have it, but we will still register you without it.","retries":1},{"type":"captured","t":18.2,"code":"S00008","status":403,"challenge":true,"secs":9.1},{"type":"classified","t":18.4,"code":"S00008","category":"not_checked","colour":"grey","quote":"","retries":0},{"type":"boxed","t":19.8,"code":"S00002","shot":"shots/S00002.png"},{"type":"classified","t":20.2,"code":"S00007","category":"unclear","colour":"grey","quote":"","retries":0},{"type":"boxed","t":21.2,"code":"S00001","shot":"shots/S00001.png"},{"type":"boxed","t":22.1,"code":"S00004","shot":"shots/S00004.png"},{"type":"boxed","t":23.2,"code":"S00005","shot":"shots/S00005.png"},{"type":"boxed","t":23.5,"code":"S00003","shot":"shots/S00003.png"},{"type":"run_finished","t":24.1,"counts":{"demands_documents":2,"asks_softly":1,"says_not_needed":2,"no_mention":1,"unclear":1,"not_checked":1},"wall_secs":24.1,"containers_peak":8}],"results":[{"code":"S00001","name":"Harbour Lane Sample Surgery","postcode":"E13 0ZZ","lat":51.5312,"lon":0.0205,"site":"https://harbour-lane-sample-surgery.example/","reg_url":"https://harbour-lane-sample-surgery.example/new-patients","status":"ok","links_national_form":false,"doc_hits":["photo ID","proof of address"],"category":"demands_documents","colour":"red","quote":"You must bring photo ID and proof of address dated within the last three months to register.","quote_verified":true,"quote_box":{"x":212,"y":388,"width":640,"height":52},"documents":["photo ID","proof of address"],"reason":"The page says new patients must bring photo ID and proof of address.","self_contradiction":false,"shot":"shots/S00001.png","retries":1,"secs":4.2,"checked_at":"2026-09-19T13:30:00Z"},{"code":"S00002","name":"Greenway Sample Medical Centre","postcode":"E13 0ZZ","lat":51.5248,"lon":0.0331,"site":"https://greenway-sample-medical-centre.example/","reg_url":"https://greenway-sample-medical-centre.example/new-patients","status":"ok","links_national_form":true,"doc_hits":["passport","utility bill"],"category":"demands_documents","colour":"red","quote":"All new patients are required to provide a passport and a recent utility bill.","quote_verified":true,"quote_box":{"x":212,"y":388,"width":640,"height":52},"documents":["passport","utility bill"],"reason":"The page says a passport and a utility bill are required.","self_contradiction":true,"shot":"shots/S00002.png","retries":0,"secs":4.9,"checked_at":"2026-09-19T13:30:00Z"},{"code":"S00003","name":"Station Road Sample Practice","postcode":"E13 0ZZ","lat":51.5289,"lon":0.0402,"site":"https://station-road-sample-practice.example/","reg_url":"https://station-road-sample-practice.example/new-patients","status":"ok","links_national_form":false,"doc_hits":["proof of address"],"category":"asks_softly","colour":"amber","quote":"Please bring proof of address if you have it, but we will still register you without it.","quote_verified":true,"quote_box":{"x":212,"y":388,"width":640,"height":52},"documents":["proof of address"],"reason":"The page asks for proof of address but says registration is still possible without it.","self_contradiction":false,"shot":"shots/S00003.png","retries":1,"secs":5.6,"checked_at":"2026-09-19T13:30:00Z"},{"code":"S00004","name":"Canal Side Sample Surgery","postcode":"E13 0ZZ","lat":51.5221,"lon":0.0188,"site":"https://canal-side-sample-surgery.example/","reg_url":"https://canal-side-sample-surgery.example/new-patients","status":"ok","links_national_form":true,"doc_hits":[],"category":"says_not_needed","colour":"green","quote":"You do not need proof of address, immigration status, ID or an NHS number to register with us.","quote_verified":true,"quote_box":{"x":212,"y":388,"width":640,"height":52},"documents":[],"reason":"The page says documents are not needed.","self_contradiction":false,"shot":"shots/S00004.png","retries":0,"secs":6.3,"checked_at":"2026-09-19T13:30:00Z"},{"code":"S00005","name":"Orchard Sample Health Centre","postcode":"E13 0ZZ","lat":51.5345,"lon":0.0312,"site":"https://orchard-sample-health-centre.example/","reg_url":"https://orchard-sample-health-centre.example/new-patients","status":"ok","links_national_form":false,"doc_hits":[],"category":"says_not_needed","colour":"green","quote":"We will never ask for proof of identity or address when you register.","quote_verified":true,"quote_box":{"x":212,"y":388,"width":640,"height":52},"documents":[],"reason":"The page says it never asks for proof of identity or address.","self_contradiction":false,"shot":"shots/S00005.png","retries":0,"secs":7.0,"checked_at":"2026-09-19T13:30:00Z"},{"code":"S00006","name":"Millfield Sample Practice","postcode":"E13 0ZZ","lat":51.5266,"lon":0.0124,"site":"https://millfield-sample-practice.example/","reg_url":"https://millfield-sample-practice.example/new-patients","status":"ok","links_national_form":true,"doc_hits":[],"category":"no_mention","colour":"green-outline","quote":"","quote_verified":false,"quote_box":null,"documents":[],"reason":"No document wording on the registration page, so the model was not called.","self_contradiction":false,"shot":"shots/S00006.png","retries":0,"secs":7.7,"checked_at":"2026-09-19T13:30:00Z"},{"code":"S00007","name":"Parkview Sample Surgery","postcode":"E13 0ZZ","lat":51.5198,"lon":0.029,"site":"https://parkview-sample-surgery.example/","reg_url":"https://parkview-sample-surgery.example/new-patients","status":"ok","links_national_form":false,"doc_hits":["ID"],"category":"unclear","colour":"grey","quote":"","quote_verified":false,"quote_box":null,"documents":["ID"],"reason":"The page mentions ID only in a section about collecting prescriptions.","self_contradiction":false,"shot":"shots/S00007.png","retries":0,"secs":8.4,"checked_at":"2026-09-19T13:30:00Z"},{"code":"S00008","name":"Riverside Sample Medical Practice","postcode":"E13 0ZZ","lat":51.533,"lon":0.0451,"site":"https://riverside-sample-medical-practice.example/","reg_url":"https://riverside-sample-medical-practice.example/new-patients","status":"blocked","links_national_form":false,"doc_hits":[],"category":"not_checked","colour":"grey","quote":"","quote_verified":false,"quote_box":null,"documents":[],"reason":"The site showed a bot challenge, so the page was not read.","self_contradiction":false,"shot":null,"retries":0,"secs":9.1,"checked_at":"2026-09-19T13:30:00Z"}],"letter_sample":"Dear Practice Manager,\n\nI am writing about the new patient registration page on the {name} website. It currently says:\n\n\"{quote}\"\n\nThe NHS guidance on nhs.uk says: \"You do not need ID, proof of address or proof of immigration status.\"\nhttps://www.nhs.uk/nhs-services/gps/how-to-register-with-a-gp-surgery/\n\nThe wording on your website contradicts the NHS guidance on nhs.uk, and it may put off people who do not have these documents. Could you update the page so that it matches the guidance?\n\nI have only read the website. I am not commenting on how your reception team registers patients in person.\n\nThank you for your time.\n\nKind regards,\n[Your name]\n\n(Sample letter for offline review. In the live app the letter is drafted by the server.)"}</script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+<script>
+"use strict";
+// Rule for this file: any string that came from a practice website or from the model goes through textContent, never innerHTML.
+const NHS_URL = "https://www.nhs.uk/nhs-services/gps/how-to-register-with-a-gp-surgery/";
+const NHS_QUOTE = "You do not need ID, proof of address or proof of immigration status.";
+const COLOUR = {demands_documents: "red", asks_softly: "amber", says_not_needed: "green", no_mention: "green-outline", unclear: "grey", not_checked: "grey"};
+const WORDS = {
+  demands_documents: ["Demands documents", "This surgery's website says new patients must provide documents", "That contradicts the NHS guidance on nhs.uk."],
+  asks_softly: ["Asks softly", "This surgery's website asks for documents, but softly or inconsistently", "The NHS guidance on nhs.uk says none are needed."],
+  says_not_needed: ["Says not needed", "This surgery says you can register without documents", "This matches the NHS guidance on nhs.uk."],
+  no_mention: ["No mention", "Registration page found, with no document wording on it", "Nothing on the page contradicts the NHS guidance on nhs.uk."],
+  unclear: ["Unclear", "The wording is ambiguous and we could not decide", "Read the page yourself before relying on it."],
+  not_checked: ["Not checked", "We could not read this surgery's website", "It was blocked, missing, or failed to load. This says nothing about the surgery."],
+};
+const LABEL = {run_started: "started", practices_found: "found", resolved: "resolved", captured: "captured", classified: "classified",
+  quote_rejected: "QUOTE REJECTED", boxed: "boxed", run_finished: "finished", note: "note"};
+const Z = {demands_documents: 600, asks_softly: 500, says_not_needed: 400, no_mention: 300};
+
+const $ = id => document.getElementById(id);
+const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; };
+const safeUrl = u => { try { const x = new URL(u); return /^https?:$/.test(x.protocol) ? x.href : null; } catch { return null; } };
+const host = u => { const s = safeUrl(u); return s ? new URL(s).host.replace(/^www\./, "") : ""; };
+const colourOf = p => !p.category ? "pending" : (Object.values(COLOUR).includes(p.colour) ? p.colour : COLOUR[p.category] || "grey");
+const KEEP = new Set(["NHS", "GP", "UK", "PMS"]);
+const nice = n => n && n === n.toUpperCase() ? n.split(" ").map(w => KEEP.has(w) || /\d/.test(w) ? w : w.charAt(0) + w.slice(1).toLowerCase()).join(" ") : n;
+const miles = (a, b) => { // haversine
+  const r = x => x * Math.PI / 180, dLat = r(b.lat - a.lat), dLon = r(b.lon - a.lon);
+  const h = Math.sin(dLat / 2) ** 2 + Math.cos(r(a.lat)) * Math.cos(r(b.lat)) * Math.sin(dLon / 2) ** 2;
+  return 3958.8 * 2 * Math.asin(Math.sqrt(h));
+};
+
+let S, map, fitTimer, gen = 0, speed = 4, api = false, sample = null;
+function fresh() {
+  return {mode: "ready", runId: null, P: new Map(), results: {}, found: 0, pages: 0, rejected: 0, peak: null,
+    finished: new Set(), done: false, polldone: false, since: 0, queue: [], replay: null, idx: 0, vt: 0, start: 0, elapsed: 0, sel: null};
+}
+
+/* ---------- map ---------- */
+function initMap() {
+  if (!window.L) { $("nomap").style.display = "grid"; return; }
+  map = L.map("map", {zoomControl: true}).setView([51.527, 0.027], 13);
+  L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {maxZoom: 19,
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
+  new ResizeObserver(() => map.invalidateSize()).observe($("map"));
+}
+function setMarker(p) {
+  if (!map || typeof p.lat !== "number" || typeof p.lon !== "number") return;
+  const cls = "pin c-" + colourOf(p) + (p.category ? " pop" : "") + (S.sel === p.code ? " sel" : "");
+  const icon = L.divIcon({className: cls, iconSize: [28, 28]});
+  if (p.marker) p.marker.setIcon(icon);
+  else {
+    p.marker = L.marker([p.lat, p.lon], {icon}).addTo(map).on("click", () => select(p.code));
+    p.marker.bindTooltip(el("span", "", p.name || p.code), {direction: "top", offset: [0, -14]});
+    clearTimeout(fitTimer);
+    fitTimer = setTimeout(() => map.flyToBounds(L.latLngBounds([...S.P.values()].filter(q => q.marker).map(q => q.marker.getLatLng())),
+      {padding: [70, 70], maxZoom: 15, duration: 0.6}), 400);
+  }
+  p.marker.setZIndexOffset((Z[p.category] || 0) + (S.sel === p.code ? 1000 : 0));
+}
+
+/* ---------- state and events ---------- */
+function reset(mode, runId) {
+  gen++;
+  if (S) for (const p of S.P.values()) if (p.marker) p.marker.remove();
+  S = fresh(); S.mode = mode; S.runId = runId; S.start = performance.now();
+  $("log").replaceChildren();
+  setMode(); counters(); renderPanel();
+}
+const P = code => { if (!S.P.has(code)) S.P.set(code, {code, name: code, rejections: 0}); return S.P.get(code); };
+
+function apply(e) {
+  const p = e.code ? P(e.code) : null;
+  switch (e.type) {
+    case "run_started": S.fake = !!e.fake; setMode(); break;
+    case "practices_found": S.found = e.count || 0; break;
+    case "resolved": Object.assign(p, {name: nice(e.name) || p.name, lat: e.lat, lon: e.lon, reg_url: e.reg_url}); setMarker(p); break;
+    case "captured": S.pages++; S.finished.add(e.code); Object.assign(p, {status: e.status, challenge: e.challenge, secs: e.secs}); break;
+    case "quote_rejected": S.rejected++; p.rejections++;
+      $("c-rej-box").classList.remove("flash"); void $("c-rej-box").offsetWidth; $("c-rej-box").classList.add("flash"); break;
+    case "classified": S.finished.add(e.code);
+      Object.assign(p, {category: e.category, colour: e.colour, quote: e.quote || "", retries: e.retries || 0}); setMarker(p); break;
+    case "boxed": p.boxed = true; p.shot = e.shot; break;
+    case "run_finished": finish(e); break;
+  }
+  logLine(e); counters();
+  if (!S.sel || (p && S.sel === p.code) || e.type === "run_finished") renderPanel();
+}
+function finish(e) {
+  if (S.done) return;
+  S.done = true;
+  if (e && typeof e.wall_secs === "number") S.elapsed = e.wall_secs;
+  if (e && e.containers_peak != null) S.peak = e.containers_peak;
+  setMode();
+  if (S.mode === "live") loadResults(S.runId, gen);
+}
+function counts() {
+  const c = {red: 0, amber: 0, green: 0, "green-outline": 0, grey: 0};
+  for (const p of S.P.values()) if (p.category) c[colourOf(p)]++;
+  return c;
+}
+function counters() {
+  const c = counts();
+  // Estimate: practices not yet captured or classified, plus quoted pages still waiting for their boxed screenshot.
+  const waitingBox = [...S.P.values()].filter(p => p.quote && p.category && !p.boxed && p.category !== "unclear").length;
+  const inflight = S.done ? 0 : Math.max(0, S.found - S.finished.size) + waitingBox;
+  $("c-found").textContent = S.found; $("c-pages").textContent = S.pages; $("c-cont").textContent = inflight;
+  $("c-cont-l").textContent = S.done && S.peak != null ? "containers, peak " + S.peak : "containers running (est.)";
+  $("c-rej").textContent = S.rejected; $("c-red").textContent = c.red; $("c-amber").textContent = c.amber;
+  $("c-green").textContent = c.green; $("c-none").textContent = c["green-outline"];
+  $("c-secs").textContent = S.elapsed.toFixed(1);
+}
+function setMode() {
+  const m = $("mode"), t = (S.fake ? "FAKE DATA, " : "") + {ready: "READY", live: "LIVE RUN", replay: "REPLAY x" + speed, sample: "SAMPLE DATA x" + speed}[S.mode];
+  m.className = S.done ? "done" : S.mode;
+  m.textContent = S.done ? t + " : DONE" : t;
+}
+
+function describe(e) {
+  const n = e.code ? P(e.code).name : "";
+  switch (e.type) {
+    case "run_started": return "postcodes " + (e.postcode_prefixes || []).join(", ") + ", limit " + e.limit;
+    case "practices_found": return e.count + " GP practices from the NHS directory";
+    case "resolved": return n + "  " + (host(e.reg_url) || "no registration page found");
+    case "captured": return n + "  status " + e.status + (e.challenge ? ", bot challenge" : "") + (e.secs != null ? "  " + e.secs + "s" : "");
+    case "classified": return n + "  " + e.category + (e.quote ? '  "' + e.quote + '"' : "");
+    case "quote_rejected": return n + "  attempt " + e.attempt + ": " + e.reason;
+    case "boxed": return n + "  sentence boxed on the screenshot";
+    case "run_finished": return (typeof e.wall_secs === "number" ? e.wall_secs.toFixed(1) + "s wall clock" : "") +
+      (e.containers_peak != null ? ", peak " + e.containers_peak + " containers" : "");
+    default: return e.msg || "";
+  }
+}
+function logLine(e) {
+  const log = $("log"), row = el("div", "ln" + (e.type === "quote_rejected" ? " rej" : e.type === "run_finished" ? " fin" : ""));
+  row.append(el("span", "t", typeof e.t === "number" ? e.t.toFixed(1) + "s" : ""), el("span", "ty", LABEL[e.type] || String(e.type)), el("span", "", describe(e)));
+  log.append(row);
+  while (log.children.length > 300) log.firstChild.remove();
+  log.scrollTop = log.scrollHeight;
+}
+const note = msg => logLine({type: "note", msg});
+
+/* ---------- clock: drains the queue so dots land one by one, and drives replays ---------- */
+let last = performance.now();
+setInterval(() => {
+  const now = performance.now(), dt = (now - last) / 1000; last = now;
+  if (!S) return;
+  if (S.replay && !S.done) {
+    S.vt += dt * speed;
+    while (S.idx < S.replay.length && (S.replay[S.idx].t || 0) <= S.vt) S.queue.push(S.replay[S.idx++]);
+    S.elapsed = Math.min(S.vt, S.replay.length ? S.replay[S.replay.length - 1].t || 0 : 0);
+  } else if (S.mode === "live" && !S.done) S.elapsed = (now - S.start) / 1000;
+  for (let n = Math.ceil(S.queue.length / 8); n > 0; n--) apply(S.queue.shift());
+  if (S.mode === "live" && S.polldone && !S.queue.length && !S.done) { note("run ended without a run_finished event"); finish(null); }
+  if (!S.done && S.mode !== "ready") $("c-secs").textContent = S.elapsed.toFixed(1);
+}, 60);
+
+/* ---------- data flow ---------- */
+const asList = j => Array.isArray(j) ? j : Array.isArray(j && j.results) ? j.results : Array.isArray(j && j.runs) ? j.runs : j && typeof j === "object" ? Object.values(j) : [];
+async function loadResults(runId, g) {
+  try {
+    const r = await fetch("/api/runs/" + encodeURIComponent(runId) + "/results");
+    if (!r.ok) throw new Error(r.status);
+    const j = await r.json(), list = asList(j);
+    if (g !== gen) return;
+    S.nhsBox = j && j.summary && j.summary.nhs && j.summary.nhs.quote_box;
+    for (const x of list) if (x && x.code) S.results[x.code] = x;
+    renderPanel();
+  } catch (err) { note("results not available: " + err.message); }
+}
+async function startLive(postcode, limit) {
+  reset("live", null);
+  const g = gen;
+  $("run").disabled = true;
+  try {
+    const r = await fetch("/api/run", {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify({postcode, limit})});
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    S.runId = (await r.json()).run_id;
+  } catch (err) { note("could not start a run: " + err.message); S.mode = "ready"; setMode(); $("run").disabled = false; return; }
+  (async function poll() {
+    if (g !== gen) return;
+    try {
+      const r = await fetch("/api/run/" + encodeURIComponent(S.runId) + "?since=" + S.since);
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      const j = await r.json(), ev = j.events || [];
+      if (g !== gen) return;
+      S.since += ev.length; S.queue.push(...ev);
+      if (j.done) { S.polldone = true; $("run").disabled = false; listRuns(); return; }
+    } catch (err) { note("poll failed, retrying: " + err.message); }
+    setTimeout(poll, 700);
+  })();
+}
+async function startReplay(runId) {
+  if (runId === "__sample") return startSample();
+  try {
+    const r = await fetch("/api/run/" + encodeURIComponent(runId) + "?since=0");
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    const ev = (await r.json()).events || [];
+    reset("replay", runId);
+    S.replay = ev.slice().sort((a, b) => (a.t || 0) - (b.t || 0));
+    note("replaying saved run " + runId + " with its original timing, " + ev.length + " events");
+    loadResults(runId, gen);
+  } catch (err) { note("could not load run " + runId + ": " + err.message); }
+}
+function startSample() {
+  reset("sample", sample.run_id);
+  S.replay = sample.events.slice();
+  for (const x of sample.results) S.results[x.code] = x;
+  note("built in sample run: invented surgeries, no real practice is shown");
+}
+async function listRuns() {
+  const r = await fetch("/api/runs");
+  if (!r.ok) throw new Error("HTTP " + r.status);
+  const sel = $("replay"), runs = asList(await r.json());
+  sel.replaceChildren(new Option("Replay a saved run", ""));
+  for (const x of runs) {
+    const id = typeof x === "string" ? x : x && (x.run_id || x.id);
+    if (!id) continue;
+    const extra = typeof x === "object" ? [x.postcode || (x.postcode_prefixes || []).join(" "), x.practices != null ? x.practices + " practices" : ""].filter(Boolean).join(", ") : "";
+    sel.add(new Option(extra ? id + " (" + extra + ")" : id, id));
+  }
+  sel.add(new Option("Built in sample run", "__sample"));
+}
+
+/* ---------- right panel ---------- */
+function select(code) {
+  const old = S.sel; S.sel = code;
+  if (old && S.P.has(old)) setMarker(S.P.get(old));
+  if (code) setMarker(P(code));
+  renderPanel(); $("panel").scrollTop = 0;
+}
+function greensNear(from, skip) {
+  const out = [...S.P.values()].filter(p => (p.category === "says_not_needed" || p.category === "no_mention") && p.code !== skip && typeof p.lat === "number");
+  for (const p of out) p._d = from ? miles(from, p) : 0;
+  return out.sort((a, b) => (a.category === b.category ? a._d - b._d : a.category === "says_not_needed" ? -1 : 1)).slice(0, 5);
+}
+function greenList(from, skip) {
+  const ul = el("ul", "greens"), list = greensNear(from, skip);
+  for (const p of list) {
+    const li = el("li"), b = el("button"); b.type = "button";
+    b.append(el("span", "k c-" + colourOf(p)), el("span", "", p.name),
+      el("span", "d", (p.category === "no_mention" ? "no document wording, " : "") + (from ? p._d.toFixed(1) + " miles" : "")));
+    b.onclick = () => select(p.code);
+    li.append(b); ul.append(li);
+  }
+  return list.length ? ul : null;
+}
+function mock(quote, tone, why) {
+  const m = el("div", "mock t-" + tone);
+  m.append(el("div", "bar"), el("div", "bar s"), el("span", "hit", quote || "(no sentence quoted)"), el("div", "bar"), el("small", "", why));
+  return m;
+}
+function shot(src, caption, quote, tone, box) {
+  const f = el("figure", "t-" + tone);
+  f.append(el("figcaption", "", caption));
+  if (!src) { f.append(mock(quote, tone, "Sample data: no screenshot. Showing the quoted sentence.")); return f; }
+  const img = new Image(); img.alt = caption + ", screenshot with the sentence boxed"; img.src = src;
+  const wrap = el("div", "crop"); wrap.append(img); f.append(wrap);
+  img.onerror = () => wrap.replaceWith(mock(quote, tone, "Screenshot not available. Showing the quoted sentence."));
+  img.onload = () => { // quote_box is in pixels of the PNG: show a 2:1 window around it, never upscaled past the PNG
+    if (!box || !(box.width > 0)) return;
+    const W = img.naturalWidth, H = img.naturalHeight, pad = 60;
+    let w = box.width + 2 * pad, h = box.height + 2 * pad;
+    if (h < w * 0.5) h = w * 0.5; else w = h / 0.5;
+    w = Math.min(W, w); h = Math.min(H, h);
+    const x = Math.max(0, Math.min(W - w, box.x + box.width / 2 - w / 2)), y = Math.max(0, Math.min(H - h, box.y + box.height / 2 - h / 2));
+    wrap.classList.add("zoomed"); wrap.style.aspectRatio = w + " / " + h;
+    Object.assign(img.style, {width: W / w * 100 + "%", left: -x / w * 100 + "%", top: -y / h * 100 + "%"});
+  };
+  return f;
+}
+function renderPanel() {
+  const panel = $("panel"), p = S.sel ? S.P.get(S.sel) : null;
+  panel.replaceChildren();
+  if (!p) return renderOverview(panel);
+  const r = S.results[p.code] || {}, tone = colourOf(p), w = WORDS[p.category];
+  const back = el("button", "back", "Back to overview"); back.type = "button"; back.onclick = () => select(null);
+  panel.append(back, el("div", "pill t-" + tone, w ? w[0] : "Reading now"), el("h2", "", p.name));
+  const meta = el("p", "meta", [p.code, r.postcode].filter(Boolean).join("  ") + "  ");
+  const url = safeUrl(p.reg_url || r.reg_url || r.site);
+  if (url) { const a = el("a", "", host(url)); a.href = url; a.target = "_blank"; a.rel = "noopener noreferrer"; meta.append(a); }
+  panel.append(meta, el("h3", "", w ? w[1] : "Reading this surgery's website now"), el("p", "sub", w ? w[2] : "The result appears here as soon as the page is classified."));
+
+  if (p.quote) {
+    const q = el("blockquote", "t-" + tone + (p.quote.length > 200 ? " long" : ""), p.quote);
+    q.append(el("cite", "", "Quoted from " + (host(url) || "the practice website")));
+    panel.append(q);
+  }
+  const chips = el("div", "chips");
+  if (p.quote && r.quote_verified) chips.append(el("span", "chip ok", "Quote verified by code: found word for word on the page"));
+  if (p.rejections) chips.append(el("span", "chip rej", "Code rejected " + p.rejections + (p.rejections === 1 ? " misquote" : " misquotes") + " from the model first"));
+  if (r.self_contradiction) chips.append(el("span", "chip warn", "Same page links to the national NHS form, which needs no documents"));
+  if ((r.documents || []).length) chips.append(el("span", "chip", "Asks for: " + r.documents.join(", ")));
+  if (p.challenge) chips.append(el("span", "chip", "Site showed a bot challenge"));
+
+  const shots = S.mode !== "sample" && S.runId ? "/shots/" + encodeURIComponent(S.runId) + "/" : null;
+  const mine = shots ? shots + encodeURIComponent(p.code) + ".png" + (p.boxed ? "?boxed=1" : "") : null;
+  if (p.category === "demands_documents" || p.category === "asks_softly") {
+    const s = el("section", "split"), cols = el("div", "cols");
+    cols.append(shot(mine, "This surgery's website", p.quote, tone, p.boxed && r.quote_box), shot(shots ? shots + "nhs.png" : null, "nhs.uk", NHS_QUOTE, "green", S.nhsBox));
+    s.append(el("h3", "", "Two NHS websites that disagree"), cols);
+    s.onclick = () => s.classList.toggle("big");
+    panel.append(s);
+    const act = el("div", "actions"), b = el("button", "btn go", "Draft letter"); b.type = "button"; b.onclick = () => openLetter(p);
+    act.append(b, el("span", "note", "Nothing is sent automatically. You approve it and send it yourself."));
+    panel.append(act);
+  } else if (p.category && p.category !== "not_checked") {
+    const s = el("section", "split single"), cols = el("div", "cols");
+    cols.append(shot(mine, "This surgery's website", p.quote, tone, p.boxed && r.quote_box));
+    s.append(cols); s.onclick = () => s.classList.toggle("big");
+    panel.append(s);
+  }
+  if (chips.children.length) panel.append(chips);
+  if (r.reason) panel.append(el("p", "note", "Why: " + r.reason));
+  panel.append(el("h4", "", "What can I do"));
+  const near = typeof p.lat === "number" ? greenList(p, p.code) : null;
+  panel.append(el("p", "sub", near ? "Nearest surgeries whose websites do not ask for documents:" : "No green surgeries found nearby yet."));
+  if (near) panel.append(near);
+  const g = el("p", "note", "The NHS guidance applies to every GP surgery in England. "), a = el("a", "", "Read it on nhs.uk");
+  a.href = NHS_URL; a.target = "_blank"; a.rel = "noopener noreferrer"; g.append(a); panel.append(g);
+}
+function renderOverview(panel) {
+  panel.append(el("p", "eyebrow", "The rule, in the NHS's own words"));
+  const q = el("blockquote", "nhs", NHS_QUOTE), c = el("cite"), a = el("a", "", "nhs.uk: how to register with a GP surgery");
+  a.href = NHS_URL; a.target = "_blank"; a.rel = "noopener noreferrer"; c.append(a); q.append(c);
+  panel.append(q, el("p", "sub", "Open Door reads the registration page of every GP surgery near a postcode and shows which ones say something different. Click a dot."));
+  const lg = el("ul", "legend");
+  for (const [k, t] of [["red", "Says you must bring documents"], ["amber", "Asks for documents, softly or inconsistently"], ["green", "Says documents are not needed"],
+    ["green-outline", "No document wording on the page"], ["grey", "Unclear, or could not be checked"], ["pending", "Being read right now"]]) {
+    const li = el("li"); li.append(el("span", "k c-" + k), el("span", "", t)); lg.append(li);
+  }
+  panel.append(el("h4", "", "Map key"), lg, el("h4", "", "What can I do"));
+  const pts = [...S.P.values()].filter(p => typeof p.lat === "number");
+  const mid = pts.length ? {lat: pts.reduce((s, p) => s + p.lat, 0) / pts.length, lon: pts.reduce((s, p) => s + p.lon, 0) / pts.length} : null;
+  const list = greenList(mid, null);
+  panel.append(el("p", "sub", list ? "Surgeries whose websites do not ask for documents, closest to the middle of this search first:" :
+    "Run a postcode. Surgeries whose websites do not ask for documents will be listed here."));
+  if (list) panel.append(list);
+}
+
+/* ---------- letter: a human approves, nothing is sent from here ---------- */
+async function openLetter(p) {
+  const dlg = $("dlg"), ta = $("dlg-text");
+  $("dlg-title").textContent = "Draft letter to " + p.name;
+  ta.value = "Drafting...";
+  dlg.dataset.subject = "Your new patient registration page and the NHS guidance on nhs.uk";
+  dlg.showModal();
+  try {
+    let text;
+    if (S.mode === "sample") text = sample.letter_sample.replace("{name}", p.name).replace("{quote}", p.quote);
+    else {
+      const r = await fetch("/api/letter/" + encodeURIComponent(S.runId) + "/" + encodeURIComponent(p.code));
+      text = await r.text();
+      if (!r.ok) { let d = ""; try { d = JSON.parse(text).detail; } catch {} throw new Error(d || "HTTP " + r.status); }
+      try { const j = JSON.parse(text); if (typeof j === "string") text = j; else if (j && typeof j === "object") { text = j.letter || j.text || j.body || text; if (j.subject) dlg.dataset.subject = j.subject; } } catch {}
+    }
+    ta.value = text;
+  } catch (err) { ta.value = "Could not load the letter: " + err.message; }
+}
+$("dlg-mail").onclick = ev => { ev.currentTarget.href = "mailto:?subject=" + encodeURIComponent($("dlg").dataset.subject) + "&body=" + encodeURIComponent($("dlg-text").value); };
+$("dlg-copy").onclick = async ev => {
+  const ta = $("dlg-text");
+  try { await navigator.clipboard.writeText(ta.value); } catch { ta.select(); document.execCommand("copy"); }
+  ev.currentTarget.textContent = "Copied"; setTimeout(() => $("dlg-copy").textContent = "Copy", 1500);
+};
+$("dlg-close").onclick = () => $("dlg").close();
+
+/* ---------- wiring ---------- */
+$("runform").onsubmit = ev => {
+  ev.preventDefault();
+  const pc = $("postcode").value.trim().toUpperCase(), limit = Math.max(1, Math.min(1500, parseInt($("limit").value, 10) || 40));
+  if (!/^[A-Z0-9 ,]{2,40}$/.test(pc)) { $("postcode").focus(); return; }
+  if (api) startLive(pc, limit); else startSample();
+};
+$("replay").onchange = ev => { const v = ev.target.value; ev.target.value = ""; if (v) startReplay(v); };
+for (const b of document.querySelectorAll("[data-speed]")) b.onclick = () => {
+  speed = +b.dataset.speed;
+  for (const o of document.querySelectorAll("[data-speed]")) o.setAttribute("aria-pressed", String(o === b));
+  setMode();
+};
+document.addEventListener("keydown", ev => { if (ev.key === "Escape") { const big = document.querySelector(".split.big"); if (big) big.classList.remove("big"); else if (S.sel && !$("dlg").open) select(null); } });
+
+(async function init() {
+  sample = JSON.parse($("sample").textContent);
+  initMap();
+  reset("ready", null);
+  try { await listRuns(); api = true; }
+  catch { // opened as a file or served without the API: show the built in sample so the design can be reviewed offline
+    api = false; $("replay").add(new Option("Built in sample run", "__sample")); startSample();
+  }
+})();
+</script>
+</body>
+</html>

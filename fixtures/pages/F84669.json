@@ -1,0 +1,26 @@
+{
+ "kind": "gp",
+ "code": "F84669",
+ "name": "CENTRAL PARK SURGERY",
+ "site": "https://www.centralparksurgerynewham.nhs.uk/",
+ "reg_links": [
+  "https://gp-registration.nhs.uk/F84669/gpregistration/landing",
+  "https://www.centralparksurgerynewham.nhs.uk/practice-information/new-patients/",
+  "https://www.centralparksurgerynewham.nhs.uk/2026/07/13/4682/"
+ ],
+ "url": "https://gp-registration.nhs.uk/F84669/gpregistration/landing",
+ "is_reg": true,
+ "reg_url": "https://gp-registration.nhs.uk/F84669/gpregistration/landing",
+ "status": "ok",
+ "final_url": "https://gp-registration.nhs.uk/F84669/gpregistration/landing",
+ "title": "",
+ "challenge": false,
+ "text": "",
+ "links_national_form": true,
+ "doc_hits": [],
+ "national_form_only": true,
+ "http_status": null,
+ "loads": 0,
+ "secs": 0.0,
+ "error": null
+}

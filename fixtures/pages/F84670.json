@@ -1,0 +1,22 @@
+{
+ "kind": "gp",
+ "code": "F84670",
+ "name": "WESTBURY ROAD MEDICAL PRACTICE",
+ "site": "http://www.westburyroadmedicalpractice.co.uk/",
+ "reg_links": [],
+ "url": "http://www.westburyroadmedicalpractice.co.uk/",
+ "is_reg": false,
+ "reg_url": "http://www.westburyroadmedicalpractice.co.uk/",
+ "status": "error",
+ "final_url": "http://www.westburyroadmedicalpractice.co.uk/",
+ "title": "",
+ "challenge": false,
+ "text": "",
+ "links_national_form": false,
+ "doc_hits": [],
+ "national_form_only": false,
+ "http_status": null,
+ "loads": 0,
+ "secs": 26.3,
+ "error": "TimeoutError: Page.goto: Timeout 25000ms exceeded.\nCall log:\n  - navigating to \"http://www.westburyroadmedicalpractice.co.uk/\", waiting until \"domcontentloaded\"\n"
+}

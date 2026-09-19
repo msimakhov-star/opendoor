@@ -1,0 +1,24 @@
+{
+ "kind": "gp",
+ "code": "F84642",
+ "name": "LUCAS AVENUE PRACTICE",
+ "site": "https://www.lucasavenuepractice.co.uk/",
+ "reg_links": [
+  "https://lucasavenuepractice.co.uk/register-with-us/"
+ ],
+ "url": "https://lucasavenuepractice.co.uk/register-with-us/",
+ "is_reg": true,
+ "reg_url": "https://lucasavenuepractice.co.uk/register-with-us/",
+ "status": "blocked",
+ "final_url": "https://lucasavenuepractice.co.uk/register-with-us/",
+ "title": "Security Verification",
+ "challenge": true,
+ "text": "To access this website, please wait while we complete a security check. Loading...",
+ "links_national_form": false,
+ "doc_hits": [],
+ "national_form_only": false,
+ "http_status": 401,
+ "loads": 1,
+ "secs": 2.7,
+ "error": null
+}

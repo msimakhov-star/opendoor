@@ -1,0 +1,24 @@
+{
+ "kind": "gp",
+ "code": "F84677",
+ "name": "EAST END MEDICAL CENTRE",
+ "site": "https://www.eastendmedicalcentre.nhs.uk/",
+ "reg_links": [],
+ "url": "https://www.eastendmedicalcentre.nhs.uk/",
+ "is_reg": false,
+ "reg_url": "https://www.eastendmedicalcentre.nhs.uk/",
+ "status": "blocked",
+ "final_url": "https://www.eastendmedicalcentre.nhs.uk/",
+ "title": "Just a moment...",
+ "challenge": true,
+ "text": "www.eastendmedicalcentre.nhs.uk Performing security verification This website uses a security service to protect against malicious bots. This page is displayed while the website verifies you are not a bot. Ray ID: a3d898aa4c33d1d2 Performance and Security by Cloudflare Privacy",
+ "links_national_form": false,
+ "doc_hits": [
+  "id"
+ ],
+ "national_form_only": false,
+ "http_status": 403,
+ "loads": 1,
+ "secs": 8.4,
+ "error": null
+}

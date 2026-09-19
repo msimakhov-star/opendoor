@@ -1,0 +1,27 @@
+{
+ "kind": "gp",
+ "code": "F84088",
+ "name": "PLASHET ROAD MEDICAL CENTRE",
+ "site": "https://plashetmedicalcentre.co.uk/",
+ "reg_links": [
+  "https://plashetmedicalcentre.co.uk/pages/New-Patient-Registration"
+ ],
+ "url": "https://plashetmedicalcentre.co.uk/",
+ "is_reg": false,
+ "reg_url": "https://plashetmedicalcentre.co.uk/pages/New-Patient-Registration",
+ "status": "ok",
+ "final_url": "https://plashetmedicalcentre.co.uk/pages/New-Patient-Registration",
+ "title": "New Patient Registration - Plashet Medical Centre",
+ "challenge": false,
+ "text": "Cookies on our website We use some essential cookies to make this website work. We\u2019d also like to use analytics cookies so we can understand how patients use our website and make improvements. Accept analytics cookiesDecline analytics cookiesFind out more Skip to main content Language 020 8472 0473 Text Size Plashet Medical Centre Search Home Appointments Prescriptions Services Surgery Information Health Information & Support Contact Us Home > New Patient Registration New Patient Registration Register with the practice online via this link: Register with a GP surgery You are eligible to register with the practice if you live within our catchment area and can provide a valid proof of address and ID. You are also required to fill a registration form and health questionnaire, and will then be booked an appointment with the Practice Nurse to have a New Patient Health Check. Please note; your registration with the practice will be incomplete until your Health Check has been performed Find your NHS number Practice Area View a larger version of the practice boundary map Last Updated 20 Oct 2025 Share Print Facebook Bluesky X (Twitter) LinkedIn Mastodon Local Services Why wait? Book a private MRI scan Tax free benefit of \u00a35,000 every year if 66yrs or over and have a medical condition Private Shoulder, Elbow Hand & Wrist Specialist Counselling Services Aesthetic Clinic Wills & LPA Private Hip & Knee Specialist Advertise Your Business Here Site Sign In Sitemap Back To Top About Disclaimer Website Privacy Website Accessibility Cookies Content Attribution Contact Plashet Medical Centre 152 Plashet Road, Plaistow, London , E13 0QT 020 8472 0473 nelondonicb.plashet-medical-centre@nhs.net \u00a9 Neighbourhood Direct Ltd 2026 GP Practice Website by Oldroyd Publishing Group",
+ "links_national_form": true,
+ "doc_hits": [
+  "id",
+  "proof of address"
+ ],
+ "national_form_only": false,
+ "http_status": 200,
+ "loads": 2,
+ "secs": 11.8,
+ "error": null
+}
